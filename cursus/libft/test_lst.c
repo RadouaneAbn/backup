@@ -41,10 +41,6 @@ int main() {
     t_list *last_node = ft_lstlast(head);
     printf("The tail is: %s\n", (char *) last_node->content);
 
-    while (current){
-        tmp = current;
-        current  = current->next;
-        // ft_lstdelone(tmp, NULL);
-    }
-    
+    ft_lstclear(&head, NULL);
+    return (0);
 }
