@@ -1,33 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/30 22:30:54 by rabounou          #+#    #+#             */
+/*   Updated: 2024/10/30 22:30:56 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
-#include <stdio.h>
+
+static	void	lstmap_healper(t_list **head, t_list **tail, t_list *node)
+{
+	if (*head == NULL)
+		*head = node;
+	if (*tail == NULL)
+		*tail = node;
+	else
+	{
+		(*tail)->next = node;
+		*tail = (*tail)->next;
+	}
+}
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*head;
-	t_list	*body;
-	t_list	*current;
+	t_list	*tail;
 	t_list	*new_node;
-	void	*tmp;
 
 	head = NULL;
-	body = NULL;
-	current = lst;
-	while (current)
+	tail = NULL;
+	while (lst)
 	{
-		tmp = f(current->content);
-		if (del != NULL)
-			del(current->content);
-		new_node = ft_lstnew(tmp);
-		if (head == NULL)
-			head = new_node;
-		if (body == NULL)
-			body = new_node;
-		else
+		new_node = ft_lstnew(f(lst->content));
+		if (new_node == NULL)
 		{
-			body->next = new_node;
-			body = body->next;
+			ft_lstclear(&head, del);
+			return (NULL);
 		}
-		current = current->next;
+		lstmap_healper(&head, &tail, new_node);
+		lst = lst->next;
 	}
 	return (head);
 }

@@ -22,7 +22,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		return (NULL);
 	slen = ft_strlen(s);
 	new_str = (char *) malloc((slen + 1) * sizeof(char));
-	if (s == NULL)
+	if (new_str == NULL)
 		return (NULL);
 	i = 0;
 	while (i < slen)

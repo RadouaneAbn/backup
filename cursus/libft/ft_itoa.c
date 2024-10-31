@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static char	*itoa_helper(char *arr, int size, int is_signed)
+static char	*itoa_helper(char *arr, int size)
 {
 	int		i;
 	char	*s;
@@ -48,6 +48,6 @@ char	*ft_itoa(int n)
 	if (is_signed)
 		arr[i++] = '-';
 	arr[i] = '\0';
-	new_string = itoa_helper(arr, i, is_signed);
+	new_string = itoa_helper(arr, i);
 	return (new_string);
 }

@@ -16,14 +16,14 @@ char	*ft_strnstr(const char *hh, const char *nn, size_t len)
 {
 	size_t	i;
 	size_t	j;
-	size_t	end;
 
+	if ((!hh[0] && !nn[0]) || !nn[0])
+		return ((char *)hh);
 	i = 0;
-	end = len - ft_strlen(nn);
-	while (hh[i] && i <= end)
+	while (hh[i] && i < len)
 	{
 		j = 0;
-		while (nn[j] && hh[i + j] == nn[j])
+		while (nn[j] && hh[i + j] == nn[j] && i + j < len)
 			j++;
 		if (!nn[j])
 			return ((char *)(hh + i));

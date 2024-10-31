@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include <limits.h>
+#include <stdio.h>
+
 void	ft_putnbr_fd(int n, int fd)
 {
 	char			arr[12];
@@ -30,7 +34,7 @@ void	ft_putnbr_fd(int n, int fd)
 		arr[i++] = nn % 10 + '0';
 		nn /= 10;
 	}
-	while (i >= 0)
+	while (i > 0)
 		arr2[j++] = arr[--i];
 	write(fd, arr2, j);
 }

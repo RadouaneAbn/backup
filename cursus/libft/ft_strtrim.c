@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int	char_in_charset(char c, char const *charset)
 {
@@ -32,14 +31,16 @@ static size_t	get_final_len(char const *s1, char const *set)
 	size_t	i;
 
 	i = 0;
-	slen = 0;
-	while (s1[i])
-	{
-		if (!char_in_charset(s1[i], set))
-			slen++;
+	slen = ft_strlen(s1);
+	if (slen > 0)
+		slen--;
+	while (s1[i] && char_in_charset(s1[i], set))
 		i++;
-	}
-	return (slen);
+	if (i > slen)
+		return (slen);
+	while (s1[slen] && char_in_charset(s1[slen], set))
+		slen--;
+	return (slen - i + 1);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
@@ -51,18 +52,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (s1 == NULL)
 		return (NULL);
-	new_size = get_final_len(s1, set);
-	new_str = (char *) malloc((new_size + 1) * sizeof(char));
+	new_size = get_final_len(s1, set) + 1;
+	new_str = (char *) malloc((new_size) * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (s1[i])
-	{
-		if (!char_in_charset(s1[i], set))
-			new_str[j++] = s1[i];
+	while (s1[i] && char_in_charset(s1[i], set))
 		i++;
-	}
-	new_str[j] = 0;
+	ft_strlcpy(new_str, s1 + i, new_size);
 	return (new_str);
 }

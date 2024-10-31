@@ -15,19 +15,11 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
-	int	idx;
 
-	i = 0;
-	idx = -1;
-	while (s[i])
-	{
-		if (s[i] == c)
-			idx = i;
-		i++;
-	}
-	if (!s[i] && c == 0)
+	i = ft_strlen(s);
+	while (i > 0 && s[i] != (char)c)
+		i--;
+	if (s[i] == (char)c)
 		return ((char *)(s + i));
-	if (idx == -1)
-		return (NULL);
-	return ((char *)(s + idx));
+	return (NULL);
 }
