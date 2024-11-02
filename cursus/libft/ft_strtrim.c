@@ -30,6 +30,8 @@ static size_t	get_final_len(char const *s1, char const *set)
 	size_t	slen;
 	size_t	i;
 
+	if (!s1[0])
+		return (0);
 	i = 0;
 	slen = ft_strlen(s1);
 	if (slen > 0)
@@ -46,7 +48,6 @@ static size_t	get_final_len(char const *s1, char const *set)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;
-	size_t	j;
 	char	*new_str;
 	size_t	new_size;
 
@@ -57,7 +58,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (new_str == NULL)
 		return (NULL);
 	i = 0;
-	j = 0;
 	while (s1[i] && char_in_charset(s1[i], set))
 		i++;
 	ft_strlcpy(new_str, s1 + i, new_size);

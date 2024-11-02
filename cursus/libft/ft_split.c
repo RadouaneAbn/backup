@@ -12,26 +12,26 @@
 
 #include "libft.h"
 
-static size_t	get_word_count(char const *s, char c)
+static size_t	get_word_count(char const *s, char c, size_t slen)
 {
 	size_t	wcount;
+	size_t	i;
 	int		word_found;
 
 	wcount = 0;
 	word_found = 0;
-	while (*s)
+	i = 0;
+	while (i <= slen)
 	{
-		if (word_found && *s == c)
+		if (!word_found && (s[i] != c && s[i] != '\0'))
+			word_found = 1;
+		else if (word_found && (s[i] == c || s[i] == '\0'))
 		{
 			word_found = 0;
 			wcount++;
 		}
-		if (!word_found && *s != c)
-			word_found = 1;
-		s++;
+		i++;
 	}
-	if (word_found)
-		wcount++;
 	return (wcount);
 }
 
@@ -62,31 +62,31 @@ static char	*ft_strndup(char const *s, size_t n, int *word_found)
 	return (new_str);
 }
 
-static char	**split_string(char const *s, char c, char **arr)
+static char	**split_string(char const *s, char c, char **arr, size_t slen)
 {
-	int		word_found;
-	size_t	ij[2];
+	size_t	i;
+	size_t	j;
 	size_t	idx;
+	int		word_found;
 
+	i = 0;
 	word_found = 0;
-	ij[0] = -1;
 	idx = 0;
-	while (s[++ij[0]])
+	while (i <= slen)
 	{
-		if (word_found && s[ij[0]] == c)
+		if (!word_found && (s[i] != c && s[i] != '\0'))
 		{
-			arr[idx++] = ft_strndup(s + ij[1], ij[0] - ij[1], &word_found);
-			if (arr[idx - 1] == NULL)
+			j = i;
+			word_found = 1;
+		}
+		else if (word_found && (s[i] == c || s[i] == '\0'))
+		{
+			arr[idx] = ft_strndup(s + j, i - j, &word_found);
+			if (arr[idx++] == NULL)
 				return (free_all(arr, idx));
 		}
-		if (!word_found && s[ij[0]] != c)
-		{
-			word_found = 1;
-			ij[1] = ij[0];
-		}
+		i++;
 	}
-	if (word_found)
-		arr[idx++] = ft_strndup(s + ij[1], ij[0] - ij[1], &word_found);
 	arr[idx] = NULL;
 	return (arr);
 }
@@ -95,11 +95,13 @@ char	**ft_split(char const *s, char c)
 {
 	size_t	size;
 	char	**arr;
+	size_t	slen;
 
-	size = get_word_count(s, c) + 1;
+	slen = ft_strlen(s);
+	size = get_word_count(s, c, slen) + 1;
 	arr = (char **) malloc(size * sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
-	arr = split_string(s, c, arr);
+	arr = split_string(s, c, arr, slen);
 	return (arr);
 }
