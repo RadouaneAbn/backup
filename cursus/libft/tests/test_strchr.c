@@ -10,7 +10,10 @@ void test_strchr(const char *s, int c)
     
     printf("strchr   : %s\n", original ? original : "NULL");
     printf("ft_strchr: %s\n", output ? output : "NULL");
-    
+    if (!output && !original && output == original) {
+        printf("✅ SUCCESS ✅\n");
+        return ;
+    }
     if (strcmp(output, original) != 0) {
         printf("❌ FAILURE ❌\n");
     } else {

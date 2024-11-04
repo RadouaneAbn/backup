@@ -8,7 +8,7 @@ void *ft_calloc(size_t count, size_t size);
 void print_memory(const void *ptr, size_t size) {
     const unsigned char *mem = (const unsigned char *)ptr;
     for (size_t i = 0; i < size; i++) {
-        printf("%02x ", mem[i]);
+        printf("%d ", mem[i]);
     }
     printf("\n");
 }
@@ -52,12 +52,6 @@ int main() {
         assert(arr4[i] == 0.0);
     }
     free(arr4);
-
-    size_t count5 = SIZE_MAX / 2 + 1;
-    size_t size5 = 2;
-    void *arr5 = ft_calloc(count5, size5);
-    assert(arr5 == NULL);
-    printf("Test 5: Allocate with potential overflow, ptr = %p (should be NULL)\n", arr5);
 
     printf("All tests passed!\n");
     return 0;

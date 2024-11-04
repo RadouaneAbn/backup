@@ -12,9 +12,9 @@ void test_strdup(char *s)
     printf("strdup  : '%s'\n", o);
     printf("original: '%s'\n", f);
     if (strcmp(o, f) == 0) {
-        printf("SUCCESS\n\n");
+        printf("✅ SUCCESS ✅\n\n");
     } else {
-        printf("FAILED !!!\n\n");
+        printf("❌ FAILURE ❌!!!\n\n");
     }
     free(f);
     free(o);

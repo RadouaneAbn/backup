@@ -38,7 +38,7 @@ static size_t	get_final_len(char const *s1, char const *set)
 		slen--;
 	while (s1[i] && char_in_charset(s1[i], set))
 		i++;
-	if (i > slen)
+	if (i >= slen)
 		return (slen);
 	while (s1[slen] && char_in_charset(s1[slen], set))
 		slen--;
@@ -53,6 +53,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (s1 == NULL)
 		return (NULL);
+	if (!set)
+		return (ft_strdup(s1));
 	new_size = get_final_len(s1, set) + 1;
 	new_str = (char *) malloc((new_size) * sizeof(char));
 	if (new_str == NULL)

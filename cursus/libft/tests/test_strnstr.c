@@ -14,9 +14,9 @@ void print_result(const char *haystack, const char *needle, size_t len) {
     printf("  ft_strnstr() -> \"%s\"\n", ft_result ? ft_result : "NULL");
 
     if (std_result == ft_result) {
-        printf("  Result: OK\n\n");
+        printf("✅ SUCCESS ✅\n\n");
     } else {
-        printf("  Result: Mismatch!\n\n");
+        printf("❌ FAILURE ❌\n\n");
     }
 }
 

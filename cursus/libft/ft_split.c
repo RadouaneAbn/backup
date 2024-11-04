@@ -97,6 +97,8 @@ char	**ft_split(char const *s, char c)
 	char	**arr;
 	size_t	slen;
 
+	if (!s)
+		return (NULL);
 	slen = ft_strlen(s);
 	size = get_word_count(s, c, slen) + 1;
 	arr = (char **) malloc(size * sizeof(char *));

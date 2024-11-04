@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:49:08 by rabounou          #+#    #+#             */
-/*   Updated: 2024/10/24 20:24:14 by rabounou         ###   ########.fr       */
+/*   Created: 2024/10/30 23:04:51 by rabounou          #+#    #+#             */
+/*   Updated: 2024/10/30 23:05:16 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	size_t	i;
-	size_t	j;
+	t_list	*last_node;
 
-	if ((!haystack[0] && !needle[0]) || !needle[0])
-		return ((char *)haystack);
-	i = 0;
-	while (haystack[i] && i < len)
-	{
-		j = 0;
-		while (needle[j] && haystack[i + j] == needle[j] && i + j < len)
-			j++;
-		if (!needle[j])
-			return ((char *)(haystack + i));
-		i++;
-	}
-	return (NULL);
+	if (new == NULL)
+		return ;
+	last_node = ft_lstlast(*lst);
+	if (last_node)
+		last_node->next = new;
+	else
+		*lst = new;
 }

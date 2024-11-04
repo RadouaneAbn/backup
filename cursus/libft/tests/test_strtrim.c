@@ -29,11 +29,11 @@ void test_strtrim(char *s, char *set, char *ex) {
 }
 
 int main () {
-    test_strtrim("Test to remove something", "tv", "Tes o remoe somehing");
+    test_strtrim("Test to remove something", "tv", "Test to remove something");
     test_strtrim("Test to remove something", "", "Test to remove something");
     test_strtrim("", "red", "");
-    test_strtrim("Test to remove something", "tes", "T o rmov omhing");
-    test_strtrim("He plays a lot!", "payst ", "Hello!");
+    test_strtrim("Test to remove something", "Tes", "t to remove something");
+    test_strtrim("He plays a lot!", "!toHe ", "plays a l");
     test_strtrim("He plays a lot!", NULL, "He plays a lot!");
     test_strtrim(NULL, "red", NULL);
     test_strtrim(NULL, NULL, NULL);
