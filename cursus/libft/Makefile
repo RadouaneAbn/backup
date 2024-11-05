@@ -25,7 +25,6 @@ $(NAME): $(OBJ_FILES)
 bonus: $(BONUS_OBJ) $(OBJ_FILES)
 	ar rcs $(NAME) $^
 
-# implicit rule
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
