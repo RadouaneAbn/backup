@@ -43,36 +43,35 @@ static void	*free_all(char **arr, size_t idx)
 	return (NULL);
 }
 
-static char	*ft_strndup(char const *s, size_t n, int *word_found)
+// static char	*ft_strndup(char const *s, size_t n)
+// {
+// 	char	*new_str;
+// 	size_t	i;
+
+// 	new_str = (char *) malloc((n + 1) * sizeof(char));
+// 	if (new_str == NULL)
+// 		return (NULL);
+// 	i = 0;
+// 	while (i < n)
+// 	{
+// 		new_str[i] = s[i];
+// 		i++;
+// 	}
+// 	new_str[i] = '\0';
+// 	return (new_str);
+// }
+
+static char	**split_string(char const *s, char c, char **arr, int slen)
 {
-	char	*new_str;
-	size_t	i;
+	int	i;
+	int	j;
+	int	idx;
+	int	word_found;
 
-	*word_found = 0;
-	new_str = (char *) malloc((n + 1) * sizeof(char));
-	if (new_str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		new_str[i] = s[i];
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-static char	**split_string(char const *s, char c, char **arr, size_t slen)
-{
-	size_t	i;
-	size_t	j;
-	size_t	idx;
-	int		word_found;
-
-	i = 0;
+	i = -1;
 	word_found = 0;
 	idx = 0;
-	while (i <= slen)
+	while (++i <= slen)
 	{
 		if (!word_found && (s[i] != c && s[i] != '\0'))
 		{
@@ -81,11 +80,11 @@ static char	**split_string(char const *s, char c, char **arr, size_t slen)
 		}
 		else if (word_found && (s[i] == c || s[i] == '\0'))
 		{
-			arr[idx] = ft_strndup(s + j, i - j, &word_found);
+			arr[idx] = ft_substr(s, j, i - j);
+			word_found = 0;
 			if (arr[idx++] == NULL)
 				return (free_all(arr, idx));
 		}
-		i++;
 	}
 	arr[idx] = NULL;
 	return (arr);
