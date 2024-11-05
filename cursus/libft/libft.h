@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 
+/* The linked list struct */
 typedef struct s_list
 {
 	void			*content;
