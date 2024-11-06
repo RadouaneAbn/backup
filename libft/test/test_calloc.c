@@ -4,6 +4,9 @@
 #include <assert.h>
 #include <limits.h>
 #include "libft.h"
+#include <stdint.h>
+
+
 void *ft_calloc(size_t count, size_t size);
 
 void print_memory(const void *ptr, size_t size) {
