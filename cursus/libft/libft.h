@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
-# include <stdio.h>
+# include <limits.h>
 
 /* The linked list struct */
 typedef struct s_list
