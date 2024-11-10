@@ -17,10 +17,10 @@ char	*ft_strdup(const char *s1)
 	size_t	strsize;
 	char	*new_str;
 
-	strsize = ft_strlen(s1);
-	new_str = (char *) malloc((strsize + 1) * sizeof(char));
+	strsize = ft_strlen(s1) + 1;
+	new_str = (char *) malloc(strsize * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
-	ft_strlcpy(new_str, s1, strsize + 1);
+	ft_strlcpy(new_str, s1, strsize);
 	return (new_str);
 }
