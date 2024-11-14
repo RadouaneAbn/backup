@@ -34,10 +34,10 @@ char	*ft_append_str(char *s1, char *s2)
 	while (s2 && s2[i])
 		ptr[j++] = s2[i++];
 	ptr[j] = 0;
-    if (s1)
-        free(s1);
-    if (s2)
-        free(s2);
+    // if (s1)
+    //     free(s1);
+    // if (s2)
+    //     free(s2);
 	return (ptr);
 }
 
@@ -61,7 +61,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (s[start + i])
+	while (s[start + i] && i < rlen)
 	{
 		str[i] = s[start + i];
 		i++;

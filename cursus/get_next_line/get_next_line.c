@@ -23,7 +23,7 @@ void read_line(char **last_string, int fd)
     read_len = read(fd, s, BUFFER_SIZE);
     if (read_len <= 0)
     {
-        free(s);
+        // free(s);
         return ;
     }
     s[read_len] = 0;
@@ -41,21 +41,25 @@ char *clear_line(char **s)
     i = 0;
     if (*s == NULL)
         return (NULL);
-    while (*s[i] && *s[i] != '\n')
+    while ((*s)[i] && (*s)[i] != '\n')
         i++;
-    j = i + 1;
-    while (*s[j])
-        j++;
+    // printf("[%d] {%s}\n", i, *s);
     new_str = ft_substr(*s, 0, i);
+    // printf("line 1: {%s}\n", new_str);
+    j = i + 1;
+    while ((*s)[j])
+        j++;
     last_str = ft_substr(*s, i + 1, j);
-    free(s);
+    // printf("line 2: {%s}\n", last_str);
+    // printf("done\n");
+    // free(*s);
     *s = last_str;
     return (new_str);
 }
 
 char	*get_next_line(int fd)
 {
-    static char *last_string;
+    static char last_string[BUFFER_SIZE];
     char *tmp;
     char *result;
     int size;
@@ -64,12 +68,13 @@ char	*get_next_line(int fd)
     result = NULL;
     while (!newline_found(last_string))
     {
+        printf("1");
         result = ft_append_str(result, last_string);
-        read_line(&last_string, fd);
+        read_line(last_string, fd);
         if (last_string == NULL)
             break;
     }
-    str_before_nl = clear_line(&last_string);
+    str_before_nl = clear_line(last_string);
     result = ft_append_str(result, str_before_nl);
     return (result);
 }
