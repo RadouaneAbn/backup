@@ -6,7 +6,7 @@
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:42:38 by rabounou          #+#    #+#             */
-/*   Updated: 2024/10/31 19:58:43 by rabounou         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:26:04 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
+# include <stdio.h>
+# include <fcntl.h>
 
 /* The linked list struct */
 typedef struct s_list
