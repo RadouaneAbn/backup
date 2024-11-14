@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 static int	ft_isspace(int c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
@@ -34,7 +36,7 @@ int	ft_atoi(const char *str)
 			sign = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (ft_isdigit(str[i]))
 	{
 		result = result * 10 + str[i] - '0';
 		i++;

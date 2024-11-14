@@ -37,29 +37,11 @@ static size_t	get_word_count(char const *s, char c, size_t slen)
 
 static void	*free_all(char **arr, size_t idx)
 {
-	while (idx > 0)
-		free(arr[--idx]);
+	while (--idx > 0)
+		free(arr[idx - 1]);
 	free(arr);
 	return (NULL);
 }
-
-// static char	*ft_strndup(char const *s, size_t n)
-// {
-// 	char	*new_str;
-// 	size_t	i;
-
-// 	new_str = (char *) malloc((n + 1) * sizeof(char));
-// 	if (new_str == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		new_str[i] = s[i];
-// 		i++;
-// 	}
-// 	new_str[i] = '\0';
-// 	return (new_str);
-// }
 
 static char	**split_string(char const *s, char c, char **arr, int slen)
 {
