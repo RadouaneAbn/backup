@@ -5,10 +5,12 @@ int main() {
     int i = 0;
     char *s;
 
-    while ((s = get_next_line(fd)) != NULL)
+    printf("test for %d\n", BUFFER_SIZE);
+    while ((s = get_next_line(fd)) != NULL )
     {
         printf("%s", s);
         free(s);
+        i++;
     }
     return (0);
 }

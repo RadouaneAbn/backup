@@ -13,7 +13,7 @@ typedef struct s_list {
 }   t_list;
 
 typedef struct s_buf {
-    char *buffer;
+    char buffer[1024];
     int idx;
 }   t_buf;
  
@@ -22,7 +22,9 @@ typedef struct s_buf {
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_append_str(char *s1, char *s2);
+int ft_append_str(char **dest, char *src);
 char	*ft_substr(char *s, unsigned int start, size_t len);
+int     ft_appendto_buffer(char *s, t_buf *b, char **line);
+size_t ft_strlen(char *s);
 
 #endif
