@@ -7,11 +7,6 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-typedef struct s_list {
-    char            *s;
-    struct s_list   *next;
-}   t_list;
-
 typedef struct s_buf {
     char buffer[1024];
     int idx;
