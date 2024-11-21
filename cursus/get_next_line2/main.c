@@ -189,14 +189,12 @@ void multiple_nl_txt()
 }
 
 int main() {
-    // multiple_line_no_nl();
-    // multiple_line_with_nl();
-    // _41_no_nl();
-    // _41_with_nl();
-    // _42_no_nl();
-    // _42_with_nl();
-    // _43_no_nl();
-    _43_with_nl();
-    // multiple_nl_txt();
+    int fd = open("files/multiple_nl.txt", O_RDONLY);
+    char *s;
+    int i = 1;
+    while ((s = get_next_line(fd)) != NULL) {
+        printf("-%d: %s", i++, s);
+        free(s);
+    }
     return (0);
 }
