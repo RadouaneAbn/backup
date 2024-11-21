@@ -109,6 +109,8 @@ char *last_clean(char *s, void (*f)(void *))
 
     if (DM) printf("cleaning line...\n>>>\n%s\n>>>\n<<<\n", s);
     i = 0;
+    if (s == NULL)
+        return (NULL);
     while (s[i] && s[i] != '\n')
         i++;
     if (DM) printf("newline found in %d ascii=[%d]\n", i, s[i]);
@@ -154,6 +156,11 @@ char *get_next_line(int fd)
             if (DM) printf("last -> nl\n");
             appendto_buffer(last, &buffer, &line);
             appendto_line(&line, buffer.str);
+            if (line == NULL)
+            {
+                free(last);
+                last = NULL;
+            }
             last = last_clean(last, free);
             return (line);
         }
@@ -184,6 +191,12 @@ char *get_next_line(int fd)
             return (NULL);
         }
         appendto_line(&line, buffer.str);
+        if (line == NULL)
+            {
+                free(last);
+                last = NULL;
+                return (NULL);
+            }
         if (DM) printf("tmp: %s\n", b_tmp);
         last = last_clean(b_tmp, NULL);
     }
