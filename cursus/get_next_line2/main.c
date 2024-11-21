@@ -189,7 +189,7 @@ void multiple_nl_txt()
 }
 
 int main() {
-    int fd = open("files/multiple_nl.txt", O_RDONLY);
+    int fd = open("files/big_line_no_nl", O_RDONLY);
     char *s;
     int i = 1;
     while ((s = get_next_line(fd)) != NULL) {

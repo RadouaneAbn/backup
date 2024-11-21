@@ -37,10 +37,12 @@ char *ft_strdup(char *s)
 void appendto_line(char **line, char *buffer)
 {
     int i = 0;
+    int j = 0;
     size_t line_len = ft_strlen(*line);
     size_t buffer_len = ft_strlen(buffer);
     char *new_line;
 
+    // printf("line len: %zu\n", line_len + buffer_len);
     new_line = malloc((line_len + buffer_len + 1) * sizeof(char));
     if (new_line == NULL)
         return ;
@@ -52,11 +54,9 @@ void appendto_line(char **line, char *buffer)
             i++;
         }
     }
-    while (buffer[i])
-    {
-        new_line[i] = buffer[i];
-        i++;
-    }
+    j = 0;
+    while (buffer[j])
+        new_line[i++] = buffer[j++];
     new_line[i] = '\0';
     if (*line)
         free(*line);
@@ -74,13 +74,16 @@ void appendto_buffer(char *tmp, t_buf *buffer, char **line)
         if (tmp[i++] == '\n')
             break;
     }
-    buffer->str[buffer->idx] = '\0';
+    (buffer->str)[buffer->idx] = '\0';
+    // printf("last idx: %zu\n", buffer->idx);
     if (tmp[i] && buffer->idx == 2047)
     {
+        // printf("BUFFER filled\n");
         appendto_line(line, buffer->str);
         buffer->idx = 0;
         appendto_buffer(tmp + i, buffer, line);
     }
+    // printf("buffer[%zu]:\n>>>\n[%s]<<<\n", buffer->idx, buffer->str);
 }
 
 int nl_found(char *s)
@@ -106,10 +109,7 @@ char *last_clean(char *s, void (*f)(void *))
     if (f && s)
             f(s);
     if (s[i] == '\0' || s[i + 1] == '\0')
-    {
-        
         return (NULL);
-    }
     j = i + 1;
     last = ft_strdup(s + j);
     if (last == NULL)
