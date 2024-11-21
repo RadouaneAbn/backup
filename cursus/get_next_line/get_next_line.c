@@ -4,135 +4,72 @@ int newline_found(char *s)
 {
     int i;
 
+    if (s == NULL)
+        return (0);
     i = 0;
     while (s[i] && s[i] != '\n')
         i++;
     return (s[i] == '\n');
 }
 
-void clear_line(char *s)
+void read_line(char **last_string, int fd)
+{
+    ssize_t read_len;
+    char *s;
+    
+    s = malloc((BUFFER_SIZE + 1) * sizeof(char));
+    if (s == NULL)
+        return ;
+    read_len = read(fd, s, BUFFER_SIZE);
+    if (read_len <= 0)
+    {
+        free(s);
+        return ;
+    }
+    s[read_len] = 0;
+    *last_string = s;
+}
+
+char *clear_line(char **s)
 {
     int i;
     int j;
+    int k;
+    char *new_str;
+    char *last_str;
 
     i = 0;
-    printf("clear \'%s\'\n", s);
-    while (s[i] && s[i] != '\n')
+    if (*s == NULL)
+        return (NULL);
+    while (*s[i] && *s[i] != '\n')
         i++;
-    if (s[i] == '\0')
-    {
-        s[0] = '\0';
-        return ;
-    }
     j = i + 1;
-    i = 0;
-    while (s[j])
-        s[i++] = s[j++];
-    s[i] = '\0';
+    while (*s[j])
+        j++;
+    new_str = ft_substr(*s, 0, i);
+    last_str = ft_substr(*s, i + 1, j);
+    free(s);
+    *s = last_str;
+    return (new_str);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char last[BUFFER_SIZE + 1];
-    t_buf b;
-    char *line;
-    ssize_t size_read;
+    static char *last_string;
+    char *tmp;
+    char *result;
+    int size;
+    char *str_before_nl;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    b.idx = 0;
-    b.buffer[0] = '\0';
-    line = NULL;
-    if (last[0])
+    result = NULL;
+    while (!newline_found(last_string))
     {
-        printf(">>> last: %s\n", last);
-        ft_appendto_buffer(last, &b, &line);
-        ft_append_str(&line, b.buffer);
-        if (newline_found(last)) // If leftover contains a newline, stop
-        {
-            clear_line(last);
-            return (line);
-        }
-        clear_line(last);
+        result = ft_append_str(result, last_string);
+        read_line(&last_string, fd);
+        if (last_string == NULL)
+            break;
     }
-    // if (read(fd, last, 0) == -1)
-    //     return (NULL);
-    while ((size_read = read(fd, last, BUFFER_SIZE)) > 0)
-    {
-        last[size_read] = '\0';
-        ft_appendto_buffer(last, &b, &line);
-        if (newline_found(last))
-            break ;
-    }
-    printf("size: %ld\n", size_read);
-    if (size_read == -1)
-        return (NULL);
-    ft_appendto_buffer(last, &b, &line);
-    ft_append_str(&line, b.buffer);
-    clear_line(last);
-    return (line);
+    str_before_nl = clear_line(&last_string);
+    result = ft_append_str(result, str_before_nl);
+    return (result);
 }
-
-// char *get_next_line(int fd)
-// {
-//     static char last[BUFFER_SIZE + 1];
-//     t_buf b;
-//     char *line;
-//     ssize_t size_read;
-
-//     if (fd < 0)
-//         return (NULL);
-//     b.idx = 0;
-//     b.buffer[0] = 0;
-//     line = NULL;
-//     while (!newline_found(last))
-//     {
-//         ft_appendto_buffer(last, &b, &line);
-//         size_read = read(fd, last, BUFFER_SIZE);
-//         if (size_read >= 0)
-//             last[size_read] = 0;
-//         if (size_read <= 0)
-//             break;
-//     }
-//     printf("[%ld]: {%s}\n", size_read, last);
-//     if (last[0])
-//     {
-//         ft_appendto_buffer(last, &b, &line);
-//         ft_append_str(&line, b.buffer);
-//         clear_line(last);
-//     }
-//     return (line);
-// }
-
-// char *get_next_line(int fd)
-// {
-//     static char last[BUFFER_SIZE + 1];
-//     t_buf b;
-//     char *line;
-//     ssize_t size_read;
-//     if (fd < 0)
-//         return (NULL);
-//     b.idx = 0;
-//     b.buffer[0] = 0;
-//     line = NULL;
-//     while (!newline_found(last))
-//     {
-//         ft_appendto_buffer(last, &b, &line);
-//         // printf("BUFFER: {%s}\n", b.buffer);
-//         size_read = read(fd, last, BUFFER_SIZE);
-//         if (size_read <= 0) { // End of file or error
-//             if (b.buffer[0] && size_read == 0) {
-//                 ft_append_str(&line, b.buffer); // Append final part of the line
-//                 return (line);
-//             }
-//             // free(line);
-//             return (NULL);
-//         }
-//         last[size_read] = '\0';
-//     }
-//     // printf("[%ld]: {%s}\n", size_read, last);
-//     ft_appendto_buffer(last, &b, &line);
-//     ft_append_str(&line, b.buffer);
-//     clear_line(last);
-//     return (line);
-// }

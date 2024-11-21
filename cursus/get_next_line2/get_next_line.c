@@ -103,10 +103,11 @@ char *last_clean(char *s, void (*f)(void *))
     while (s[i] && s[i] != '\n')
         i++;
     if (DM) printf("newline found in %d ascii=[%d]\n", i, s[i]);
+    if (f && s)
+            f(s);
     if (s[i] == '\0' || s[i + 1] == '\0')
     {
-        if (f && s)
-            f(s);
+        
         return (NULL);
     }
     j = i + 1;
