@@ -1,204 +1,122 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/21 15:43:57 by rabounou          #+#    #+#             */
+/*   Updated: 2024/11/21 15:46:09 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-size_t ft_strlen(char *s)
+void	appendto_line(char **line, char *buffer)
 {
-    size_t i;
+	int		i;
+	int		j;
+	char	*new_line;
 
-    if (s == NULL)
-        return (0);
-    i = 0;
-    while (s[i])
-        i++;
-    return (i);
+	new_line = malloc((ft_strlen(*line) + ft_strlen(buffer) + 1)
+			* sizeof(char));
+	if (new_line == NULL)
+	{
+		free(*line);
+		*line = NULL;
+		return ;
+	}
+	i = 0;
+	while (*line && (*line)[i])
+	{
+		new_line[i] = (*line)[i];
+		i++;
+	}
+	j = 0;
+	while (buffer[j])
+		new_line[i++] = buffer[j++];
+	new_line[i] = '\0';
+	free(*line);
+	*line = new_line;
 }
 
-char *ft_strdup(char *s)
+int	read_from_last(char **last, t_buf *buffer, char **line)
 {
-    size_t i;
-    size_t slen;
-    char *new;
-
-    if (s == NULL)
-        return (NULL);
-    i = 0;
-    slen = ft_strlen(s);
-    new = malloc(slen + 1);
-    if (new == NULL)
-    return (NULL);
-    while (s[i])
-    {
-        new[i] = s[i];
-        i++;
-    }
-    new[i] = '\0';
-    return (new);
+	if (nl_found(*last))
+	{
+		appendto_buffer(*last, buffer, line);
+		appendto_line(line, buffer->str);
+		if (*line == NULL)
+		{
+			free(*last);
+			*last = NULL;
+		}
+		*last = last_clean(*last, free);
+		return (0);
+	}
+	else
+	{
+		appendto_buffer(*last, buffer, line);
+		free(*last);
+		*last = NULL;
+	}
+	return (1);
 }
 
-void appendto_line(char **line, char *buffer)
+int	read_from_file(char **last, t_buf *buffer, char **line, int fd)
 {
-    int i = 0;
-    int j = 0;
-    size_t line_len = ft_strlen(*line);
-    size_t buffer_len = ft_strlen(buffer);
-    char *new_line;
+	ssize_t	size;
 
-    // printf("line len: %zu\n", line_len + buffer_len);
-    new_line = malloc((line_len + buffer_len + 1) * sizeof(char));
-    if (new_line == NULL)
-    {
-        if (*line)
-            free(*line);
-        *line = NULL;
-        return ;
-    }
-    if (*line)
-    {
-        while ((*line)[i])
-        {
-            new_line[i] = (*line)[i];
-            i++;
-        }
-    }
-    j = 0;
-    while (buffer[j])
-        new_line[i++] = buffer[j++];
-    new_line[i] = '\0';
-    if (*line)
-        free(*line);
-    // printf("line: [%s]\n", new_line);
-    *line = new_line;
+	size = 1;
+	while (size > 0)
+	{
+		size = read(fd, buffer->b_tmp, BUFFER_SIZE);
+		buffer->b_tmp[size] = '\0';
+		appendto_buffer(buffer->b_tmp, buffer, line);
+		if (nl_found(buffer->b_tmp))
+			break ;
+	}
+	if (size <= 0 && buffer->idx == 0)
+	{
+		*last = NULL;
+		return (0);
+	}
+	appendto_line(line, buffer->str);
+	if (*line == NULL)
+	{
+		free(*last);
+		*last = NULL;
+		return (0);
+	}
+	*last = last_clean(buffer->b_tmp, NULL);
+	return (1);
 }
 
-void appendto_buffer(char *tmp, t_buf *buffer, char **line)
+char	*get_next_line(int fd)
 {
-    int i;
+	static char	*last;
+	t_buf		buffer;
+	char		*line;
 
-    i = 0;
-    while (tmp[i] && buffer->idx < 2047)
-    {
-        buffer->str[(buffer->idx)++] = tmp[i];
-        if (tmp[i++] == '\n')
-            break;
-    }
-    (buffer->str)[buffer->idx] = '\0';
-    // printf("last idx: %zu\n", buffer->idx);
-    if (tmp[i] && buffer->idx == 2047)
-    {
-        // printf("BUFFER filled\n");
-        appendto_line(line, buffer->str);
-        buffer->idx = 0;
-        appendto_buffer(tmp + i, buffer, line);
-    }
-    // printf("buffer[%zu]:\n>>>\n[%s]<<<\n", buffer->idx, buffer->str);
-}
-
-int nl_found(char *s)
-{
-    int i = 0;
-
-    while (s[i] && s[i] != '\n')
-        i++;
-    return (s[i] == '\n');
-}
-
-char *last_clean(char *s, void (*f)(void *))
-{
-    int i;
-    int j;
-    char *last;
-
-    if (DM) printf("cleaning line...\n>>>\n%s\n>>>\n<<<\n", s);
-    i = 0;
-    if (s == NULL)
-        return (NULL);
-    while (s[i] && s[i] != '\n')
-        i++;
-    if (DM) printf("newline found in %d ascii=[%d]\n", i, s[i]);
-    if (s[i] == '\0' || s[i + 1] == '\0')
-        last = NULL;
-    else
-    {
-        j = i + 1;
-        last = ft_strdup(s + j);
-    }
-    if (f && s)
-        f(s);
-    if (DM) printf("%s\n<<<\n\n", last);
-    return (last);
-}
-
-char *get_next_line(int fd)
-{
-    static char *last;
-    char b_tmp[BUFFER_SIZE + 1];
-    t_buf buffer;
-    ssize_t size;
-    char *line;
-
-    if (DM) printf("read from: %d\n", fd);
-
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    if (read(fd, b_tmp, 0) == -1) {
-        if (last)
-            free(last);
-        last = NULL;
-        return (NULL);
-    }
-    buffer.idx = 0;
-    b_tmp[0] = 0;
-    line = NULL;
-    if (DM) printf("last line: %s\n", last);
-    if (last)
-    {
-        if (nl_found(last))
-        {
-            if (DM) printf("last -> nl\n");
-            appendto_buffer(last, &buffer, &line);
-            appendto_line(&line, buffer.str);
-            if (line == NULL)
-            {
-                free(last);
-                last = NULL;
-            }
-            last = last_clean(last, free);
-            return (line);
-        }
-        else
-        {
-            if (DM) printf("last -> nonl\n");
-            appendto_buffer(last, &buffer, &line);
-            free(last);
-            last = NULL;
-        }
-    }
-    if (last == NULL)
-    {
-        while ((size = read(fd, b_tmp, BUFFER_SIZE)) > 0)
-        {
-            if (DM) printf("size read: %ld\n", size);
-            b_tmp[size] = '\0';
-            if (DM) printf("read: %s\n", b_tmp);
-            appendto_buffer(b_tmp, &buffer, &line);
-            if (nl_found(b_tmp))
-                break;
-        }
-        if (DM) printf("size read: %ld\n", size);
-        if (DM) printf("buf idx: %zu\n", buffer.idx);
-        if (size <= 0 && buffer.idx == 0)
-        {
-            last = NULL;
-            return (NULL);
-        }
-        appendto_line(&line, buffer.str);
-        if (line == NULL)
-            {
-                free(last);
-                last = NULL;
-                return (NULL);
-            }
-        if (DM) printf("tmp: %s\n", b_tmp);
-        last = last_clean(b_tmp, NULL);
-    }
-    return (line);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (read(fd, buffer.b_tmp, 0) == -1)
+	{
+		free(last);
+		return (last = NULL);
+	}
+	buffer.idx = 0;
+	buffer.b_tmp[0] = 0;
+	line = NULL;
+	if (last)
+	{
+		if (read_from_last(&last, &buffer, &line) == 0)
+			return (line);
+	}
+	if (last == NULL)
+	{
+		if (read_from_file(&last, &buffer, &line, fd) == 0)
+			return (NULL);
+	}
+	return (line);
 }
