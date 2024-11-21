@@ -131,6 +131,7 @@ char *get_next_line(int fd)
         return (NULL);
     buffer.idx = 0;
     line = NULL;
+    b_tmp[0] = 0;
     if (DM) printf("last line: %s\n", last);
     if (last)
     {

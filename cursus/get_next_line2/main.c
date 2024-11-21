@@ -196,7 +196,7 @@ int main() {
     // _42_no_nl();
     // _42_with_nl();
     // _43_no_nl();
-    // _43_with_nl();
-    multiple_nl_txt();
+    _43_with_nl();
+    // multiple_nl_txt();
     return (0);
 }
