@@ -45,7 +45,12 @@ void appendto_line(char **line, char *buffer)
     // printf("line len: %zu\n", line_len + buffer_len);
     new_line = malloc((line_len + buffer_len + 1) * sizeof(char));
     if (new_line == NULL)
+    {
+        if (*line)
+            free(*line);
+        *line = NULL;
         return ;
+    }
     if (*line)
     {
         while ((*line)[i])
@@ -108,13 +113,14 @@ char *last_clean(char *s, void (*f)(void *))
         i++;
     if (DM) printf("newline found in %d ascii=[%d]\n", i, s[i]);
     if (s[i] == '\0' || s[i + 1] == '\0')
-        return (NULL);
-    j = i + 1;
-    last = ft_strdup(s + j);
-    if (last == NULL)
-        return (NULL);
+        last = NULL;
+    else
+    {
+        j = i + 1;
+        last = ft_strdup(s + j);
+    }
     if (f && s)
-        free(s);
+        f(s);
     if (DM) printf("%s\n<<<\n\n", last);
     return (last);
 }
@@ -129,11 +135,17 @@ char *get_next_line(int fd)
 
     if (DM) printf("read from: %d\n", fd);
 
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, b_tmp, 0) == -1)
+    if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
+    if (read(fd, b_tmp, 0) == -1) {
+        if (last)
+            free(last);
+        last = NULL;
+        return (NULL);
+    }
     buffer.idx = 0;
-    line = NULL;
     b_tmp[0] = 0;
+    line = NULL;
     if (DM) printf("last line: %s\n", last);
     if (last)
     {
@@ -167,7 +179,10 @@ char *get_next_line(int fd)
         if (DM) printf("size read: %ld\n", size);
         if (DM) printf("buf idx: %zu\n", buffer.idx);
         if (size <= 0 && buffer.idx == 0)
+        {
+            last = NULL;
             return (NULL);
+        }
         appendto_line(&line, buffer.str);
         if (DM) printf("tmp: %s\n", b_tmp);
         last = last_clean(b_tmp, NULL);
