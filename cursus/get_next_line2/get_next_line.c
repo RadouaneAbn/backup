@@ -60,6 +60,7 @@ void appendto_line(char **line, char *buffer)
     new_line[i] = '\0';
     if (*line)
         free(*line);
+    // printf("line: [%s]\n", new_line);
     *line = new_line;
 }
 
@@ -106,14 +107,14 @@ char *last_clean(char *s, void (*f)(void *))
     while (s[i] && s[i] != '\n')
         i++;
     if (DM) printf("newline found in %d ascii=[%d]\n", i, s[i]);
-    if (f && s)
-            f(s);
     if (s[i] == '\0' || s[i + 1] == '\0')
         return (NULL);
     j = i + 1;
     last = ft_strdup(s + j);
     if (last == NULL)
         return (NULL);
+    if (f && s)
+        free(s);
     if (DM) printf("%s\n<<<\n\n", last);
     return (last);
 }
@@ -139,10 +140,10 @@ char *get_next_line(int fd)
         if (nl_found(last))
         {
             if (DM) printf("last -> nl\n");
-            // appendto_line(&line, last);
             appendto_buffer(last, &buffer, &line);
             appendto_line(&line, buffer.str);
             last = last_clean(last, free);
+            return (line);
         }
         else
         {

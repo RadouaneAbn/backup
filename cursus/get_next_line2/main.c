@@ -189,11 +189,13 @@ void multiple_nl_txt()
 }
 
 int main() {
-    int fd = open("files/big_line_no_nl", O_RDONLY);
+    // int fd = open("files/big_line_no_nl", O_RDONLY);
+    int fd = open("files/multiple_nlx5", O_RDONLY);
     char *s;
     int i = 1;
     while ((s = get_next_line(fd)) != NULL) {
         printf("-%d: %s", i++, s);
+        // printf("--\n");
         free(s);
     }
     return (0);
