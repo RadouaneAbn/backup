@@ -13,7 +13,7 @@ typedef struct s_buf {
 }   t_buf;
  
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 50
 # endif
 
 char	*get_next_line(int fd);

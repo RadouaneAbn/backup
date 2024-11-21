@@ -16,6 +16,7 @@ void clear_line(char *s)
     int j;
 
     i = 0;
+    printf("clear \'%s\'\n", s);
     while (s[i] && s[i] != '\n')
         i++;
     if (s[i] == '\0')
@@ -44,6 +45,7 @@ char *get_next_line(int fd)
     line = NULL;
     if (last[0])
     {
+        printf(">>> last: %s\n", last);
         ft_appendto_buffer(last, &b, &line);
         ft_append_str(&line, b.buffer);
         if (newline_found(last)) // If leftover contains a newline, stop
@@ -62,6 +64,7 @@ char *get_next_line(int fd)
         if (newline_found(last))
             break ;
     }
+    printf("size: %ld\n", size_read);
     if (size_read == -1)
         return (NULL);
     ft_appendto_buffer(last, &b, &line);
@@ -86,12 +89,12 @@ char *get_next_line(int fd)
 //     {
 //         ft_appendto_buffer(last, &b, &line);
 //         size_read = read(fd, last, BUFFER_SIZE);
-//         if (size_read < 0)
-//             break;
-//         if (size_read == 0)
+//         if (size_read >= 0)
+//             last[size_read] = 0;
+//         if (size_read <= 0)
 //             break;
 //     }
-//     // printf("[%ld]: {%s}\n", size_read, last);
+//     printf("[%ld]: {%s}\n", size_read, last);
 //     if (last[0])
 //     {
 //         ft_appendto_buffer(last, &b, &line);
@@ -107,7 +110,6 @@ char *get_next_line(int fd)
 //     t_buf b;
 //     char *line;
 //     ssize_t size_read;
-
 //     if (fd < 0)
 //         return (NULL);
 //     b.idx = 0;
@@ -129,7 +131,6 @@ char *get_next_line(int fd)
 //         last[size_read] = '\0';
 //     }
 //     // printf("[%ld]: {%s}\n", size_read, last);
-
 //     ft_appendto_buffer(last, &b, &line);
 //     ft_append_str(&line, b.buffer);
 //     clear_line(last);

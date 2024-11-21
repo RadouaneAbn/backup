@@ -9,7 +9,7 @@ int main() {
     // printf("BUFFER SIZE: %d\n\n", BUFFER_SIZE);
     while ((s = get_next_line(fd)) != NULL && i < 20)
     {
-        printf("%s", s);
+        printf("line: %s", s);
         free(s);
         i++;
     }
