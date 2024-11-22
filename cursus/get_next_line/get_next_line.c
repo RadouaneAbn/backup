@@ -122,7 +122,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (read(fd, 0, 0) == -1)
 		return (cleanup(&last, NULL, NULL, NULL));
-	buffer.b_tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer.b_tmp = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (buffer.b_tmp == NULL)
 		return (cleanup(&(buffer.b_tmp), &last, NULL, NULL));
 	buffer.idx = 0;

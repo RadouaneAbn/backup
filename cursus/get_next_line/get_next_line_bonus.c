@@ -114,7 +114,7 @@ char	*cleanup(char **d1, char **d2, char **d3, char *return_value)
 
 char	*get_next_line(int fd)
 {
-	static char	*last_array[1024];
+	static char	*last_array[OPEN_MAX];
 	t_buf		buffer;
 	char		*line;
 	char		**last;
@@ -124,7 +124,7 @@ char	*get_next_line(int fd)
 	last = &last_array[fd];
 	if (read(fd, 0, 0) == -1)
 		return (cleanup(last, NULL, NULL, NULL));
-	buffer.b_tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer.b_tmp = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (buffer.b_tmp == NULL)
 		return (cleanup(&(buffer.b_tmp), last, NULL, NULL));
 	buffer.idx = 0;
