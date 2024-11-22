@@ -118,7 +118,7 @@ char	*get_next_line(int fd)
 	t_buf		buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647)
 		return (NULL);
 	if (read(fd, 0, 0) == -1)
 		return (cleanup(&last, NULL, NULL, NULL));
