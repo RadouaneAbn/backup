@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 10:20:34 by rabounou          #+#    #+#             */
-/*   Updated: 2024/11/22 10:22:53 by rabounou         ###   ########.fr       */
+/*   Created: 2024/11/22 10:23:38 by rabounou          #+#    #+#             */
+/*   Updated: 2024/11/22 10:24:12 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	appendto_line(char **line, char *buffer)
 {
@@ -114,23 +114,25 @@ char	*cleanup(char **d1, char **d2, char **d3, char *return_value)
 
 char	*get_next_line(int fd)
 {
-	static char	*last;
+	static char	*last_array[1024];
 	t_buf		buffer;
 	char		*line;
+	char		**last;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	last = &last_array[fd];
 	if (read(fd, 0, 0) == -1)
-		return (cleanup(&last, NULL, NULL, NULL));
+		return (cleanup(last, NULL, NULL, NULL));
 	buffer.b_tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer.b_tmp == NULL)
-		return (cleanup(&(buffer.b_tmp), &last, NULL, NULL));
+		return (cleanup(&(buffer.b_tmp), last, NULL, NULL));
 	buffer.idx = 0;
 	buffer.b_tmp[0] = 0;
 	line = NULL;
-	if (last && read_from_last(&last, &buffer, &line) == 0)
+	if (*last && read_from_last(last, &buffer, &line) == 0)
 		return (cleanup(&(buffer.b_tmp), NULL, NULL, line));
-	if (last == NULL && read_from_file(&last, &buffer, &line, fd) == 0)
+	if (*last == NULL && read_from_file(last, &buffer, &line, fd) == 0)
 		return (cleanup(&(buffer.b_tmp), NULL, NULL, NULL));
 	free(buffer.b_tmp);
 	return (line);
