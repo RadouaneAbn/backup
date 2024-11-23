@@ -77,17 +77,10 @@ int	read_from_file(char **last, t_buf *buffer, char **line, int fd)
 			break ;
 	}
 	if (size <= 0 && buffer->idx == 0)
-	{
-		*last = NULL;
 		return (0);
-	}
 	appendto_line(line, buffer->str);
 	if (*line == NULL)
-	{
-		free(*last);
-		*last = NULL;
 		return (0);
-	}
 	*last = last_clean(buffer->b_tmp, NULL);
 	return (1);
 }
