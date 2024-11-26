@@ -112,8 +112,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		**last;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647 \
-		|| fd >= OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > 2147483647 || fd > OPEN_MAX)
 		return (NULL);
 	last = &last_array[fd];
 	if (read(fd, 0, 0) == -1)
