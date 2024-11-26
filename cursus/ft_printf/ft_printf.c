@@ -19,14 +19,20 @@ void append_string(t_buf *buf, char *s)
 
 int append_to_buffer(t_buf *buf, va_list args, const char *s, int i)
 {
-    if (s[i] == 'c')
+    if (s[i] == '%')
+        append_char(buf, '%');
+    else if (s[i] == 'c')
         append_char(buf, va_arg(args, int));
     else if (s[i] == 's')
         append_string(buf, va_arg(args, char *));
     else if (s[i] == 'i' || s[i] == 'd')
         append_dec(buf, va_arg(args, int));
-    else if (s[i] == '%')
-        append_char(buf, '%');
+    else if (s[i] == 'u')
+        append_udec(buf, va_arg(args, unsigned int));
+    else if (s[i] == 'x')
+        append_hex(buf, va_arg(args, unsigned int), "abcdef");
+    else if (s[i] == 'X')
+        append_hex(buf, va_arg(args, unsigned int), "ABCDEF");
     return (2);
 }
 
