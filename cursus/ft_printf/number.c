@@ -59,28 +59,25 @@ void    append_dec(t_buf *buf, int n)
     appendto_buffer(buf, result + i + 1);
 }
 
-void    append_hex(t_buf *buf, int n, char *base)
+void    append_hex(t_buf *buf, unsigned int n, char *base)
 {
     char result[12];
-    int is_signed;
-    unsigned int nn;
+    int c;
     int i;
 
-    is_signed = (n < 0);
-    nn = (n < 0) * -n + (n >= 0) * n;
-    if (is_signed)
-        n *= -1;
     i = 11;
     result[i--] = 0;
     if (n == 0)
         result[i--] = '0';
-    while (nn)
+    while (n)
     {
-        result[i--] = (nn % 16) + '0';
-        nn /= 10; 
+        c = n % 16;
+        if (c < 10)
+            result[i--] = c + '0';
+        else
+            result[i--] = base[c - 10];
+        n /= 16; 
     }
-    if (is_signed)
-        buf->s[buf->i++] = '-';
     appendto_buffer(buf, result + i + 1);
 }
 

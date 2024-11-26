@@ -18,7 +18,7 @@ typedef struct s_buf {
 int ft_printf(const char *str, ...);
 void    append_dec(t_buf *buf, int n);
 void    append_udec(t_buf *buf, unsigned int n);
-void    append_hex(t_buf *buf, int n);
+void    append_hex(t_buf *buf, unsigned int n, char *base);
 void	copyto_buffer(t_buf *buf, const char *src);
 
 #endif

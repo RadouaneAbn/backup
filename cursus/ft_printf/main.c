@@ -67,4 +67,16 @@ int main() {
     m = ft_printf("ft_printf: |%u|\n", (unsigned int)SIZE_MAX);
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
+
+    printf("\ntesting ft_printf on hex:\n");
+    n = printf("printf   : |%x|\n", 255);
+    m = ft_printf("ft_printf: |%x|\n", 255);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
+
+    printf("\ntesting ft_printf on hex:\n");
+    n = printf("printf   : |%X|\n", -1);
+    m = ft_printf("ft_printf: |%X|\n", -1);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
 }
