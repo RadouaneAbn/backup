@@ -74,9 +74,15 @@ int main() {
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
 
-    printf("\ntesting ft_printf on hex:\n");
     n = printf("printf   : |%X|\n", -1);
     m = ft_printf("ft_printf: |%X|\n", -1);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
+
+    char *s = "red";
+    printf("\ntesting ft_printf on addr:\n");
+    n = printf("printf   : |%p|\n", &s);
+    m = ft_printf("ft_printf: |%p|\n", &s);
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
 }

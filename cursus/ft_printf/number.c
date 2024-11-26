@@ -81,6 +81,30 @@ void    append_hex(t_buf *buf, unsigned int n, char *base)
     appendto_buffer(buf, result + i + 1);
 }
 
+void    append_addr(t_buf *buf, unsigned long n, char *base)
+{
+    char result[15];
+    int c;
+    int i;
+
+    i = 11;
+    result[i--] = 0;
+    if (n == 0)
+        result[i--] = '0';
+    while (i >= 2)
+    {
+        c = n % 16;
+        if (c < 10)
+            result[i--] = c + '0';
+        else
+            result[i--] = base[c - 10];
+        n /= 16; 
+    }
+    // result[i--] = 'x';
+    // result[i--] = '0';
+    appendto_buffer(buf, result + i + 1);
+}
+
 void	copyto_buffer(t_buf *buf, const char *src)
 {
 	int	i;

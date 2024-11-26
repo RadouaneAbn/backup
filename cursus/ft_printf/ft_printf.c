@@ -33,6 +33,8 @@ int append_to_buffer(t_buf *buf, va_list args, const char *s, int i)
         append_hex(buf, va_arg(args, unsigned int), "abcdef");
     else if (s[i] == 'X')
         append_hex(buf, va_arg(args, unsigned int), "ABCDEF");
+    else if (s[i] == 'p')
+        append_addr(buf, va_arg(args, unsigned int), "abcdef");
     return (2);
 }
 
