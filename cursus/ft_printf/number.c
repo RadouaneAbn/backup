@@ -1,22 +1,6 @@
 #include "ft_printf.h"
 
-void appendto_buffer(t_buf *buf, char *s)
-{
-    int slen;
-
-    slen = ft_strlen(s);
-    if (slen < BUFFER_SIZE - buf->i)
-        copyto_buffer(buf, s);
-    else
-    {
-        write(1, buf->s, buf->i);
-        buf->i = 0;
-        appendto_buffer(buf, s);
-    }
-    return ;
-}
-
-void    append_udec(t_buf *buf, unsigned int n)
+int    ft_putudec(unsigned int n)
 {
     char result[12];
     int total;
@@ -31,10 +15,10 @@ void    append_udec(t_buf *buf, unsigned int n)
         result[i--] = (n % 10) + '0';
         n /= 10; 
     }
-    appendto_buffer(buf, result + i + 1);
+    return (ft_putstr(result + i + 1));
 }
 
-void    append_dec(t_buf *buf, int n)
+int    ft_putdec(int n)
 {
     char result[12];
     int is_signed;
@@ -55,11 +39,11 @@ void    append_dec(t_buf *buf, int n)
         nn /= 10; 
     }
     if (is_signed)
-        buf->s[buf->i++] = '-';
-    appendto_buffer(buf, result + i + 1);
+        result[i--] = '-';
+    return (ft_putstr(result + i + 1));
 }
 
-void    append_hex(t_buf *buf, unsigned int n, char *base)
+int    ft_puthex(unsigned int n, char *base)
 {
     char result[12];
     int c;
@@ -78,14 +62,14 @@ void    append_hex(t_buf *buf, unsigned int n, char *base)
             result[i--] = base[c - 10];
         n /= 16; 
     }
-    appendto_buffer(buf, result + i + 1);
+    return (ft_putstr(result + i + 1));
 }
 
-void    append_addr(t_buf *buf, unsigned long n, char *base)
+int	ft_putaddr(unsigned long n, char *base)
 {
-    char result[15];
-    int c;
-    int i;
+    char	result[15];
+    int		c;
+    int		i;
 
     i = 11;
     result[i--] = 0;
@@ -102,15 +86,6 @@ void    append_addr(t_buf *buf, unsigned long n, char *base)
     }
     // result[i--] = 'x';
     // result[i--] = '0';
-    appendto_buffer(buf, result + i + 1);
+    return (ft_putstr(result + i + 1));
 }
 
-void	copyto_buffer(t_buf *buf, const char *src)
-{
-	int	i;
-	int	src_len;
-
-	i = 0;
-	while (src[i])
-		buf->s[buf->i++] = src[i++];
-}

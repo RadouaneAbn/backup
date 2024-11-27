@@ -1,40 +1,49 @@
 #include "ft_printf.h"
 
-
-void append_char(t_buf *buf, int c)
+int ft_putchar(int c)
 {
-    buf->s[buf->i++] = c;
+    return (write(1, &c, 1));
 }
 
-void append_string(t_buf *buf, char *s)
+int ft_strlen(char *s)
 {
-    int i;
+	int i;
 
-    i = buf->i;
-    if (s == NULL)
-        buf->i += ft_strlcpy((buf->s) + buf->i, "(null)", 7);
-    else
-        buf->i += ft_strlcpy((buf->s) + buf->i, s, 1048576 - buf->i);
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
 }
 
-int append_to_buffer(t_buf *buf, va_list args, const char *s, int i)
+int ft_putstr(char *s)
+{
+	int slen;
+
+	if (s == NULL)
+		return (write(1, "(null)", 6));
+	return (write(1, s, ft_strlen(s)));
+}
+
+int append_to_buffer(va_list args, const char *s, int i)
 {
     if (s[i] == '%')
-        append_char(buf, '%');
+        return (ft_putchar('%'));
     else if (s[i] == 'c')
-        append_char(buf, va_arg(args, int));
+        ft_putchar(va_arg(args, int));
     else if (s[i] == 's')
-        append_string(buf, va_arg(args, char *));
+        ft_putstr(va_arg(args, char *));
     else if (s[i] == 'i' || s[i] == 'd')
-        append_dec(buf, va_arg(args, int));
+        ft_putdec(va_arg(args, int));
     else if (s[i] == 'u')
-        append_udec(buf, va_arg(args, unsigned int));
+        ft_putudec(va_arg(args, unsigned int));
     else if (s[i] == 'x')
-        append_hex(buf, va_arg(args, unsigned int), "abcdef");
+        ft_puthex(va_arg(args, unsigned int), "abcdef");
     else if (s[i] == 'X')
-        append_hex(buf, va_arg(args, unsigned int), "ABCDEF");
+        ft_puthex(va_arg(args, unsigned int), "ABCDEF");
     else if (s[i] == 'p')
-        append_addr(buf, va_arg(args, unsigned int), "abcdef");
+        ft_putaddr(va_arg(args, unsigned long), "abcdef");
     return (2);
 }
 
@@ -47,7 +56,7 @@ int ft_printf(const char *str, ...)
     va_start(args, str);
 
     buf.i = 0;
-    buf.s[0] = 0;
+    buf.total_size = 0;
     i = 0;
     while (str[i])
     {
