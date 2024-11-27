@@ -26,46 +26,43 @@ int ft_putstr(char *s)
 	return (write(1, s, ft_strlen(s)));
 }
 
-int append_to_buffer(va_list args, const char *s, int i)
+int find_flag(va_list args, const char *s, int *i)
 {
-    if (s[i] == '%')
+    *i++;
+    if (s[*i] == '%')
         return (ft_putchar('%'));
-    else if (s[i] == 'c')
-        ft_putchar(va_arg(args, int));
-    else if (s[i] == 's')
-        ft_putstr(va_arg(args, char *));
-    else if (s[i] == 'i' || s[i] == 'd')
-        ft_putdec(va_arg(args, int));
-    else if (s[i] == 'u')
-        ft_putudec(va_arg(args, unsigned int));
-    else if (s[i] == 'x')
-        ft_puthex(va_arg(args, unsigned int), "abcdef");
-    else if (s[i] == 'X')
-        ft_puthex(va_arg(args, unsigned int), "ABCDEF");
-    else if (s[i] == 'p')
-        ft_putaddr(va_arg(args, unsigned long), "abcdef");
+    else if (s[*i] == 'c')
+        return (ft_putchar(va_arg(args, int)));
+    else if (s[*i] == 's')
+        return (ft_putstr(va_arg(args, char *)));
+    else if (s[*i] == 'i' || s[*i] == 'd')
+        return (ft_putdec(va_arg(args, int)));
+    else if (s[*i] == 'u')
+        return (ft_putudec(va_arg(args, unsigned int)));
+    else if (s[*i] == 'x')
+        return (ft_puthex(va_arg(args, unsigned int), "abcdef"));
+    else if (s[*i] == 'X')
+        return (ft_puthex(va_arg(args, unsigned int), "ABCDEF"));
+    else if (s[*i] == 'p')
+        return (ft_putaddr(va_arg(args, unsigned long), "abcdef"));
     return (2);
 }
 
 int ft_printf(const char *str, ...)
 {
-    t_buf buf;
     int i;
-    int flag;
+    int count;
     va_list args;
     va_start(args, str);
 
-    buf.i = 0;
-    buf.total_size = 0;
     i = 0;
+    count = 0;
     while (str[i])
     {
         if (str[i] == '%' && str[i + 1])
-            i += append_to_buffer(&buf, args, str, i + 1);
+            count += find_flag(args, str, &i);
         else
-            buf.s[buf.i++] = str[i++];
+            count += ft_putchar(str[i]);
     }
-    buf.s[buf.i] = 0;
-    write(1, buf.s, buf.i);
-    return (buf.i);
+    return (count);
 }
