@@ -1,7 +1,7 @@
 #include "get_next_line.c"
 
 int main() {
-	int fd = open("test", O_RDONLY);
+	int fd = 0;
 	int i = 1;
 	char *s;
 
