@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/28 15:50:16 by rabounou          #+#    #+#             */
+/*   Updated: 2024/11/28 15:50:55 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int ft_putchar(int c)
+int	ft_putchar(int c)
 {
-    return (write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
-int ft_strlen(char *s)
+int	ft_strlen(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s == NULL)
@@ -17,52 +29,52 @@ int ft_strlen(char *s)
 	return (i);
 }
 
-int ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
 	if (s == NULL)
 		return (write(1, "(null)", 6));
 	return (write(1, s, ft_strlen(s)));
 }
 
-int find_flag(va_list args, const char *s, int i)
+int	find_flag(va_list args, const char *s, int i)
 {
-    if (s[i] == '%')
-        return (ft_putchar('%'));
-    else if (s[i] == 'c')
-        return (ft_putchar(va_arg(args, int)));
-    else if (s[i] == 's')
-        return (ft_putstr(va_arg(args, char *)));
-    else if (s[i] == 'i' || s[i] == 'd')
-        return (ft_putdec(va_arg(args, int)));
-    else if (s[i] == 'u')
-        return (ft_putudec(va_arg(args, unsigned int)));
-    else if (s[i] == 'x')
-        return (ft_puthex(va_arg(args, unsigned int), "abcdef"));
-    else if (s[i] == 'X')
-        return (ft_puthex(va_arg(args, unsigned int), "ABCDEF"));
-    else if (s[i] == 'p')
-        return (ft_putaddr(va_arg(args, unsigned long), "abcdef"));
-    return (2);
+	if (s[i] == '%')
+		return (ft_putchar('%'));
+	else if (s[i] == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	else if (s[i] == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (s[i] == 'i' || s[i] == 'd')
+		return (ft_putdec(va_arg(args, int)));
+	else if (s[i] == 'u')
+		return (ft_putudec(va_arg(args, unsigned int)));
+	else if (s[i] == 'x')
+		return (ft_puthex(va_arg(args, unsigned int), "abcdef"));
+	else if (s[i] == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), "ABCDEF"));
+	else if (s[i] == 'p')
+		return (ft_putaddr(va_arg(args, unsigned long), "abcdef"));
+	return (2);
 }
 
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
-    int i;
-    int count;
-    va_list args;
-    va_start(args, str);
+	int		i;
+	int		count;
+	va_list	args;
 
-    if (str == NULL)
-        return (0);
-    i = 0;
-    count = 0;
-    while (str[i])
-    {
-        if (str[i] == '%' && str[i + 1])
-            count += find_flag(args, str, ++i);
-        else
-            count += ft_putchar(str[i]);
-	i++;
-    }
-    return (count);
+	va_start(args, str);
+	if (str == NULL)
+		return (-1);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '%' && str[i + 1])
+			count += find_flag(args, str, ++i);
+		else
+			count += ft_putchar(str[i]);
+		i++;
+	}
+	return (count);
 }
