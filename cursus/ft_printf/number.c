@@ -66,11 +66,11 @@ int    ft_puthex(unsigned int n, char *base)
 
 int	ft_putaddr(unsigned long n, char *base)
 {
-    char	result[15];
+    char	result[22];
     int		c;
     int		i;
 
-    i = 11;
+    i = 21;
     if (n == 0)
         return (ft_putstr("(nil)"));
     result[i--] = 0;
