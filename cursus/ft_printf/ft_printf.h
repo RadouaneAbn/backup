@@ -20,6 +20,15 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct sflag {
+    short int padding;
+    short int justify;
+    short int precision;
+    short int with_sign;
+    short int leading_space;
+    short int alt;
+} t_flag;
+
 int	ft_printf(const char *str, ...);
 int	ft_putudec(unsigned int n);
 int	ft_putdec(int n);
