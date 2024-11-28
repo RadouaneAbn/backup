@@ -72,10 +72,12 @@ int	ft_putaddr(unsigned long n, char *base)
     int		i;
 
     i = 11;
+    if (n == 0)
+        return (ft_putstr("(nil)"));
     result[i--] = 0;
     if (n == 0)
         result[i--] = '0';
-    while (i >= 2)
+    while (n)
     {
         c = n % 16;
         if (c < 10)
@@ -84,8 +86,8 @@ int	ft_putaddr(unsigned long n, char *base)
             result[i--] = base[c - 10];
         n /= 16; 
     }
-    // result[i--] = 'x';
-    // result[i--] = '0';
+    result[i--] = 'x';
+    result[i--] = '0';
     return (ft_putstr(result + i + 1));
 }
 

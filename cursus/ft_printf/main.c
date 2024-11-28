@@ -3,14 +3,16 @@
 
 int main() {
     int n, m;
+    static char *snull = NULL;
+    char *null = NULL;
     printf("testing ft_printf on strings:\n");
     n = printf("printf   : |%s|\n", "test string");
     m = ft_printf("ft_printf: |%s|\n", "test string");
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
 
-    n = printf("printf   : |%s|\n", NULL);
-    m = ft_printf("ft_printf: |%s|\n", NULL);
+    n = printf("printf   : |%s|\n", null);
+    m = ft_printf("ft_printf: |%s|\n", null);
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
 
@@ -83,6 +85,16 @@ int main() {
     printf("\ntesting ft_printf on addr:\n");
     n = printf("printf   : |%p|\n", &s);
     m = ft_printf("ft_printf: |%p|\n", &s);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
+
+    n = printf("printf   : |%p|\n", &null);
+    m = ft_printf("ft_printf: |%p|\n", &null);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
+
+    n = printf("printf   : |%p|\n", &snull);
+    m = ft_printf("ft_printf: |%p|\n", &snull);
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
 }

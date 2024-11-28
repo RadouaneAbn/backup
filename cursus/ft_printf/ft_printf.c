@@ -26,24 +26,23 @@ int ft_putstr(char *s)
 	return (write(1, s, ft_strlen(s)));
 }
 
-int find_flag(va_list args, const char *s, int *i)
+int find_flag(va_list args, const char *s, int i)
 {
-    *i++;
-    if (s[*i] == '%')
+    if (s[i] == '%')
         return (ft_putchar('%'));
-    else if (s[*i] == 'c')
+    else if (s[i] == 'c')
         return (ft_putchar(va_arg(args, int)));
-    else if (s[*i] == 's')
+    else if (s[i] == 's')
         return (ft_putstr(va_arg(args, char *)));
-    else if (s[*i] == 'i' || s[*i] == 'd')
+    else if (s[i] == 'i' || s[i] == 'd')
         return (ft_putdec(va_arg(args, int)));
-    else if (s[*i] == 'u')
+    else if (s[i] == 'u')
         return (ft_putudec(va_arg(args, unsigned int)));
-    else if (s[*i] == 'x')
+    else if (s[i] == 'x')
         return (ft_puthex(va_arg(args, unsigned int), "abcdef"));
-    else if (s[*i] == 'X')
+    else if (s[i] == 'X')
         return (ft_puthex(va_arg(args, unsigned int), "ABCDEF"));
-    else if (s[*i] == 'p')
+    else if (s[i] == 'p')
         return (ft_putaddr(va_arg(args, unsigned long), "abcdef"));
     return (2);
 }
@@ -60,9 +59,10 @@ int ft_printf(const char *str, ...)
     while (str[i])
     {
         if (str[i] == '%' && str[i + 1])
-            count += find_flag(args, str, &i);
+            count += find_flag(args, str, ++i);
         else
             count += ft_putchar(str[i]);
+	i++;
     }
     return (count);
 }
