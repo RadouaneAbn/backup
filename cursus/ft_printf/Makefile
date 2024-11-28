@@ -13,7 +13,7 @@ $(NAME) : $(OBG_FILES)
 	$(AR) $@ $^
 
 %.o: %.c
-	$(CC) $(CFALGS) $< -o $@
+	$(CC) $(CFALGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBG_FILES)

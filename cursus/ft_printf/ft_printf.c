@@ -19,8 +19,6 @@ int ft_strlen(char *s)
 
 int ft_putstr(char *s)
 {
-	int slen;
-
 	if (s == NULL)
 		return (write(1, "(null)", 6));
 	return (write(1, s, ft_strlen(s)));

@@ -3,7 +3,6 @@
 int    ft_putudec(unsigned int n)
 {
     char result[12];
-    int total;
     int i;
 
     i = 11;
