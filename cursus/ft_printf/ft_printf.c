@@ -52,6 +52,8 @@ int ft_printf(const char *str, ...)
     va_list args;
     va_start(args, str);
 
+    if (str == NULL)
+        return (0);
     i = 0;
     count = 0;
     while (str[i])

@@ -97,4 +97,14 @@ int main() {
     m = ft_printf("ft_printf: |%p|\n", &snull);
     printf("%d: bytes printed\n", n);
     printf("%d: bytes printed\n\n", m);
+
+    n = printf("printf   : |%p|%p|\n", LONG_MIN, LONG_MAX);
+    m = ft_printf("ft_printf: |%p|%p|\n", LONG_MIN, LONG_MAX);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
+
+    n = printf("printf   : |%p|%p|\n", -ULONG_MAX, ULONG_MAX);
+    m = ft_printf("ft_printf: |%p|%p|\n", -ULONG_MAX, ULONG_MAX);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
 }
