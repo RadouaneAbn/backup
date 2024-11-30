@@ -9,11 +9,12 @@ int	main(void)
 	int n, m;
 	null = NULL;
 
-    printf("testing ft_printf with NULL:\n");
-	n = printf(NULL);
-	m = ft_printf(NULL);
-	printf("%d: bytes printed\n", n);
-	printf("%d: bytes printed\n\n", m);
+    char *ss = NULL;
+
+    n = printf("printf   : |%s|\n", ss);
+    m = ft_printf("ft_printf: |%s|\n", ss);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
 
 	printf("testing ft_printf on strings:\n");
 	n = printf("printf   : |%s|\n", "test string");
