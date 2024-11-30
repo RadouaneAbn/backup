@@ -9,11 +9,12 @@ int	main(void)
 	int n, m;
 	null = NULL;
 
-    printf("testing ft_printf with NULL:\n");
-	n = printf(NULL);
-	m = ft_printf(NULL);
-	printf("%d: bytes printed\n", n);
-	printf("%d: bytes printed\n\n", m);
+    char *ss = NULL;
+
+    n = printf("printf   : |%s|\n", ss);
+    m = ft_printf("ft_printf: |%s|\n", ss);
+    printf("%d: bytes printed\n", n);
+    printf("%d: bytes printed\n\n", m);
 
 	printf("testing ft_printf on strings:\n");
 	n = printf("printf   : |%s|\n", "test string");
@@ -52,6 +53,34 @@ int	main(void)
 	m = ft_printf("ft_printf: |%d|\n", (int)SIZE_MAX);
 	printf("%d: bytes printed\n", n);
 	printf("%d: bytes printed\n\n", m);
+
+	n = printf("printf   : |%+d|\n", 17);
+	m = ft_printf("ft_printf: |%+d|\n", 17);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+	n = printf("printf   : |%+d|\n", -17);
+	m = ft_printf("ft_printf: |%+d|\n", -17);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+
+	n = printf("printf   : |% d|\n", 17);
+	m = ft_printf("ft_printf: |% d|\n", 17);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+	n = printf("printf   : |% d|\n", -17);
+	m = ft_printf("ft_printf: |% d|\n", -17);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+
+	n = printf("printf   : |% d|\n", 0);
+	m = ft_printf("ft_printf: |% d|\n", 0);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+	n = printf("printf   : |%+d|\n", 0);
+	m = ft_printf("ft_printf: |%+d|\n", 0);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+
 	printf("##################################\n");
 	printf("\ntesting ft_printf on unsigned integers:\n");
 	n = printf("printf   : |%u|\n", -1);
@@ -66,6 +95,8 @@ int	main(void)
 	m = ft_printf("ft_printf: |%u|\n", (unsigned int)SIZE_MAX);
 	printf("%d: bytes printed\n", n);
 	printf("%d: bytes printed\n\n", m);
+
+	printf("##################################\n");
 	printf("\ntesting ft_printf on hex:\n");
 	n = printf("printf   : |%x|\n", 255);
 	m = ft_printf("ft_printf: |%x|\n", 255);
@@ -75,6 +106,24 @@ int	main(void)
 	m = ft_printf("ft_printf: |%X|\n", -1);
 	printf("%d: bytes printed\n", n);
 	printf("%d: bytes printed\n\n", m);
+	n = printf("printf    [%%#X]: |%#X|\n", 0);
+	m = ft_printf("ft_printf [%%#X]: |%#X|\n", 0);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+
+	n = printf("printf   : |%#x|\n", 255);
+	m = ft_printf("ft_printf: |%#x|\n", 255);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+	n = printf("printf   : |%#X|\n", -1);
+	m = ft_printf("ft_printf: |%#X|\n", -1);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+	n = printf("printf   : |%#X|\n", 0);
+	m = ft_printf("ft_printf: |%#X|\n", 0);
+	printf("%d: bytes printed\n", n);
+	printf("%d: bytes printed\n\n", m);
+
 	s = "red";
 	printf("\ntesting ft_printf on addr:\n");
 	n = printf("printf   : |%p|\n", &s);

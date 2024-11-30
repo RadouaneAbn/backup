@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_putudec(unsigned int n)
+int	print_udec(unsigned int n)
 {
 	char	result[12];
 	int		i;
@@ -26,10 +26,10 @@ int	ft_putudec(unsigned int n)
 		result[i--] = (n % 10) + '0';
 		n /= 10;
 	}
-	return (ft_putstr(result + i + 1));
+	return (print_str(result + i + 1));
 }
 
-int	ft_putdec(int n)
+int	print_dec(int n)
 {
 	char			result[12];
 	int				is_signed;
@@ -51,18 +51,18 @@ int	ft_putdec(int n)
 	}
 	if (is_signed)
 		result[i--] = '-';
-	return (ft_putstr(result + i + 1));
+	return (print_str(result + i + 1));
 }
 
-int	ft_puthex(unsigned int n, char *base, int alt, char flag)
+int	print_hex(unsigned int n, char flag)
 {
 	char	result[12];
 	int		c;
 	int		i;
 	char	cap;
-	int count;
 
 	i = 11;
+	cap = (flag == 'X') * 'A' + (flag == 'x') * 'a' ;
 	result[i--] = 0;
 	cap = (flag == 'X') * ' ';
 	if (n == 0)
@@ -73,16 +73,13 @@ int	ft_puthex(unsigned int n, char *base, int alt, char flag)
 		if (c < 10)
 			result[i--] = c + '0';
 		else
-			result[i--] = base[c - 10] - cap;
+			result[i--] = cap + (c - 10);
 		n /= 16;
 	}
-	count = 0;
-	if (alt)
-		count += ft_putstr("0x");
-	return (ft_putstr(result + i + 1));
+	return (print_str(result + i + 1));
 }
 
-int	ft_putaddr(unsigned long n, char *base)
+int	print_addr(unsigned long n, char *base)
 {
 	char	result[22];
 	int		c;
@@ -90,7 +87,7 @@ int	ft_putaddr(unsigned long n, char *base)
 
 	i = 21;
 	if (n == 0)
-		return (ft_putstr("(nil)"));
+		return (print_str("(nil)"));
 	result[i--] = 0;
 	if (n == 0)
 		result[i--] = '0';
@@ -104,6 +101,6 @@ int	ft_putaddr(unsigned long n, char *base)
 		n /= 16;
 	}
 	result[i--] = 'x';
-	result[i--] = '0';
-	return (ft_putstr(result + i + 1));
+	result[i] = '0';
+	return (print_str(result + i));
 }

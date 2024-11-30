@@ -19,14 +19,37 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+// # include "libft/libft.h"
+
+typedef struct
+{
+    int precision;
+    int width;
+    int pad;
+    int alt;
+    char leading_space_sign;
+} t_opt;
+
+// typedef int (*func)(va_list, t_opt *);
+
+typedef struct {
+    char flag;
+    int (*f)(va_list, t_opt *); 
+} t_func;
 
 int	ft_printf(const char *str, ...);
-int	ft_putudec(unsigned int n);
-int	ft_putdec(int n);
-int	ft_puthex(unsigned int n, char *base, int alt, char flag);
-int	ft_putaddr(unsigned long n, char *base);
+int	print_udec(va_list args, t_opt *opt);
+int	print_dec(va_list args, t_opt *opt);
+int	print_hex(va_list args, t_opt *opt);
+int	print_addr(va_list args, t_opt *opt);
+int	print_str(va_list args, t_opt *opt);
+int	print_char(va_list args, t_opt *opt);
+int ft_strlen(const char *s);
+int	print_hex_cap(va_list args, t_opt *opt);
+int ft_putchar(int c);
+int	 ft_putstr(char *s);
+int	ft_isdigit(int c);
 int	ft_putchar(int c);
-int	ft_strlen(char *s);
-int	ft_putstr(char *s);
+int print_mod(va_list args, t_opt *opt);
 
 #endif
