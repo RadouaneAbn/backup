@@ -36,11 +36,17 @@ int	ft_putstr(char *s)
 	return (write(1, s, ft_strlen(s)));
 }
 
+// int handle_flag(va_list args, const char *s, int *i)
+// {
+// 	if (s[*i] == '#' && (s[*i + 1] == 'x' || s[*i + 1] == 'X'))
+// 	{
+// 		ft_puthex()
+// 	}
+// }
+
 int	find_flag(va_list args, const char *s, int *i)
 {
-	t_flag flags;
-
-	check_flags(&flags);
+	(*i)++;
 	if (s[*i] == '%')
 		return (ft_putchar('%'));
 	else if (s[*i] == 'c')
@@ -51,13 +57,15 @@ int	find_flag(va_list args, const char *s, int *i)
 		return (ft_putdec(va_arg(args, int)));
 	else if (s[*i] == 'u')
 		return (ft_putudec(va_arg(args, unsigned int)));
-	else if (s[*i] == 'x')
-		return (ft_puthex(va_arg(args, unsigned int), "abcdef"));
-	else if (s[*i] == 'X')
-		return (ft_puthex(va_arg(args, unsigned int), "ABCDEF"));
+	else if (s[*i] == 'x' || s[*i] == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), "abcdef", 0, s[*i]));
+	// else if (s[*i] == 'X')
+	// 	return (ft_puthex(va_arg(args, unsigned int), "ABCDEF", 0, s[*i]));
 	else if (s[*i] == 'p')
 		return (ft_putaddr(va_arg(args, unsigned long), "abcdef"));
-	return (2);
+
+	// return (handle_flag(args, s, i));
+	// return (0);
 }
 
 int	ft_printf(const char *str, ...)
