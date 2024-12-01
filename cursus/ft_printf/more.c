@@ -19,14 +19,108 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	 ft_putstr(char *s)
+int print_filler(char c, int cond, int n)
 {
+	int count;
+
+	if (cond == 0)
+		return (0);
+	count = 0;
+	while (n > 0)
+	{
+		count += write(1, &c, 1);
+		n--;
+	}
+	return (count);
+}
+
+int	 ft_putstr(char *s, t_opt *opt, char filler)
+{
+	int slen;
+	int count;
+	char *new_s;
+
 	if (s == NULL)
-		return (write(1, "(null)", 6));
-	return (write(1, s, ft_strlen(s)));
+		new_s = "(null)";
+	else
+		new_s = s;
+	slen = ft_strlen(new_s);
+	count = 0;
+	count += print_filler(filler, opt->pad == 0, opt->width - slen);
+	count += write(1, new_s, slen);
+	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+	return (count);
+}
+
+int print_precision(int precision)
+{
+	int count;
+
+	count = 0;
+	while (precision > 0)
+	{
+		count += write(1, "0", 1);
+		precision--;
+	}
+	return (count);
+}
+
+int	 ft_putstr_2(char *s, t_opt *opt, char filler)
+{
+	int slen;
+	int count;
+	char *new_s;
+	int sign;
+
+	if (s == NULL)
+		new_s = "(null)";
+	else
+		new_s = s;
+	slen = ft_strlen(new_s);
+	count = 0;
+	sign = 0;
+	if (char_in_chaset(*new_s, "-+ "))
+	{
+		sign = 1;
+		slen--;
+	}
+    if (opt->precision >= slen)
+        opt->width -= opt->precision + sign;
+    else
+        opt->width -= slen + sign;
+    if (opt->width < 0)
+        opt->width = 0;
+		// printf("w: %d\n", opt->width);
+	count += print_filler(filler, opt->pad == 0, opt->width);
+	if (sign)
+        count += ft_putchar(*new_s++);
+	count += print_precision(opt->precision - slen);
+	count += write(1, new_s, slen);
+	count += print_filler(filler, opt->pad == 1, opt->width);
+	return (count);
 }
 
 int	ft_putchar(int c)
 {
 	return (write(1, &c, 1));
+}
+
+void print_options(t_opt options)
+{
+	printf("\nalt:---------------->[%d]\n", options.alt);
+	printf("leading_space_sign:->[%c]\n", options.leading_space_sign);
+	printf("pad:---------------->[%d]\n", options.pad);
+	printf("precision:---------->[%d]\n", options.precision);
+	printf("width:-------------->[%d]\n", options.width);
+}
+
+void compaire(int n, int m)
+{
+	printf("[%d - %d]\n", n, m);
+	if (n != m) {
+        printf("❌ FAILURE ❌\n");
+    } else {
+        printf("✅ SUCCESS ✅\n");
+    }
+
 }

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*convert(char *result, int is_signed, unsigned long n, char *base)
+char	*convert(char *result, int sign_space, unsigned long n, char *base)
 {
 	int k;
 	int blen;
@@ -27,8 +27,8 @@ char	*convert(char *result, int is_signed, unsigned long n, char *base)
 		result[k--] = base[n % blen];
 		n /= blen;
 	}
-	if (is_signed)
-		result[k--] = '-';
+	if (sign_space)
+		result[k--] = sign_space;
 	return (result + k + 1);
 }
 
@@ -40,8 +40,8 @@ int	print_udec(va_list args, t_opt *opt)
 	char			*s;
 
 	n = va_arg(args, unsigned int);
-	s = convert(result, 0, n, "0123456789");
-	return (ft_putstr(s));
+	s = convert(result, opt->leading_space_sign, n, "0123456789");
+	return (ft_putstr(s, opt, opt->fill));
 }
 
 int	print_dec(va_list args, t_opt *opt)
@@ -50,20 +50,20 @@ int	print_dec(va_list args, t_opt *opt)
 	int		n;
 	int 	count;
 	char	*s;
+	char	leading_space;
+	int		i;
 
 	n = va_arg(args, int);
 	if (n < 0)
-		s = convert(result, 1, -(unsigned long)(n), "0123456789");
+		leading_space = '-';
 	else
-		s = convert(result, 0, n, "0123456789");
-	return (ft_putstr(s));
+		leading_space = opt->leading_space_sign;
+	if (n < 0)
+		s = convert(result, leading_space, -(unsigned long)(n), "0123456789");
+	else
+		s = convert(result, leading_space, n, "0123456789");
+	return (ft_putstr_2(s, opt, opt->fill));
 }
-
-void print_alt(int *count, t_opt *opt, char *alt, unsigned int n)
-{
-	if (opt->alt && n)
-		*count += ft_putstr(alt);
-}	
 
 int	print_hex_cap(va_list args, t_opt *opt)
 {
@@ -72,12 +72,15 @@ int	print_hex_cap(va_list args, t_opt *opt)
 	int 			count;
 	char			*s;
 
-	n = va_arg(args, unsigned int);
-	print_alt(&count, opt, "0X", n);
-	s = convert(result, n < 0, n, "0123456789ABCDEF");
 	count = 0;
-	print_alt(&count, opt, "0x", n);
-	count += ft_putstr(s);
+	n = va_arg(args, unsigned int);
+	s = convert(result, n < 0, n, "0123456789ABCDEF");
+	if (opt->alt && n)
+	{
+		*(--s) = 'X';
+		*(--s) = '0';
+	}
+	count += ft_putstr(s, opt, opt->fill);
 	return (count);
 }
 
@@ -91,8 +94,12 @@ int	print_hex(va_list args, t_opt *opt)
 	n = va_arg(args, unsigned int);
 	s = convert(result, n < 0, n, "0123456789abcdef");
 	count = 0;
-	print_alt(&count, opt, "0x", n);
-	count += ft_putstr(s);
+	if (opt->alt && n)
+	{
+		*(--s) = 'x';
+		*(--s) = '0';
+	}
+	count += ft_putstr(s, opt, opt->fill);
 	return (count);
 }
 
@@ -107,7 +114,7 @@ int	print_addr(va_list args, t_opt *opt)
 	s = convert(result, 0, n, "0123456789abcdef");
 	*(--s) = 'x';
 	*(--s) = '0';
-	return (ft_putstr(s));
+	return (ft_putstr(s, opt, ' '));
 }
 int print_mod(va_list args, t_opt *opt)
 {

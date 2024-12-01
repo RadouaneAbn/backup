@@ -15,18 +15,30 @@
 int	print_char(va_list args, t_opt *opt)
 {
 	int c;
+	char s[2];
+	int count;
 
+	count = 0;
 	c = va_arg(args, int);
-	return (ft_putchar(c));
+	s[0] = (char)c;
+
+	count += print_filler(' ', opt->pad == 0, opt->width - 1);
+	count += ft_putchar(c);
+	count += print_filler(' ', opt->pad == 1, opt->width - 1);
+	return (count);
 }
 
 
 int	print_str(va_list args, t_opt *opt)
 {
 	char *s;
+	int slen;
+	int count;
 
+	count = 0;
 	s = va_arg(args, char *);
-	return (ft_putstr(s));
+	count += ft_putstr(s, opt, ' ');
+	return (count);
 }
 
 
@@ -63,6 +75,7 @@ int	ft_atoi_s(const char *str, int *i)
 		(*i)++;
 	}
 	(*i)--;
+	// printf("atoi: %d\n", result);
 	return (result);
 }
 
@@ -73,6 +86,7 @@ void init_options(t_opt *opt)
 	opt->width = 0;
 	opt->alt = 0;
 	opt->precision = 0;
+	opt->fill = ' ';
 }
 
 void get_options(const char *s, int *i, t_opt *opt)
@@ -84,10 +98,15 @@ void get_options(const char *s, int *i, t_opt *opt)
 	while (current)
 	{
 		current = char_in_chaset(s[*i], "0.-+ #");
+		if (current == 0 && ft_isdigit(s[*i]))
+			current = s[*i];
+		// printf("current : [%c]\n", current);
 		if (current == 0)
 			break;
 		if (current == ' ' && opt->leading_space_sign != '+')
 			opt->leading_space_sign = ' ';
+		else if (current == '0')
+			opt->fill = '0';
 		else if (current == '+')
 			opt->leading_space_sign = '+';
 		else if (s[*i] >= '0' && s[*i] <= '9')
@@ -115,6 +134,8 @@ int	find_flag(va_list args, const char *s, int *i, t_func (functions)[10])
 	start = *i;
 	(*i)++;
 	get_options(s, i, &options);
+	// print_options(options);
+	// return(0);
 	n = 0;
 	while (functions[n].flag)
 	{
