@@ -40,6 +40,8 @@ int	print_udec(va_list args, t_opt *opt)
 
 	n = va_arg(args, unsigned int);
 	s = convert(result, opt->leading_space_sign, n, "0123456789");
+	if (opt->precision[0] && opt->fill == '0')
+		opt->fill = ' ';
 	return (ft_putstr_2(s, opt, opt->fill));
 }
 
@@ -79,6 +81,8 @@ int	print_hex_cap(va_list args, t_opt *opt)
 		*(--s) = 'X';
 		*(--s) = '0';
 	}
+	if (opt->precision[0] && opt->fill == '0')
+		opt->fill = ' ';
 	count += ft_putstr_2(s, opt, opt->fill);
 	return (count);
 }
@@ -98,6 +102,8 @@ int	print_hex(va_list args, t_opt *opt)
 		*(--s) = 'x';
 		*(--s) = '0';
 	}
+	if (opt->precision[0] && opt->fill == '0')
+		opt->fill = ' ';
 	count += ft_putstr_2(s, opt, opt->fill);
 	return (count);
 }
