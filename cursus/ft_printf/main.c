@@ -170,8 +170,8 @@ int	main(void)
 	printf("%+07i\n", -54);
 	ft_printf("%+07i\n", -54);
 
-	printf("%07i\n", 54);
-	ft_printf("%07i\n", 54);
+	printf("%7i\n", -14);
+	ft_printf("%7i\n", -14);
 	
 	return (0);
 	test_strings();
