@@ -32,18 +32,6 @@ char	*convert(char *result, int sign_space, unsigned long n, char *base)
 	return (result + k + 1);
 }
 
-// int	print_udec(va_list args, t_opt *opt)
-// {
-// 	char			result[32];
-// 	unsigned int	n;
-// 	int 			count;
-// 	char			*s;
-
-// 	n = va_arg(args, unsigned int);
-// 	s = convert(result, opt->leading_space_sign, n, "0123456789");
-// 	return (ft_putstr(s, opt, opt->fill));
-// }
-
 int	print_udec(va_list args, t_opt *opt)
 {
 	char	result[32];
@@ -71,6 +59,8 @@ int	print_dec(va_list args, t_opt *opt)
 		s = convert(result, leading_space, -(unsigned long)(n), "0123456789");
 	else
 		s = convert(result, leading_space, n, "0123456789");
+	if (opt->precision[0] && opt->fill != ' ')
+		opt->fill = ' ';
 	return (ft_putstr_2(s, opt, opt->fill));
 }
 
