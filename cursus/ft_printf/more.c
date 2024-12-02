@@ -97,6 +97,7 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	char	*new_s;
 	int		sign;
 
+	(void) filler;
 	if (s == NULL)
 		new_s = "(null)";
 	else
@@ -117,12 +118,12 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 		opt->width = 0;
 	if (sign && opt->fill == '0')
 		count += ft_putchar(*new_s++);
-	count += print_filler(filler, opt->pad == 0, opt->width);
+	count += print_filler(' ', opt->pad == 0, opt->width);
 	if (sign && opt->fill == ' ')
 		count += ft_putchar(*new_s++);
 	count += print_precision(opt->precision[1] - slen);
 	count += write(1, new_s, slen);
-	count += print_filler(filler, opt->pad == 1, opt->width);
+	count += print_filler(' ', opt->pad == 1, opt->width);
 	return (count);
 }
 
