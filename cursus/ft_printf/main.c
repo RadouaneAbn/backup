@@ -47,8 +47,8 @@ void	test_strings(void)
 	n = printf("printf   : |%20s|\n", str);
 	m = ft_printf("ft_printf: |%20s|\n", str);
 	compaire(n, m);
-	n = printf("printf   : |%.3s|\n", str);
-	m = ft_printf("ft_printf: |%.3s|\n", str);
+	n = printf("printf   : |%5.3s|\n", str);
+	m = ft_printf("ft_printf: |%5.3s|\n", str);
 	compaire(n, m);
 	n = printf("printf   : |%-20s|\n", str);
 	m = ft_printf("ft_printf: |%-20s|\n", str);

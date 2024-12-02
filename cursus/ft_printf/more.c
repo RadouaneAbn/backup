@@ -63,12 +63,11 @@ int	ft_putstr_str(char *s, t_opt *opt, char filler)
 	else
 		new_s = s;
 	slen = ft_strlen(new_s);
+	if (opt->precision[0] && opt->precision[1] < slen)
+		slen = opt->precision[1];
 	count = 0;
 	count += print_filler(filler, opt->pad == 0, opt->width - slen);
-	if (opt->precision[0] && opt->precision[1] < slen)
-		count += write(1, new_s, opt->precision[1]);
-	else
-		count += write(1, new_s, slen);
+	count += write(1, new_s, slen);
 	count += print_filler(filler, opt->pad == 1, opt->width - slen);
 	return (count);
 }
