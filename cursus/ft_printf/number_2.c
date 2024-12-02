@@ -89,7 +89,7 @@ int	print_hex_cap(va_list args, t_opt *opt)
 		*(--s) = 'X';
 		*(--s) = '0';
 	}
-	count += ft_putstr(s, opt, opt->fill);
+	count += ft_putstr_2(s, opt, opt->fill);
 	return (count);
 }
 
@@ -108,7 +108,7 @@ int	print_hex(va_list args, t_opt *opt)
 		*(--s) = 'x';
 		*(--s) = '0';
 	}
-	count += ft_putstr(s, opt, opt->fill);
+	count += ft_putstr_2(s, opt, opt->fill);
 	return (count);
 }
 

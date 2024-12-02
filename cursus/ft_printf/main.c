@@ -167,11 +167,16 @@ int	main(void)
 
 	int n, m;
 	s = NULL;
-	printf("%+07i\n", -54);
-	ft_printf("%+07i\n", -54);
+	// printf("%+07i\n", -54);
+	// ft_printf("%+07i\n", -54);
 
-	printf("%7i\n", -14);
-	ft_printf("%7i\n", -14);
+	// printf("%7i\n", -14);
+	// ft_printf("%7i\n", -14);
+
+	printf("[ %5.2x ]\n", 1);
+	ft_printf("[ %5.2x ]\n", 1);
+	printf("[ %5.2x ]\n", 10);
+	ft_printf("[ %5.2x ]\n", 10);
 	
 	return (0);
 	test_strings();
