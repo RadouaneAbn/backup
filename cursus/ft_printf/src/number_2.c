@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 char	*convert(char *result, int sign_space, unsigned long n, char *base)
 {
@@ -42,7 +42,7 @@ int	print_udec(va_list args, t_opt *opt)
 	s = convert(result, opt->leading_space_sign, n, "0123456789");
 	if (opt->precision[0] && opt->fill == '0')
 		opt->fill = ' ';
-	return (ft_putstr_2(s, opt, opt->fill));
+	return (ft_putnbr(s, opt, opt->fill));
 }
 
 int	print_dec(va_list args, t_opt *opt)
@@ -63,7 +63,7 @@ int	print_dec(va_list args, t_opt *opt)
 		s = convert(result, leading_space, n, "0123456789");
 	if (opt->precision[0] && opt->fill == '0')
 		opt->fill = ' ';
-	return (ft_putstr_2(s, opt, opt->fill));
+	return (ft_putnbr(s, opt, opt->fill));
 }
 
 int	print_hex_cap(va_list args, t_opt *opt)
@@ -83,7 +83,7 @@ int	print_hex_cap(va_list args, t_opt *opt)
 	}
 	if (opt->precision[0] && opt->fill == '0')
 		opt->fill = ' ';
-	count += ft_putstr_2(s, opt, opt->fill);
+	count += ft_putnbr(s, opt, opt->fill);
 	return (count);
 }
 
@@ -104,7 +104,7 @@ int	print_hex(va_list args, t_opt *opt)
 	}
 	if (opt->precision[0] && opt->fill == '0')
 		opt->fill = ' ';
-	count += ft_putstr_2(s, opt, opt->fill);
+	count += ft_putnbr(s, opt, opt->fill);
 	return (count);
 }
 
@@ -116,11 +116,11 @@ int	print_addr(va_list args, t_opt *opt)
 
 	n = va_arg(args, unsigned long);
 	if (n == 0)
-		return (ft_putstr("(nil)", opt, ' '));
+		return (ft_putaddr("(nil)", opt, ' '));
 	s = convert(result, 0, n, "0123456789abcdef");
 	*(--s) = 'x';
 	*(--s) = '0';
-	return (ft_putstr(s, opt, ' '));
+	return (ft_putaddr(s, opt, ' '));
 }
 int	print_mod(va_list args, t_opt *opt)
 {

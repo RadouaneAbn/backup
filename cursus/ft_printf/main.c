@@ -1,5 +1,18 @@
 #include "ft_printf.h"
 
+void	compaire(int n, int m)
+{
+	printf("[%d - %d]\n", n, m);
+	if (n != m)
+	{
+		printf("❌ FAILURE ❌\n");
+	}
+	else
+	{
+		printf("✅ SUCCESS ✅\n");
+	}
+}
+
 void	test_chars(void)
 {
 	int n, m;
@@ -198,34 +211,34 @@ int	main(void)
 	// printf("[%-5.i]\n", 0);
 	// ft_printf("[%-5.i]\n", 0);
 
-	printf("[%08.5u]\n", 34);
-	ft_printf("[%08.5u]\n", 34);
-	printf("[%08.5u]\n", 0);
-	ft_printf("[%08.5u]\n", 0);
-	printf("[%08.3u]\n", 8375);
-	ft_printf("[%08.3u]\n\n", 8375);
+	// printf("[%08.5u]\n", 34);
+	// ft_printf("[%08.5u]\n", 34);
+	// printf("[%08.5u]\n", 0);
+	// ft_printf("[%08.5u]\n", 0);
+	// printf("[%08.3u]\n", 8375);
+	// ft_printf("[%08.3u]\n\n", 8375);
 
-	printf("[%08.5x]\n", 34);
-	ft_printf("[%08.5x]\n", 34);
-	printf("[%08.5x]\n", 0);
-	ft_printf("[%08.5x]\n", 0);
-	printf("[%08.3x]\n", 8375);
-	ft_printf("[%08.3x]\n\n", 8375);
+	// printf("[%08.5x]\n", 34);
+	// ft_printf("[%08.5x]\n", 34);
+	// printf("[%08.5x]\n", 0);
+	// ft_printf("[%08.5x]\n", 0);
+	// printf("[%08.3x]\n", 8375);
+	// ft_printf("[%08.3x]\n\n", 8375);
 
-	printf("[%08.5X]\n", 34);
-	ft_printf("[%08.5X]\n", 34);
-	printf("[%08.5X]\n", 0);
-	ft_printf("[%08.5X]\n", 0);
-	printf("[%08.3X]\n", 8375);
-	ft_printf("[%08.3X]\n\n", 8375);
+	// printf("[%08.5X]\n", 34);
+	// ft_printf("[%08.5X]\n", 34);
+	// printf("[%08.5X]\n", 0);
+	// ft_printf("[%08.5X]\n", 0);
+	// printf("[%08.3X]\n", 8375);
+	// ft_printf("[%08.3X]\n\n", 8375);
 
 
-	// test_strings();
-	// test_chars();
-	// test_int();
-	// test_uint();
-	// test_hex();
-	// test_addr();
+	test_strings();
+	test_chars();
+	test_int();
+	test_uint();
+	test_hex();
+	test_addr();
 	
 	return (0);
 	// n = printf("printf   : |%p|%p|\n", LONG_MIN, LONG_MAX);

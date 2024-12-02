@@ -32,7 +32,7 @@ int	print_str(va_list args, t_opt *opt)
 
 	count = 0;
 	s = va_arg(args, char *);
-	count += ft_putstr_str(s, opt, ' ');
+	count += ft_putstr(s, opt, ' ');
 	return (count);
 }
 
@@ -46,17 +46,6 @@ int	char_in_chaset(char c, char *set)
 	}
 	return (0);
 }
-
-// int print_sign_space(int n, int opt)
-// {
-// 	int count;
-
-// 	count = 0;
-// 	if (n >= 0)
-// 		count += print_char(opt);
-// 	count += print_dec(n);
-// 	return (count);
-// }
 
 int	ft_atoi_s(const char *str, int *i)
 {
@@ -181,10 +170,7 @@ int	ft_printf(const char *str, ...)
 		return (-1);
 	i = 0;
 	count = 0;
-	// printf("build pointer to functions...\n");
 	build_func(&functions);
-	// printf("[%c]\n", functions[1].flag);
-	// printf("start itration\n");
 	while (str[i])
 	{
 		if (str[i] == '%' && str[i + 1])
@@ -195,33 +181,3 @@ int	ft_printf(const char *str, ...)
 	}
 	return (count);
 }
-// int print_hex_alt(unsigned int n, char flag)
-// {
-// 	int count;
-
-// 	count = 0;
-// 	if (n != 0)
-// 		count += print_str("0x");
-// 	count += print_hex(n, flag);
-// 	return (count);
-// }
-
-// int find_flag(va_list args, const char *s, int *i, t_func *functions)
-// {
-// 	int n;
-
-// 	n = 0;
-// 	while (functions[n].flag != 0)
-// 	{
-// 		if (s[* i + 1] == functions[n].flag)
-// 			return (functions[n].f(args, s, i));
-// 	}
-// 	return (0);
-// }
-
-// int main() {
-// 	char *s = "red";
-// 	ft_printf("hello [%x]\n", 42);
-// 	ft_printf("hello [%# x]\n", 42);
-// 	printf("hello [% #x]\n", 42);
-// }

@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-// # include "libft/libft.h"
 
 typedef struct
 {
@@ -31,7 +30,6 @@ typedef struct
     int precision[2];
 } t_opt;
 
-// typedef int (*func)(va_list, t_opt *);
 
 typedef struct {
     char flag;
@@ -48,17 +46,15 @@ int	print_char(va_list args, t_opt *opt);
 int ft_strlen(const char *s);
 int	print_hex_cap(va_list args, t_opt *opt);
 int ft_putchar(int c);
-int	 ft_putstr(char *s, t_opt *opt, char filler);
 int	ft_isdigit(int c);
-int	ft_putchar(int c);
 int print_mod(va_list args, t_opt *opt);
-int print_filler(char c, int cond, int n);
-int	 ft_putstr_2(char *s, t_opt *opt, char filler);
+int	ft_putnbr(char *s, t_opt *opt, char filler);
 int char_in_chaset(char c, char *set);
-int	ft_putstr_str(char *s, t_opt *opt, char filler);
-
-/*debugging*/
-void print_options(t_opt options);
-void compaire(int n, int m);
+int	ft_putstr(char *s, t_opt *opt, char filler);
+int	ft_putaddr(char *s, t_opt *opt, char filler);
+int	print_filler(char c, int cond, int n);
+int	print_precision(int precision);
+int error_handle(int i);
+int writer(int *count, char *s, int slen);
 
 #endif
