@@ -115,9 +115,9 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 		opt->width -= slen + sign;
 	if (opt->width < 0)
 		opt->width = 0;
-	count += print_filler(filler, opt->pad == 0, opt->width);
 	if (sign)
 		count += ft_putchar(*new_s++);
+	count += print_filler(filler, opt->pad == 0, opt->width);
 	count += print_precision(opt->precision[1] - slen);
 	count += write(1, new_s, slen);
 	count += print_filler(filler, opt->pad == 1, opt->width);

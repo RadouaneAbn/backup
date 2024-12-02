@@ -167,9 +167,14 @@ int	main(void)
 
 	int n, m;
 	s = NULL;
+	printf("%+07i\n", -54);
+	ft_printf("%+07i\n", -54);
+
+	printf("%07i\n", 54);
+	ft_printf("%07i\n", 54);
 	
-	test_strings();
 	return (0);
+	test_strings();
 	test_chars();
 	test_int();
 	test_uint();
