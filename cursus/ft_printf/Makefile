@@ -12,6 +12,9 @@ all: $(NAME)
 $(NAME) : $(OBG_FILES)
 	$(AR) $@ $^
 
+bonus : $(OBG_FILES)
+	$(AR) $@ $^
+
 %.o: %.c
 	$(CC) $(CFALGS) -c $< -o $@
 
