@@ -180,10 +180,11 @@ int	main(void)
 
 	printf("[%08.5i]\n", -34);
 	ft_printf("[%08.5i]\n", -34);
-	
+		printf("%07i\n", -54);
+	ft_printf("%07i\n", -54);
 	// test_strings();
 	// test_chars();
-	test_int();
+	// test_int();
 	// test_uint();
 	// test_hex();
 	// test_addr();

@@ -59,7 +59,7 @@ int	print_dec(va_list args, t_opt *opt)
 		s = convert(result, leading_space, -(unsigned long)(n), "0123456789");
 	else
 		s = convert(result, leading_space, n, "0123456789");
-	if (opt->precision[0] && opt->fill != ' ')
+	if (opt->precision[0] && opt->fill == '0')
 		opt->fill = ' ';
 	return (ft_putstr_2(s, opt, opt->fill));
 }
