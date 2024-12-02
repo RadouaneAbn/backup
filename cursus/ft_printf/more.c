@@ -52,6 +52,27 @@ int	ft_putstr(char *s, t_opt *opt, char filler)
 	return (count);
 }
 
+int	ft_putstr_str(char *s, t_opt *opt, char filler)
+{
+	int		slen;
+	int		count;
+	char	*new_s;
+
+	if (s == NULL)
+		new_s = "(null)";
+	else
+		new_s = s;
+	slen = ft_strlen(new_s);
+	count = 0;
+	count += print_filler(filler, opt->pad == 0, opt->width - slen);
+	if (opt->precision[0] && opt->precision[1] < slen)
+		count += write(1, new_s, opt->precision[1]);
+	else
+		count += write(1, new_s, slen);
+	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+	return (count);
+}
+
 int	print_precision(int precision)
 {
 	int	count;
@@ -84,8 +105,8 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 		sign = 1;
 		slen--;
 	}
-	if (opt->precision >= slen)
-		opt->width -= opt->precision + sign;
+	if (opt->precision[1] >= slen)
+		opt->width -= opt->precision[1] + sign;
 	else
 		opt->width -= slen + sign;
 	if (opt->width < 0)
@@ -93,7 +114,7 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	count += print_filler(filler, opt->pad == 0, opt->width);
 	if (sign)
 		count += ft_putchar(*new_s++);
-	count += print_precision(opt->precision - slen);
+	count += print_precision(opt->precision[1] - slen);
 	count += write(1, new_s, slen);
 	count += print_filler(filler, opt->pad == 1, opt->width);
 	return (count);
@@ -109,7 +130,7 @@ void	print_options(t_opt options)
 	printf("\nalt:---------------->[%d]\n", options.alt);
 	printf("leading_space_sign:->[%c]\n", options.leading_space_sign);
 	printf("pad:---------------->[%d]\n", options.pad);
-	printf("precision:---------->[%d]\n", options.precision);
+	printf("precision:---------->[%d]\n", options.precision[1]);
 	printf("width:-------------->[%d]\n", options.width);
 }
 

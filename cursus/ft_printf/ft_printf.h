@@ -23,12 +23,12 @@
 
 typedef struct
 {
-    int precision;
     int width;
     int pad;
     int alt;
     char leading_space_sign;
     int fill;
+    int precision[2];
 } t_opt;
 
 // typedef int (*func)(va_list, t_opt *);
@@ -55,6 +55,7 @@ int print_mod(va_list args, t_opt *opt);
 int print_filler(char c, int cond, int n);
 int	 ft_putstr_2(char *s, t_opt *opt, char filler);
 int char_in_chaset(char c, char *set);
+int	ft_putstr_str(char *s, t_opt *opt, char filler);
 
 /*debugging*/
 void print_options(t_opt options);

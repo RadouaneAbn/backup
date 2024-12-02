@@ -32,7 +32,7 @@ int	print_str(va_list args, t_opt *opt)
 
 	count = 0;
 	s = va_arg(args, char *);
-	count += ft_putstr(s, opt, ' ');
+	count += ft_putstr_str(s, opt, ' ');
 	return (count);
 }
 
@@ -79,7 +79,8 @@ void	init_options(t_opt *opt)
 	opt->pad = 0;
 	opt->width = 0;
 	opt->alt = 0;
-	opt->precision = 0;
+	opt->precision[0] = 0;
+	opt->precision[1] = 0;
 	opt->fill = ' ';
 }
 
@@ -108,7 +109,8 @@ void	get_options(const char *s, int *i, t_opt *opt)
 		else if (s[*i] == '.')
 		{
 			(*i)++;
-			opt->precision = ft_atoi_s(s, i);
+			opt->precision[0] = 1;
+			opt->precision[1] = ft_atoi_s(s, i);
 		}
 		else if (s[*i] == '#')
 			opt->alt = 1;
