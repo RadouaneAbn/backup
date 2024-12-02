@@ -104,6 +104,8 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	slen = ft_strlen(new_s);
 	count = 0;
 	sign = 0;
+	if (opt->precision[0] && opt->precision[1] == 0 && new_s[0] == '0')
+		slen = 0;
 	if (char_in_chaset(*new_s, "-+ "))
 	{
 		sign = 1;

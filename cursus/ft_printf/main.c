@@ -178,16 +178,33 @@ int	main(void)
 	// printf("[ %5.2x ]\n", 10);
 	// ft_printf("[ %5.2x ]\n", 10);
 
-	printf("[%08.5i]\n", -34);
-	ft_printf("[%08.5i]\n", -34);
-		printf("%07i\n", -54);
-	ft_printf("%07i\n", -54);
-	// test_strings();
-	// test_chars();
-	// test_int();
-	// test_uint();
-	// test_hex();
-	// test_addr();
+	// printf("[%08.5i]\n", -34);
+	// ft_printf("[%08.5i]\n", -34);
+	// 	printf("%07i\n", -54);
+	// ft_printf("%07i\n", -54);
+
+	printf("[%.0i]\n", 0);
+	ft_printf("[%.0i]\n", 0);
+
+	printf("[%.i]\n", 0);
+	ft_printf("[%.i]\n", 0);
+
+	printf("[%5.0i]\n", 0);
+	ft_printf("[%5.0i]\n", 0);
+
+	printf("[%-5.0i]\n", 0);
+	ft_printf("[%-5.0i]\n", 0);
+
+	printf("[%-5.i]\n", 0);
+	ft_printf("[%-5.i]\n", 0);
+
+
+	test_strings();
+	test_chars();
+	test_int();
+	test_uint();
+	test_hex();
+	test_addr();
 	
 	return (0);
 	// n = printf("printf   : |%p|%p|\n", LONG_MIN, LONG_MAX);
