@@ -142,6 +142,9 @@ void test_addr(void)
 	n = printf("printf   : |%p|\n", &null);
 	m = ft_printf("ft_printf: |%p|\n", &null);
 	compaire(n, m);
+	n = printf("printf   : |%p|\n", 0);
+	m = ft_printf("ft_printf: |%p|\n", 0);
+	compaire(n, m);
 }
 
 int	main(void)

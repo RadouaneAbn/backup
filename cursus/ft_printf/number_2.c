@@ -119,6 +119,8 @@ int	print_addr(va_list args, t_opt *opt)
 	char			*s;
 
 	n = va_arg(args, unsigned long);
+	if (n == 0)
+		return (ft_putstr("(nil)", opt, ' '));
 	s = convert(result, 0, n, "0123456789abcdef");
 	*(--s) = 'x';
 	*(--s) = '0';
