@@ -3,7 +3,7 @@ CFALGS := -Wall -Wextra -Werror
 RM := rm -rf
 AR := ar rcs
 
-SRC_FILES := ft_printf.c number.c
+SRC_FILES := ft_printf.c number_2.c more.c
 OBG_FILES := $(SRC_FILES:.c=.o)
 NAME := libftprintf.a
 

@@ -62,7 +62,7 @@ int	print_hex(unsigned int n, char flag)
 	char	cap;
 
 	i = 11;
-	cap = (flag == 'X') * 'A' + (flag == 'x') * 'a' ;
+	cap = (flag == 'X') * 'A' + (flag == 'x') * 'a';
 	result[i--] = 0;
 	cap = (flag == 'X') * ' ';
 	if (n == 0)

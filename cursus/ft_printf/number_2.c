@@ -14,8 +14,8 @@
 
 char	*convert(char *result, int sign_space, unsigned long n, char *base)
 {
-	int k;
-	int blen;
+	int	k;
+	int	blen;
 
 	blen = ft_strlen(base);
 	k = 31;
@@ -32,26 +32,35 @@ char	*convert(char *result, int sign_space, unsigned long n, char *base)
 	return (result + k + 1);
 }
 
+// int	print_udec(va_list args, t_opt *opt)
+// {
+// 	char			result[32];
+// 	unsigned int	n;
+// 	int 			count;
+// 	char			*s;
+
+// 	n = va_arg(args, unsigned int);
+// 	s = convert(result, opt->leading_space_sign, n, "0123456789");
+// 	return (ft_putstr(s, opt, opt->fill));
+// }
+
 int	print_udec(va_list args, t_opt *opt)
 {
-	char			result[32];
-	unsigned int	n;
-	int 			count;
-	char			*s;
+	char	result[32];
+	unsigned int		n;
+	char	*s;
 
 	n = va_arg(args, unsigned int);
 	s = convert(result, opt->leading_space_sign, n, "0123456789");
-	return (ft_putstr(s, opt, opt->fill));
+	return (ft_putstr_2(s, opt, opt->fill));
 }
 
 int	print_dec(va_list args, t_opt *opt)
 {
 	char	result[32];
 	int		n;
-	int 	count;
 	char	*s;
 	char	leading_space;
-	int		i;
 
 	n = va_arg(args, int);
 	if (n < 0)
@@ -69,12 +78,12 @@ int	print_hex_cap(va_list args, t_opt *opt)
 {
 	char			result[32];
 	unsigned int	n;
-	int 			count;
+	int				count;
 	char			*s;
 
 	count = 0;
 	n = va_arg(args, unsigned int);
-	s = convert(result, n < 0, n, "0123456789ABCDEF");
+	s = convert(result, 0, n, "0123456789ABCDEF");
 	if (opt->alt && n)
 	{
 		*(--s) = 'X';
@@ -88,11 +97,11 @@ int	print_hex(va_list args, t_opt *opt)
 {
 	char			result[32];
 	unsigned int	n;
-	int 			count;
+	int				count;
 	char			*s;
 
 	n = va_arg(args, unsigned int);
-	s = convert(result, n < 0, n, "0123456789abcdef");
+	s = convert(result, 0, n, "0123456789abcdef");
 	count = 0;
 	if (opt->alt && n)
 	{
@@ -107,7 +116,6 @@ int	print_addr(va_list args, t_opt *opt)
 {
 	char			result[32];
 	unsigned long	n;
-	int 			count;
 	char			*s;
 
 	n = va_arg(args, unsigned long);
@@ -116,7 +124,9 @@ int	print_addr(va_list args, t_opt *opt)
 	*(--s) = '0';
 	return (ft_putstr(s, opt, ' '));
 }
-int print_mod(va_list args, t_opt *opt)
+int	print_mod(va_list args, t_opt *opt)
 {
+	(void)opt;
+	(void)args;
 	return (ft_putchar('%'));
 }

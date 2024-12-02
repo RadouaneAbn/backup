@@ -19,9 +19,9 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int print_filler(char c, int cond, int n)
+int	print_filler(char c, int cond, int n)
 {
-	int count;
+	int	count;
 
 	if (cond == 0)
 		return (0);
@@ -34,11 +34,11 @@ int print_filler(char c, int cond, int n)
 	return (count);
 }
 
-int	 ft_putstr(char *s, t_opt *opt, char filler)
+int	ft_putstr(char *s, t_opt *opt, char filler)
 {
-	int slen;
-	int count;
-	char *new_s;
+	int		slen;
+	int		count;
+	char	*new_s;
 
 	if (s == NULL)
 		new_s = "(null)";
@@ -52,9 +52,9 @@ int	 ft_putstr(char *s, t_opt *opt, char filler)
 	return (count);
 }
 
-int print_precision(int precision)
+int	print_precision(int precision)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (precision > 0)
@@ -65,12 +65,12 @@ int print_precision(int precision)
 	return (count);
 }
 
-int	 ft_putstr_2(char *s, t_opt *opt, char filler)
+int	ft_putstr_2(char *s, t_opt *opt, char filler)
 {
-	int slen;
-	int count;
-	char *new_s;
-	int sign;
+	int		slen;
+	int		count;
+	char	*new_s;
+	int		sign;
 
 	if (s == NULL)
 		new_s = "(null)";
@@ -84,16 +84,15 @@ int	 ft_putstr_2(char *s, t_opt *opt, char filler)
 		sign = 1;
 		slen--;
 	}
-    if (opt->precision >= slen)
-        opt->width -= opt->precision + sign;
-    else
-        opt->width -= slen + sign;
-    if (opt->width < 0)
-        opt->width = 0;
-		// printf("w: %d\n", opt->width);
+	if (opt->precision >= slen)
+		opt->width -= opt->precision + sign;
+	else
+		opt->width -= slen + sign;
+	if (opt->width < 0)
+		opt->width = 0;
 	count += print_filler(filler, opt->pad == 0, opt->width);
 	if (sign)
-        count += ft_putchar(*new_s++);
+		count += ft_putchar(*new_s++);
 	count += print_precision(opt->precision - slen);
 	count += write(1, new_s, slen);
 	count += print_filler(filler, opt->pad == 1, opt->width);
@@ -105,7 +104,7 @@ int	ft_putchar(int c)
 	return (write(1, &c, 1));
 }
 
-void print_options(t_opt options)
+void	print_options(t_opt options)
 {
 	printf("\nalt:---------------->[%d]\n", options.alt);
 	printf("leading_space_sign:->[%c]\n", options.leading_space_sign);
@@ -114,13 +113,15 @@ void print_options(t_opt options)
 	printf("width:-------------->[%d]\n", options.width);
 }
 
-void compaire(int n, int m)
+void	compaire(int n, int m)
 {
 	printf("[%d - %d]\n", n, m);
-	if (n != m) {
-        printf("❌ FAILURE ❌\n");
-    } else {
-        printf("✅ SUCCESS ✅\n");
-    }
-
+	if (n != m)
+	{
+		printf("❌ FAILURE ❌\n");
+	}
+	else
+	{
+		printf("✅ SUCCESS ✅\n");
+	}
 }
