@@ -9,12 +9,12 @@ int	main(void)
 	// printf("[%-5d]\n", 42); // right padding with 5
 
 	// printf("[%.5d]\n", 42); // left padding with 5 (filled with 0)
-
-	printf("[%#015x]\n", 42);
-	printf("[%-#15x]\n", 42);
-	printf("[%-15d]\n", 42);
-	printf("[%x]\n", 42);
-	printf("[%5c]\n", 'a');
+	printf("[%30.03s]\n", n);
+	// printf("[%#015x]\n", 42);
+	// printf("[%-#15x]\n", 42);
+	// printf("[%-15d]\n", 42);
+	// printf("[%x]\n", 42);
+	// printf("[%5c]\n", 'a');
 	return (0);
 	// printf("[%#x]\n", 42); // adds 0x before the hexa number
 

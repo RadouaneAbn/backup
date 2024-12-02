@@ -53,6 +53,9 @@ void	test_strings(void)
 	n = printf("printf   : |%-20s|\n", str);
 	m = ft_printf("ft_printf: |%-20s|\n", str);
 	compaire(n, m);
+	n = printf("printf   : |%5.3s|\n", null);
+	m = ft_printf("ft_printf: |%5.3s|\n", null);
+	compaire(n, m);
 }
 
 void	test_int(void)
@@ -163,14 +166,16 @@ int	main(void)
 	char		*s;
 
 	int n, m;
-	test_chars();
+	s = NULL;
+	
 	test_strings();
+	return (0);
+	test_chars();
 	test_int();
 	test_uint();
 	test_hex();
 	test_addr();
 	
-	return (0);
 	// n = printf("printf   : |%p|%p|\n", LONG_MIN, LONG_MAX);
 	// m = ft_printf("ft_printf: |%p|%p|\n", LONG_MIN, LONG_MAX);
 	// compaire(n, m);

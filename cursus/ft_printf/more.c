@@ -59,7 +59,12 @@ int	ft_putstr_str(char *s, t_opt *opt, char filler)
 	char	*new_s;
 
 	if (s == NULL)
-		new_s = "(null)";
+	{
+		if (opt->precision[0] == 0 || (opt->precision[0] && opt->precision[1] > 5))
+			new_s = "(null)";
+		else
+			new_s = "";
+	}
 	else
 		new_s = s;
 	slen = ft_strlen(new_s);
