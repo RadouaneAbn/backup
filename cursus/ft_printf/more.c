@@ -150,7 +150,7 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	slen = ft_strlen(new_s);
 	count = 0;
 	sign = 0;
-	if (char_in_chaset(*new_s, "-+ "))
+	if (opt->precision[0] && char_in_chaset(*new_s, "-+ "))
 	{
 		sign = 1;
 		slen--;
@@ -164,7 +164,7 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	// if (sign && opt->fill == '0')
 	// 	count += ft_putchar(*new_s++);
 	count += print_filler(filler, opt->pad == 0, opt->width);
-	if (sign && opt->fill == ' ')
+	if (sign && (opt->precision[0]))
 		count += ft_putchar(*new_s++);
 	count += print_precision(opt->precision[1] - slen);
 	count += write(1, new_s, slen);
