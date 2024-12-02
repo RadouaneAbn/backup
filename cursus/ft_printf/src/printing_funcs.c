@@ -1,5 +1,16 @@
 #include "../ft_printf.h"
 
+// int print_all()
+// {
+// 	int count;
+
+// 	count = 0;
+// 	count += print_filler(filler, opt->pad == 0, opt->width - slen);
+// 	if (writer(&count, s, slen) == -1)
+// 		return (-1);
+// 	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+// }
+
 int	print_filler(char c, int cond, int n)
 {
 	int	count;
@@ -35,7 +46,7 @@ int	ft_putaddr(char *s, t_opt *opt, char filler)
 	return (count);
 }
 
-int	ft_putstr(char *s, t_opt *opt, char filler)
+int	ft_putstr(char *s, t_opt *opt)
 {
 	int		slen;
 	int		count;
@@ -54,10 +65,10 @@ int	ft_putstr(char *s, t_opt *opt, char filler)
 	if (opt->precision[0] && opt->precision[1] < slen)
 		slen = opt->precision[1];
 	count = 0;
-	count += print_filler(filler, opt->pad == 0, opt->width - slen);
+	count += print_filler(opt->fill, opt->pad == 0, opt->width - slen);
 	if (writer(&count, new_s, slen) == -1)
 		return (-1);
-	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+	count += print_filler(opt->fill, opt->pad == 1, opt->width - slen);
 	return (count);
 }
 

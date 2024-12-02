@@ -32,7 +32,8 @@ int	print_str(va_list args, t_opt *opt)
 
 	count = 0;
 	s = va_arg(args, char *);
-	count += ft_putstr(s, opt, ' ');
+	opt->fill = ' ';
+	count += ft_putstr(s, opt);
 	return (count);
 }
 
