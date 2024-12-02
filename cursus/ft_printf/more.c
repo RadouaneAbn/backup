@@ -162,7 +162,10 @@ int	ft_putstr_2(char *s, t_opt *opt, char filler)
 	if (opt->width < 0)
 		opt->width = 0;
 	if (sign && opt->fill == '0')
+	{
 		count += ft_putchar(*new_s++);
+		sign = 0;
+	}
 	count += print_filler(filler, opt->pad == 0, opt->width);
 	if (sign && (opt->precision[0]))
 		count += ft_putchar(*new_s++);
