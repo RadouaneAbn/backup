@@ -70,13 +70,8 @@ int	find_flag(va_list args, const char *s, int *i, t_func(functions)[10])
 	t_opt	options;
 	int		n;
 
-	// t_func *f;
-	// int start;
-	// start = *i;
 	(*i)++;
 	get_options(s, i, &options);
-	// print_options(options);
-	// return(0);
 	n = 0;
 	while (functions[n].flag)
 	{
@@ -114,9 +109,36 @@ void	build_func(t_func (*functions)[10])
 	(*functions)[9].f = NULL;
 }
 
+int init_printf(const char *str, va_list args, t_func(functions)[10])
+{
+	int i;
+	int tmp;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '%' && str[i + 1])
+		{
+			tmp = find_flag(args, str, &i, functions);
+			if (tmp == -1)
+				return (-1);
+		}
+		else
+		{
+			tmp = ft_putchar(str[i]);
+			if (tmp == -1)
+				return (-1);
+		}
+		count += tmp;
+		i++;
+	}
+	return (count);
+}
+
 int	ft_printf(const char *str, ...)
 {
-	int		i;
 	int		count;
 	va_list	args;
 	t_func	functions[10];
@@ -124,16 +146,7 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	if (str == NULL)
 		return (-1);
-	i = 0;
-	count = 0;
 	build_func(&functions);
-	while (str[i])
-	{
-		if (str[i] == '%' && str[i + 1])
-			count += find_flag(args, str, &i, functions);
-		else
-			count += ft_putchar(str[i]);
-		i++;
-	}
+	count = init_printf(str, args, functions);
 	return (count);
 }
