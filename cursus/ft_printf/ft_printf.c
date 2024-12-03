@@ -19,9 +19,12 @@ int	print_char(va_list args, t_opt *opt)
 
 	count = 0;
 	c = va_arg(args, int);
-	count += print_filler(' ', opt->pad == 0, opt->width - 1);
-	count += ft_putchar(c);
-	count += print_filler(' ', opt->pad == 1, opt->width - 1);
+	if (print_filler(&count, ' ', opt->pad == 0, opt->width - 1) == -1)
+		return (-1);
+	if (ft_putchar(c) == -1)
+		return (-1);
+	if (print_filler(&count, ' ', opt->pad == 1, opt->width - 1) == -1)
+		return (-1);
 	return (count);
 }
 

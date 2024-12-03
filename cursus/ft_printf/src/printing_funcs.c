@@ -17,7 +17,7 @@ int	print_filler(int *count, char c, int cond, int n)
 		return (0);
 	while (n > 0)
 	{
-		if (writer(&count, &c, 1) == -1)
+		if (writer(count, &c, 1) == -1)
 			return (-1);
 		n--;
 	}

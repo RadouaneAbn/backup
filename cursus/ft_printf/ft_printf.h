@@ -52,8 +52,8 @@ int	ft_putnbr(char *s, t_opt *opt, char filler);
 int char_in_chaset(char c, char *set);
 int	ft_putstr(char *s, t_opt *opt);
 int	ft_putaddr(char *s, t_opt *opt, char filler);
-int	print_filler(char c, int cond, int n);
-int	print_precision(int precision);
+int	print_filler(int *count, char c, int cond, int n);
+int	print_precision(int *count, int precision);
 int error_handle(int i);
 int writer(int *count, char *s, int slen);
 
