@@ -39,8 +39,9 @@ int			ft_strlen(const char *s);
 int			ft_putchar(int c);
 int			ft_isdigit(int c);
 int			char_in_chaset(char c, char *set);
-int			error_handle(int i);
 int			writer(int *count, char *s, int slen);
+char	*convert(char *result, int sign_space, unsigned long n, char *base);
+void	calculate_width_precision(char *s, t_opt *opt, int *slen, int *sign);
 
 /*Printing funtions*/
 int			ft_putnbr(char *s, t_opt *opt);

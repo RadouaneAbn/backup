@@ -16,7 +16,9 @@ int	find_flag(va_list args, const char *s, int *i, t_func(functions)[10])
 {
 	t_opt	options;
 	int		n;
+	int start;
 
+	start = *i;
 	(*i)++;
 	get_options(s, i, &options);
 	n = 0;
@@ -28,7 +30,10 @@ int	find_flag(va_list args, const char *s, int *i, t_func(functions)[10])
 		}
 		n++;
 	}
-	return (0);
+	if (s[*i] == 0)
+		return (-1);
+	*i = start;
+	return (print_mod(args, &options));
 }
 
 void	build_func(t_func (*functions)[10])
@@ -65,18 +70,12 @@ int	init_printf(const char *str, va_list args, t_func(functions)[10])
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '%' && str[i + 1])
-		{
+		if (str[i] == '%')
 			tmp = find_flag(args, str, &i, functions);
-			if (tmp == -1)
-				return (-1);
-		}
 		else
-		{
 			tmp = ft_putchar(str[i]);
-			if (tmp == -1)
-				return (-1);
-		}
+		if (tmp == -1)
+			return (-1);
 		count += tmp;
 		i++;
 	}

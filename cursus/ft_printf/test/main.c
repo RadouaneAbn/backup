@@ -1,4 +1,7 @@
-#include "ft_printf.h"
+#include "../ft_printf.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <limits.h>
 
 void	compaire(int n, int m)
 {
@@ -175,6 +178,30 @@ void	test_addr(void)
 	compaire(n, m);
 }
 
+void test_crazy()
+{
+	int n, m;
+	n = printf("--> %.0");          /*!!!!!!!!!!!!!!!!*/
+	printf("\n");
+	m = ft_printf("--> %.0");          /*!!!!!!!!!!!!!!!!*/
+	printf("\n");
+	compaire(n, m);
+	n = printf("--> %");          /*!!!!!!!!!!!!!!!!*/
+	printf("\n");
+	m = ft_printf("--> %");          /*!!!!!!!!!!!!!!!!*/
+	printf("\n");
+	compaire(n, m);
+	n = printf("%r\n");       /*!!!!!!!!!!!!!!!!*/
+	m = ft_printf("%r\n");       /*!!!!!!!!!!!!!!!!*/
+	compaire(n, m);
+	n = printf("%043.45\n"); /*!!!!!!!!!!!!!!!!*/
+	m = ft_printf("%043.45\n"); /*!!!!!!!!!!!!!!!!*/
+	compaire(n, m);
+	n = printf("%043.45y\n"); /*!!!!!!!!!!!!!!!!*/
+	m = ft_printf("%043.45y\n"); /*!!!!!!!!!!!!!!!!*/
+	compaire(n, m);
+}
+
 int	main(void)
 {
 	static char	*snull = NULL;
@@ -223,14 +250,13 @@ int	main(void)
 	// ft_printf("[%08.5X]\n", 0);
 	// printf("[%08.3X]\n", 8375);
 	// ft_printf("[%08.3X]\n\n", 8375);
-	printf("%");          /*!!!!!!!!!!!!!!!!*/
-	printf("%t\n");       /*!!!!!!!!!!!!!!!!*/
-	printf("%043.45t\n"); /*!!!!!!!!!!!!!!!!*/
-	test_strings();
-	test_chars();
-	test_int();
-	test_uint();
-	test_hex();
-	test_addr();
+	// test_strings();
+	// test_chars();
+	// test_int();
+	// test_uint();
+	// test_hex();
+	// test_addr();
+
+	test_crazy();
 	return (0);
 }
