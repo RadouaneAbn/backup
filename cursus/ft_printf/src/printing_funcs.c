@@ -1,15 +1,16 @@
-#include "../ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printing_funcs.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/03 16:29:58 by rabounou          #+#    #+#             */
+/*   Updated: 2024/12/03 16:29:59 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int print_all(int *count, t_opt *opt, char *s, int slen)
-{
-	if (print_filler(count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
-		return (-1);
-	if (writer(count, s, slen) == -1)
-		return (-1);
-	if (print_filler(count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
-		return (-1);
-	return (*count);
-}
+#include "../ft_printf.h"
 
 int	print_filler(int *count, char c, int cond, int n)
 {
@@ -20,6 +21,17 @@ int	print_filler(int *count, char c, int cond, int n)
 		if (writer(count, &c, 1) == -1)
 			return (-1);
 		n--;
+	}
+	return (*count);
+}
+
+int	print_precision(int *count, int precision)
+{
+	while (precision > 0)
+	{
+		if (writer(count, "0", 1) == -1)
+			return (-1);
+		precision--;
 	}
 	return (*count);
 }
@@ -49,7 +61,8 @@ int	ft_putstr(char *s, t_opt *opt)
 
 	if (s == NULL)
 	{
-		if (opt->precision[0] == 0 || (opt->precision[0] && opt->precision[1] > 5))
+		if (opt->precision[0] == 0 || (opt->precision[0]
+				&& opt->precision[1] > 5))
 			new_s = "(null)";
 		else
 			new_s = "";
@@ -61,54 +74,6 @@ int	ft_putstr(char *s, t_opt *opt)
 		slen = opt->precision[1];
 	count = 0;
 	if (print_all(&count, opt, new_s, slen) == -1)
-		return (-1);
-	return (count);
-}
-
-int	print_precision(int *count, int precision)
-{
-	while (precision > 0)
-	{
-		if (writer(count, "0", 1) == -1)
-			return (-1);
-		precision--;
-	}
-	return (*count);
-}
-
-void calculate_width_precision(char *s, t_opt *opt, int *slen, int *sign)
-{
-	if (opt->precision[0] && opt->precision[1] == 0 && s[0] == '0')
-		*slen = 0;
-	if (char_in_chaset(*s, "-+ "))
-	{
-		*sign = 1;
-		(*slen)--;
-	}
-	if (opt->precision[1] >= *slen)
-		opt->width -= opt->precision[1] + *sign;
-	else
-		opt->width -= *slen + *sign;
-	if (opt->width < 0)
-		opt->width = 0;
-}
-
-int print_all_2(t_opt *opt, char *s, int slen, int sign)
-{
-	int count;
-
-	count = 0;
-	if (sign && opt->fill == '0')
-		count += ft_putchar(*s++);
-	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
-		return (-1);
-	if (sign && opt->fill == ' ')
-		count += ft_putchar(*s++);
-	if (print_precision(&count, opt->precision[1] - slen) == -1)
-		return (-1);
-	if (writer(&count, s, slen) == -1)
-		return (-1);
-	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
 		return (-1);
 	return (count);
 }
@@ -132,6 +97,5 @@ int	ft_putnbr(char *s, t_opt *opt)
 	tmp = print_all_2(opt, new_s, slen, sign);
 	if (tmp == -1)
 		return (-1);
-	count += tmp;
-	return (count);
+	return (count + tmp);
 }

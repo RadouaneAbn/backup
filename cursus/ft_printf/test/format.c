@@ -29,12 +29,12 @@ int	main(void)
 	// printf("%+u\n", 0);
 
 	// printf("[%5.d]\n", 42);     // [   42]
-	// printf("[%5.4d]\n", 42);     // [00042]
+	// printf("[%5.4d]\n", 42);    // [00042]
 	// printf("[%5d]\n", 42);      // [   42]
 	// printf("[% .5d]\n", 42);    // [ 00042]
 	// printf("[%+.5d]\n", 42);    // [+00042]
-	// printf("[%.5%]\n", 42);    // [%]
-	// printf("[% -+5d]\n", 42);    // [%]
+	// printf("[%.5%]\n", 42);     // [%]
+	// printf("[% -+5d]\n", 42);   // [%]
 	// printf("[%.5d]\n", 42); //
 
 	// `-`: left justify (right padding)

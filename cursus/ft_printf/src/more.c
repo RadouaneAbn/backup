@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   more.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/03 16:12:33 by rabounou          #+#    #+#             */
+/*   Updated: 2024/12/03 16:12:50 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_printf.h"
 
 int	ft_strlen(const char *s)
@@ -29,6 +41,7 @@ int	char_in_chaset(char c, char *set)
 	}
 	return (0);
 }
+
 int	ft_atoi_s(const char *str, int *i)
 {
 	int	result;

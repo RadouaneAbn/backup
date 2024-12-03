@@ -114,7 +114,7 @@ void	test_int(void)
 	compaire(n, m);
 }
 
-void test_uint(void)
+void	test_uint(void)
 {
 	int n, m;
 	printf("##################################\n");
@@ -130,7 +130,7 @@ void test_uint(void)
 	compaire(n, m);
 }
 
-void test_hex(void)
+void	test_hex(void)
 {
 	int n, m;
 	printf("##################################\n");
@@ -155,11 +155,14 @@ void test_hex(void)
 	compaire(n, m);
 }
 
-void test_addr(void)
+void	test_addr(void)
 {
+	char	*s;
+	char	*null;
+
 	int n, m;
-	char *s = "red";
-	char *null = NULL;
+	s = "red";
+	null = NULL;
 	printf("\ntesting ft_printf on addr:\n");
 	n = printf("printf   : |%p|\n", &s);
 	m = ft_printf("ft_printf: |%p|\n", &s);
@@ -182,71 +185,52 @@ int	main(void)
 	s = NULL;
 	// printf("%+07i\n", -54);
 	// ft_printf("%+07i\n", -54);
-
 	// printf("%7i\n", -14);
 	// ft_printf("%7i\n", -14);
-
 	// printf("[ %5.2x ]\n", 1);
 	// ft_printf("[ %5.2x ]\n", 1);
 	// printf("[ %5.2x ]\n", 10);
 	// ft_printf("[ %5.2x ]\n", 10);
-
 	// printf("[%08.5i]\n", -34);
 	// ft_printf("[%08.5i]\n", -34);
 	// 	printf("%07i\n", -54);
 	// ft_printf("%07i\n", -54);
-
 	// printf("[%.0i]\n", 0);
 	// ft_printf("[%.0i]\n", 0);
-
 	// printf("[%.i]\n", 0);
 	// ft_printf("[%.i]\n", 0);
-
 	// printf("[%5.0i]\n", 0);
 	// ft_printf("[%5.0i]\n", 0);
-
 	// printf("[%-5.0i]\n", 0);
 	// ft_printf("[%-5.0i]\n", 0);
-
 	// printf("[%-5.i]\n", 0);
 	// ft_printf("[%-5.i]\n", 0);
-
 	// printf("[%08.5u]\n", 34);
 	// ft_printf("[%08.5u]\n", 34);
 	// printf("[%08.5u]\n", 0);
 	// ft_printf("[%08.5u]\n", 0);
 	// printf("[%08.3u]\n", 8375);
 	// ft_printf("[%08.3u]\n\n", 8375);
-
 	// printf("[%08.5x]\n", 34);
 	// ft_printf("[%08.5x]\n", 34);
 	// printf("[%08.5x]\n", 0);
 	// ft_printf("[%08.5x]\n", 0);
 	// printf("[%08.3x]\n", 8375);
 	// ft_printf("[%08.3x]\n\n", 8375);
-
 	// printf("[%08.5X]\n", 34);
 	// ft_printf("[%08.5X]\n", 34);
 	// printf("[%08.5X]\n", 0);
 	// ft_printf("[%08.5X]\n", 0);
 	// printf("[%08.3X]\n", 8375);
 	// ft_printf("[%08.3X]\n\n", 8375);
-	printf("%");			/*!!!!!!!!!!!!!!!!*/
-	printf("%t\n");			/*!!!!!!!!!!!!!!!!*/
-	printf("%043.45t\n");	/*!!!!!!!!!!!!!!!!*/
-
+	printf("%");          /*!!!!!!!!!!!!!!!!*/
+	printf("%t\n");       /*!!!!!!!!!!!!!!!!*/
+	printf("%043.45t\n"); /*!!!!!!!!!!!!!!!!*/
 	test_strings();
 	test_chars();
 	test_int();
 	test_uint();
 	test_hex();
 	test_addr();
-	
 	return (0);
-	// n = printf("printf   : |%p|%p|\n", LONG_MIN, LONG_MAX);
-	// m = ft_printf("ft_printf: |%p|%p|\n", LONG_MIN, LONG_MAX);
-	// compaire(n, m);
-	// n = printf("printf   : |%p|%p|\n", -ULONG_MAX, ULONG_MAX);
-	// m = ft_printf("ft_printf: |%p|%p|\n", -ULONG_MAX, ULONG_MAX);
-	// compaire(n, m);
 }
