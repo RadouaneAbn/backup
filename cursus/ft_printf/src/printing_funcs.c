@@ -133,17 +133,5 @@ int	ft_putnbr(char *s, t_opt *opt)
 	if (tmp == -1)
 		return (-1);
 	count += tmp;
-	// if (sign && opt->fill == '0')
-	// 	count += ft_putchar(*new_s++);
-	// if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
-	// 	return (-1);
-	// if (sign && opt->fill == ' ')
-	// 	count += ft_putchar(*new_s++);
-	// if (print_precision(&count, opt->precision[1] - slen) == -1)
-	// 	return (-1);
-	// if (writer(&count, new_s, slen) == -1)
-	// 	return (-1);
-	// if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
-	// 	return (-1);
 	return (count);
 }

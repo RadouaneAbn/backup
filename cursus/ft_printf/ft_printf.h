@@ -58,5 +58,6 @@ int	print_hex(va_list args, t_opt *opt);
 int	print_addr(va_list args, t_opt *opt);
 int	print_str(va_list args, t_opt *opt);
 int	print_char(va_list args, t_opt *opt);
-
+void	init_options(t_opt *opt);
+int	ft_atoi_s(const char *str, int *i);
 #endif
