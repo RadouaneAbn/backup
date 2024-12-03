@@ -11,20 +11,17 @@
 // 	count += print_filler(filler, opt->pad == 1, opt->width - slen);
 // }
 
-int	print_filler(char c, int cond, int n)
+int	print_filler(int *count, char c, int cond, int n)
 {
-	int	count;
-
 	if (cond == 0)
 		return (0);
-	count = 0;
 	while (n > 0)
 	{
 		if (writer(&count, &c, 1) == -1)
 			return (-1);
 		n--;
 	}
-	return (count);
+	return (*count);
 }
 
 int	ft_putaddr(char *s, t_opt *opt, char filler)
@@ -39,10 +36,12 @@ int	ft_putaddr(char *s, t_opt *opt, char filler)
 		new_s = s;
 	slen = ft_strlen(new_s);
 	count = 0;
-	count += print_filler(filler, opt->pad == 0, opt->width - slen);
+	if (print_filler(&count, filler, opt->pad == 0, opt->width - slen) == -1)
+		return (-1);
 	if (writer(&count, s, slen) == -1)
 		return (-1);
-	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+	if (print_filler(&count, filler, opt->pad == 1, opt->width - slen) == -1)
+		return (-1);
 	return (count);
 }
 
@@ -65,26 +64,24 @@ int	ft_putstr(char *s, t_opt *opt)
 	if (opt->precision[0] && opt->precision[1] < slen)
 		slen = opt->precision[1];
 	count = 0;
-	count += print_filler(opt->fill, opt->pad == 0, opt->width - slen);
+	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
+		return (-1);
 	if (writer(&count, new_s, slen) == -1)
 		return (-1);
-	count += print_filler(opt->fill, opt->pad == 1, opt->width - slen);
+	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
+		return (-1);
 	return (count);
 }
 
-int	print_precision(int precision)
+int	print_precision(int *count, int precision)
 {
-	int	count;
-
-	count = 0;
 	while (precision > 0)
 	{
-		if (writer(&count, "0", 1) == -1)
+		if (writer(count, "0", 1) == -1)
 			return (-1);
-		// count += write(1, "0", 1);
 		precision--;
 	}
-	return (count);
+	return (*count);
 }
 
 int	ft_putnbr(char *s, t_opt *opt, char filler)
@@ -116,12 +113,15 @@ int	ft_putnbr(char *s, t_opt *opt, char filler)
 		opt->width = 0;
 	if (sign && opt->fill == '0')
 		count += ft_putchar(*new_s++);
-	count += print_filler(filler, opt->pad == 0, opt->width);
+	if (print_filler(&count, filler, opt->pad == 0, opt->width) == -1 )
+		return (-1);
 	if (sign && opt->fill == ' ')
 		count += ft_putchar(*new_s++);
-	count += print_precision(opt->precision[1] - slen);
+	if (print_precision(&count, opt->precision[1] - slen) == -1)
+		return (-1);
 	if (writer(&count, new_s, slen) == -1)
 		return (-1);
-	count += print_filler(filler, opt->pad == 1, opt->width);
+	if (print_filler(&count, filler, opt->pad == 1, opt->width) == -1 )
+		return (-1);
 	return (count);
 }
