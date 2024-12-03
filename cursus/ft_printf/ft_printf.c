@@ -23,6 +23,7 @@ int	print_char(va_list args, t_opt *opt)
 		return (-1);
 	if (ft_putchar(c) == -1)
 		return (-1);
+	count++;
 	if (print_filler(&count, ' ', opt->pad == 1, opt->width - 1) == -1)
 		return (-1);
 	return (count);
