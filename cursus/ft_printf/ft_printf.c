@@ -6,7 +6,7 @@
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:50:16 by rabounou          #+#    #+#             */
-/*   Updated: 2024/12/03 16:06:37 by rabounou         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:46:13 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	find_flag(va_list args, const char *s, int *i, t_func(functions)[10])
 {
 	t_opt	options;
 	int		n;
-	int start;
+	int		start;
 
 	start = *i;
 	(*i)++;

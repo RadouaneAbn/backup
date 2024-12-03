@@ -6,7 +6,7 @@
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:50:56 by rabounou          #+#    #+#             */
-/*   Updated: 2024/12/03 16:05:17 by rabounou         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:46:32 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int			ft_putchar(int c);
 int			ft_isdigit(int c);
 int			char_in_chaset(char c, char *set);
 int			writer(int *count, char *s, int slen);
-char	*convert(char *result, int sign_space, unsigned long n, char *base);
-void	calculate_width_precision(char *s, t_opt *opt, int *slen, int *sign);
+char		*convert(char *result, int sign_space, unsigned long n, char *base);
+void		calculate_width_precision(char *s, t_opt *opt, int *slen,
+				int *sign);
 
 /*Printing funtions*/
 int			ft_putnbr(char *s, t_opt *opt);
