@@ -1,4 +1,4 @@
-#include "../ft_printf.h"
+#include "ft_printf.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <limits.h>
@@ -181,6 +181,8 @@ void	test_addr(void)
 void test_crazy()
 {
 	int n, m;
+
+	printf("\ntesting ft_printf on crazy cases:\n");
 	n = printf("--> %.0");          /*!!!!!!!!!!!!!!!!*/
 	printf("\n");
 	m = ft_printf("--> %.0");          /*!!!!!!!!!!!!!!!!*/
@@ -250,12 +252,12 @@ int	main(void)
 	// ft_printf("[%08.5X]\n", 0);
 	// printf("[%08.3X]\n", 8375);
 	// ft_printf("[%08.3X]\n\n", 8375);
-	// test_strings();
-	// test_chars();
-	// test_int();
-	// test_uint();
-	// test_hex();
-	// test_addr();
+	test_strings();
+	test_chars();
+	test_int();
+	test_uint();
+	test_hex();
+	test_addr();
 
 	test_crazy();
 	return (0);
