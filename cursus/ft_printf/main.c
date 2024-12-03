@@ -231,7 +231,9 @@ int	main(void)
 	// ft_printf("[%08.5X]\n", 0);
 	// printf("[%08.3X]\n", 8375);
 	// ft_printf("[%08.3X]\n\n", 8375);
-
+	printf("%");			/*!!!!!!!!!!!!!!!!*/
+	printf("%t\n");			/*!!!!!!!!!!!!!!!!*/
+	printf("%043.45t\n");	/*!!!!!!!!!!!!!!!!*/
 
 	test_strings();
 	test_chars();

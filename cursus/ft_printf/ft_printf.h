@@ -37,24 +37,26 @@ typedef struct {
 } t_func;
 
 int	ft_printf(const char *str, ...);
+int ft_strlen(const char *s);
+int ft_putchar(int c);
+int	ft_isdigit(int c);
+int char_in_chaset(char c, char *set);
+int error_handle(int i);
+int writer(int *count, char *s, int slen);
+
+int	ft_putnbr(char *s, t_opt *opt);
+int	ft_putstr(char *s, t_opt *opt);
+int	ft_putaddr(char *s, t_opt *opt);
+
+int print_mod(va_list args, t_opt *opt);
+int	print_filler(int *count, char c, int cond, int n);
+int	print_precision(int *count, int precision);
+int	print_hex_cap(va_list args, t_opt *opt);
 int	print_udec(va_list args, t_opt *opt);
 int	print_dec(va_list args, t_opt *opt);
 int	print_hex(va_list args, t_opt *opt);
 int	print_addr(va_list args, t_opt *opt);
 int	print_str(va_list args, t_opt *opt);
 int	print_char(va_list args, t_opt *opt);
-int ft_strlen(const char *s);
-int	print_hex_cap(va_list args, t_opt *opt);
-int ft_putchar(int c);
-int	ft_isdigit(int c);
-int print_mod(va_list args, t_opt *opt);
-int	ft_putnbr(char *s, t_opt *opt, char filler);
-int char_in_chaset(char c, char *set);
-int	ft_putstr(char *s, t_opt *opt);
-int	ft_putaddr(char *s, t_opt *opt, char filler);
-int	print_filler(int *count, char c, int cond, int n);
-int	print_precision(int *count, int precision);
-int error_handle(int i);
-int writer(int *count, char *s, int slen);
 
 #endif

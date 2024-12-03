@@ -1,14 +1,13 @@
 #include "../ft_printf.h"
 
-// int print_all()
+// int print_all(int *count, t_opt *opt, char *s, int slen)
 // {
-// 	int count;
-
-// 	count = 0;
-// 	count += print_filler(filler, opt->pad == 0, opt->width - slen);
-// 	if (writer(&count, s, slen) == -1)
+// 	if (print_filler(count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
 // 		return (-1);
-// 	count += print_filler(filler, opt->pad == 1, opt->width - slen);
+// 	if (writer(count, s, slen) == -1)
+// 		return (-1);
+// 	if (print_filler(count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
+// 		return (-1);
 // }
 
 int	print_filler(int *count, char c, int cond, int n)
@@ -24,7 +23,7 @@ int	print_filler(int *count, char c, int cond, int n)
 	return (*count);
 }
 
-int	ft_putaddr(char *s, t_opt *opt, char filler)
+int	ft_putaddr(char *s, t_opt *opt)
 {
 	int		slen;
 	int		count;
@@ -36,11 +35,12 @@ int	ft_putaddr(char *s, t_opt *opt, char filler)
 		new_s = s;
 	slen = ft_strlen(new_s);
 	count = 0;
-	if (print_filler(&count, filler, opt->pad == 0, opt->width - slen) == -1)
+
+	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
 		return (-1);
 	if (writer(&count, s, slen) == -1)
 		return (-1);
-	if (print_filler(&count, filler, opt->pad == 1, opt->width - slen) == -1)
+	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
 		return (-1);
 	return (count);
 }
@@ -84,7 +84,7 @@ int	print_precision(int *count, int precision)
 	return (*count);
 }
 
-int	ft_putnbr(char *s, t_opt *opt, char filler)
+int	ft_putnbr(char *s, t_opt *opt)
 {
 	int		slen;
 	int		count;
@@ -113,7 +113,7 @@ int	ft_putnbr(char *s, t_opt *opt, char filler)
 		opt->width = 0;
 	if (sign && opt->fill == '0')
 		count += ft_putchar(*new_s++);
-	if (print_filler(&count, filler, opt->pad == 0, opt->width) == -1 )
+	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
 		return (-1);
 	if (sign && opt->fill == ' ')
 		count += ft_putchar(*new_s++);
@@ -121,7 +121,7 @@ int	ft_putnbr(char *s, t_opt *opt, char filler)
 		return (-1);
 	if (writer(&count, new_s, slen) == -1)
 		return (-1);
-	if (print_filler(&count, filler, opt->pad == 1, opt->width) == -1 )
+	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
 		return (-1);
 	return (count);
 }
