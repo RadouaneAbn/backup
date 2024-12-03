@@ -38,12 +38,6 @@ int	ft_putaddr(char *s, t_opt *opt)
 	count = 0;
 	if (print_all(&count, opt, new_s, slen) == -1)
 		return (-1);
-	// if (print_filler(&count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
-	// 	return (-1);
-	// if (writer(&count, s, slen) == -1)
-	// 	return (-1);
-	// if (print_filler(&count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
-	// 	return (-1);
 	return (count);
 }
 
@@ -68,12 +62,6 @@ int	ft_putstr(char *s, t_opt *opt)
 	count = 0;
 	if (print_all(&count, opt, new_s, slen) == -1)
 		return (-1);
-	// if (print_filler(&count, opt->fill, opt->pad == 0, opt->width - slen) == -1)
-	// 	return (-1);
-	// if (writer(&count, new_s, slen) == -1)
-	// 	return (-1);
-	// if (print_filler(&count, opt->fill, opt->pad == 1, opt->width - slen) == -1)
-	// 	return (-1);
 	return (count);
 }
 
@@ -105,12 +93,33 @@ void calculate_width_precision(char *s, t_opt *opt, int *slen, int *sign)
 		opt->width = 0;
 }
 
+int print_all_2(t_opt *opt, char *s, int slen, int sign)
+{
+	int count;
+
+	count = 0;
+	if (sign && opt->fill == '0')
+		count += ft_putchar(*s++);
+	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
+		return (-1);
+	if (sign && opt->fill == ' ')
+		count += ft_putchar(*s++);
+	if (print_precision(&count, opt->precision[1] - slen) == -1)
+		return (-1);
+	if (writer(&count, s, slen) == -1)
+		return (-1);
+	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
+		return (-1);
+	return (count);
+}
+
 int	ft_putnbr(char *s, t_opt *opt)
 {
 	int		slen;
 	int		count;
 	char	*new_s;
 	int		sign;
+	int		tmp;
 
 	if (s == NULL)
 		new_s = "(null)";
@@ -120,31 +129,21 @@ int	ft_putnbr(char *s, t_opt *opt)
 	count = 0;
 	sign = 0;
 	calculate_width_precision(new_s, opt, &slen, &sign);
-	// if (opt->precision[0] && opt->precision[1] == 0 && new_s[0] == '0')
-	// 	slen = 0;
-	// if (char_in_chaset(*new_s, "-+ "))
-	// {
-	// 	sign = 1;
-	// 	slen--;
-	// }
-	// if (opt->precision[1] >= slen)
-	// 	opt->width -= opt->precision[1] + sign;
-	// else
-	// 	opt->width -= slen + sign;
-	// if (opt->width < 0)
-	// 	opt->width = 0;
-
-	if (sign && opt->fill == '0')
-		count += ft_putchar(*new_s++);
-	if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
+	tmp = print_all_2(opt, new_s, slen, sign);
+	if (tmp == -1)
 		return (-1);
-	if (sign && opt->fill == ' ')
-		count += ft_putchar(*new_s++);
-	if (print_precision(&count, opt->precision[1] - slen) == -1)
-		return (-1);
-	if (writer(&count, new_s, slen) == -1)
-		return (-1);
-	if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
-		return (-1);
+	count += tmp;
+	// if (sign && opt->fill == '0')
+	// 	count += ft_putchar(*new_s++);
+	// if (print_filler(&count, opt->fill, opt->pad == 0, opt->width) == -1 )
+	// 	return (-1);
+	// if (sign && opt->fill == ' ')
+	// 	count += ft_putchar(*new_s++);
+	// if (print_precision(&count, opt->precision[1] - slen) == -1)
+	// 	return (-1);
+	// if (writer(&count, new_s, slen) == -1)
+	// 	return (-1);
+	// if (print_filler(&count, opt->fill, opt->pad == 1, opt->width) == -1 )
+	// 	return (-1);
 	return (count);
 }
