@@ -39,16 +39,18 @@ int	print_precision(int *count, int precision)
 int	ft_putaddr(char *s, t_opt *opt)
 {
 	int		slen;
-	int		sign;
+	int		count;
+	char	*new_s;
 
-	slen = ft_strlen(s);
-	sign = 0;
-	if (char_in_chaset(*s, "-+ "))
-	{
-		sign = 1;
-		slen--;
-	}
-	return (print_all_2(opt, s, slen, sign));
+	if (s == NULL)
+		new_s = "(null)";
+	else
+		new_s = s;
+	slen = ft_strlen(new_s);
+	count = 0;
+	if (print_all(&count, opt, new_s, slen) == -1)
+		return (-1);
+	return (count);
 }
 
 int	ft_putstr(char *s, t_opt *opt)

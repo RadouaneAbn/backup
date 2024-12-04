@@ -88,10 +88,11 @@ int	ft_printf(const char *str, ...)
 	va_list	args;
 	t_func	functions[10];
 
-	va_start(args, str);
 	if (str == NULL)
 		return (-1);
+	va_start(args, str);
 	build_func(&functions);
 	count = init_printf(str, args, functions);
+	va_end(args);
 	return (count);
 }

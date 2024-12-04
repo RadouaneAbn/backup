@@ -101,7 +101,5 @@ int	print_addr(va_list args, t_opt *opt)
 	s = convert(result, 0, n, "0123456789abcdef");
 	*(--s) = 'x';
 	*(--s) = '0';
-	if (opt->leading_space_sign)
-		*(--s) = opt->leading_space_sign;
 	return (ft_putaddr(s, opt));
 }
