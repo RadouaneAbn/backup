@@ -170,8 +170,8 @@ void	test_addr(void)
 	n = printf("printf   : |%p|\n", &s);
 	m = ft_printf("ft_printf: |%p|\n", &s);
 	compaire(n, m);
-	n = printf("printf   : |%p|\n", &null);
-	m = ft_printf("ft_printf: |%p|\n", &null);
+	n = printf("printf   : |%40p|\n", &s);
+	m = ft_printf("ft_printf: |%40p|\n", &s);
 	compaire(n, m);
 	n = printf("printf   : |%p|\n", (void *)0);
 	m = ft_printf("ft_printf: |%p|\n", (void *)0);
