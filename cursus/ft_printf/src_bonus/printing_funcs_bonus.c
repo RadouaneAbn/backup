@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "../ft_printf_bonus.h"
 
 int	print_filler(int *count, char c, int cond, int n)
 {
