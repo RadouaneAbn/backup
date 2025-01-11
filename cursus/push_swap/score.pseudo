@@ -1,0 +1,114 @@
+move {
+    target
+    target_idx
+    targeted
+    targeted_idx
+    a_move
+    b_move
+    score
+}
+
+fake_move:
+    malloc(move)
+    move->target        = 0
+    move->target_idx    = 0
+    move->targeted      = 0
+    move->targeted_idx  = 0
+    move->a_move        = 0
+    move->b_move        = 0
+    move->score         = INT_MAX
+
+
+>>> 1
+push_best_element_ab(stack):
+    i = 0
+    *current_move = fake_move()
+    *best_move = NULL;
+    while i < a.size:
+        # stack is both stacks (a and b).
+        current_move->targeted = get_elem(stack.a, i);
+        current_move->targeted_ix = i
+        find_best_move(stack, current_move)
+        if (current_move->score < max_score)
+            # This way we find the best move
+            #  (less instructions)
+            max_score = current_move->score
+            best_move = current_move
+        i++;
+
+TOP = 1
+BTM = -1
+MIX = 0
+
+
+>>> 5
+calculate_score(stack, side_a, side_b, move)
+    a = move->targeted_idx
+    b = target_idx
+    if (side_a == side_b)
+        if (side_a == TOP)
+            score_a = a
+            score_b = b
+            score = max(score_a, score_b)
+            move->a_move = TOP
+            move->b_move = TOP
+        else if (side_a == BTM)
+            score_a = stack.a->size - a
+            score_b = stack.b->size - b
+            score = max(score_a, score_b)
+            move->a_move = BTM
+            move->b_move = BTM
+    else
+        if (side_a == TOP)
+            score_a = a
+            score_b = stack.b->size - b
+            move->a_move = TOP
+            move->b_move = BTM
+        else
+            score_a = stack.a->size - a
+            score_b = b
+            move->a_move = BTM
+            move->b_move = TOP
+        score = score_a + score_b
+
+    move->score = score
+
+>>> 4
+find_max(b, move):
+    i = 0
+    max = LONG_MIN
+    max_i = LONG_MIN
+    while (i < b->size):
+        curr = get_elem(b, i)
+        if (curr > max):
+            max = curr
+            max_i = i
+    move->target = max
+    move->target_idx = max_i
+
+>>> 3
+find_target(a, b, move):
+    i = 0
+    while (i < b->size):
+        if (move->targeted > get_elem(b, i)):
+            move->target = get_elem(b, i)
+            move->target_idx = i
+            return ;
+        i++
+    find_max(b, move)
+
+>>> 2
+find_best_move(stack, move):
+    # find target for the current value in stack a
+    # DESC is just a boolean for later use
+    # returns and index of the target
+
+    # target_idx = find_target(stack.b, stack.a, target_idx)
+    target_idx = find_target(stack.b, stack.a, move)
+
+    # find out if the target and the targeted value are in the same side (top or bottom half of the stack)
+    # side = TOP, BTM, MIX
+    side_a = find_side(stack.a, move->targeted_idx)
+    side_b = find_side(stack.b, move->target_idx)
+
+    calculate_score(stack, side_a, side_b, move)

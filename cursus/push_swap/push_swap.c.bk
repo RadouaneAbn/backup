@@ -1,0 +1,141 @@
+#include "push_swap.h"
+
+// int find_target(t_stack *stack, int n, int order)
+// {
+//     int i = 0;
+//     int target;
+//     int max_value_idx;
+//     int current_value;
+
+//     if (order == DESC)
+//         target = LONG_MAX;
+//     else
+//         target = LONG_MIN;
+//     max_value_idx = -1;
+//     while (i < stack->size)
+//     {
+//         current_value = get_element(stack, i);
+//         if ((n < current_value) == order)
+//             max_value_idx = i;
+        
+//     }
+// }
+
+// int find_target(t_stack *dst, t_stack *src, int idx, int order)
+// {
+//     int i = 0;
+//     int target;
+//     int max_value_idx;
+//     int current_value;
+//     int src_value;
+
+//     if (order == DESC)
+//         target = LONG_MAX;
+//     else
+//         target = LONG_MIN;
+//     max_value_idx = -1;
+//     src_value = get_element(src, idx);
+//     while (i < dst->size)
+//     {
+//         current_value = get_element(dst, i);
+//         if ((src_value < current_value) == order)
+//             max_value_idx = i;
+        
+//     }
+// }
+
+int get_move_score(t_stacks stack, int idx)
+{
+    int score;
+    int current_element;
+
+        // current_element = get_element(stack.a, idx);
+        find_target(stack.b, stack.a, idx, DESC);
+}
+
+void push_best_element_ab(t_stacks stack)
+{
+    int i = 0;
+    int score;
+    while (i < stack.a->size)
+    {
+        score = get_move_score(stack, i);
+    }
+}
+
+int sort_stack(t_stacks stack)
+{
+    while (stack.a->size > 3)
+    {
+        if (stack.b->size < 2)
+            pb(stack);
+        else
+            push_best_element(stack);
+    }
+}
+
+int main(int ac, char **av)
+{
+    t_stacks stack;
+    int status;
+
+    init_stack(&stack, ac, av);
+
+    if (stack.capacity <= 3)
+        status = short_sort_a(stack);
+    else
+        status = sort_stack(stack);
+
+    print_stack(stack);
+    
+    if (status == -1)   
+        exit (1);
+    return (0);
+}
+
+
+// int main(int ac, char **av)
+// {
+//     t_stack *a;
+//     t_stack *b;
+//     // t_list *current;
+
+
+//     init_stack(&a, ac, av);
+
+    // print_stack(stack);
+    // // s_print(a, b);
+
+    // // sort_stack(a, b);
+    // pb(stack);
+    // // s_print(a, b);
+
+    // print_stack(stack);
+
+    // sa(stack);
+    // // s_print(a, b);
+
+    // print_stack(stack);
+
+    // pb(stack);
+    // pb(stack);
+    // // s_print(stack);
+
+    // print_stack(stack);
+
+    // rb(stack);
+
+    // print_stack(stack);
+
+    // rra(stack);
+    // rra(stack);
+
+    // print_stack(stack);
+
+    // pa(stack);
+
+    // print_stack(stack);
+
+//     return (0);
+// }
+

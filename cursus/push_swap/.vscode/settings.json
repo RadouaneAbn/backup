@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "push_swap.h": "c",
+    "*.out": "c",
+    "array": "c",
+    "string_view": "c",
+    "format": "c",
+    "initializer_list": "c",
+    "span": "c"
+  }
+}
