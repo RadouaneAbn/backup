@@ -85,5 +85,14 @@ int find_min_idx(t_stack *s);
 int find_side(t_stack *s, int idx);
 int max(int a, int b);
 
+int all_args_are_valide_phase1(char *s);
+int notvalid_number(char *s);
+int ft_isnum(int c);
+int ft_isspace(int c);
+void clean_exit(void *p1, void *p2, void *p3, void *p4);
+int get_correct_count(int ac, char **av);
+int get_arg_count(char *s);
+int convert_args_to_int(t_stack *a, char *s);
+
 
 #endif

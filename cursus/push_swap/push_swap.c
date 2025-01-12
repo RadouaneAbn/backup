@@ -204,7 +204,8 @@ int main(int ac, char **av)
     int status;
 
     init_stack(&stack, ac, av);
-    return (0);
+    // print_stack(stack);
+    // return (0);
     // make sure the stack is not sorted before sorting it
     if (is_not_sorted(stack.a) == 0)
         return (0);
@@ -220,27 +221,3 @@ int main(int ac, char **av)
         exit (1);
     return (0);
 }
-
-// int sort_stack(t_stacks stack)
-// {
-//     t_move *move;
-//     while ((stack.a->size > 3) && (stack.b->size < 2))
-//         pb(stack);
-//     while (stack.a->size > 3)
-//     {
-//         move = push_best_element_ab(stack);
-//         make_move(stack, move);
-//         pb(stack);
-//         free(move);
-//     }
-//     short_sort_a(stack);
-//     while (stack.b->size > 0)
-//     {
-//         move = push_best_element_ba(stack);
-//         make_move(stack, move);
-//         pa(stack);
-//         free(move);
-//     }
-//     organize_stack_a(stack);
-//     return (1);
-// }
