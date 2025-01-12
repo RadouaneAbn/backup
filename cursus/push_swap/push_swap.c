@@ -204,11 +204,13 @@ int main(int ac, char **av)
     int status;
 
     init_stack(&stack, ac, av);
-
+    return (0);
     // make sure the stack is not sorted before sorting it
-    // (is_not_sorted(stack.a) == )
+    if (is_not_sorted(stack.a) == 0)
+        return (0);
     if (stack.capacity <= 3)
     {
+        /* WARNNING: 2 elem is not working */
         status = short_sort_a(stack);
     }
     else
