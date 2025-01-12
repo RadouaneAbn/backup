@@ -58,7 +58,7 @@ void print_move(t_move *move);
 void s_print(t_stack *a, t_stack *b);
 
 /* Stack call functions */
-int init_stack(t_stacks *stack, int ac, char **av);
+void init_stack(t_stacks *stack, int ac, char **av);
 
 void pa(t_stacks stack);
 void pb(t_stacks stack);

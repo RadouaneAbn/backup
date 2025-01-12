@@ -76,7 +76,7 @@ void calculate_score(t_stacks stack, t_move *move)
         score = max(stack.a->size - a, stack.b->size - b);
     else if (move->a_move >= 0)
         score = a + (stack.b->size - b);
-    else if (move->a_move < 0)
+    else
         score = (stack.a->size - a) + b;
     move->score = score;
 }
@@ -204,6 +204,9 @@ int main(int ac, char **av)
     int status;
 
     init_stack(&stack, ac, av);
+
+    // make sure the stack is not sorted before sorting it
+    // (is_not_sorted(stack.a) == )
     if (stack.capacity <= 3)
     {
         status = short_sort_a(stack);

@@ -59,10 +59,21 @@ def test_all():
 
 
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         test_all()
         sys.exit(0)
     
+    if sys.argv[1] == "-o":
+        try:
+            n = int(sys.argv[2])
+            unique_numbers = generate_unique_numbers(n)
+            test_string = " ".join(map(str, unique_numbers))
+            print(test_string)
+            sys.exit(0)
+        except ValueError as e:
+            print(f"Invalid input: {e}")
+            sys.exit(1)
+
     try:
         n = int(sys.argv[1])
         if n <= 0:

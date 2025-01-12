@@ -6,8 +6,7 @@ MAKE := make
 SRC_FILES := $(wildcard *.c stack_calls/*.c) 
 OBJ_FILES := $(SRC_FILES:.c=.o)
 
-# NAME := push_swap
-NAME := push_swap_new
+NAME := push_swap
 
 # LIBFT_DIR = ./libft
 # LIBFT_NAME = libft.a
