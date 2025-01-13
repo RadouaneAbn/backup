@@ -30,16 +30,16 @@ def execute(test_string, n):
     except subprocess.CalledProcessError as e:
         print(f"Error executing ./push_swap: {e}")
     
-    # Execute the `push_swap2` program
-    try:
-        push_swap2_output = subprocess.check_output(
-            f'./push_swap_new {test_string}', shell=True, text=True
-        ).strip()
-        nlen = len(push_swap2_output.split("\n"))
-        print_result("push swap new", nlen, n)
-        # print(f"push_swap2: {nlen}")
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing ./push_swap2: {e}")
+    # # Execute the `push_swap2` program
+    # try:
+    #     push_swap2_output = subprocess.check_output(
+    #         f'./push_swap_new {test_string}', shell=True, text=True
+    #     ).strip()
+    #     nlen = len(push_swap2_output.split("\n"))
+    #     print_result("push swap new", nlen, n)
+    #     # print(f"push_swap2: {nlen}")
+    # except subprocess.CalledProcessError as e:
+    #     print(f"Error executing ./push_swap2: {e}")
 
 def test_all():
     n = 100

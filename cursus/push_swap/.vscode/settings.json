@@ -7,6 +7,10 @@
     "format": "c",
     "initializer_list": "c",
     "span": "c",
-    "vector": "c"
+    "vector": "c",
+    "defs.h": "c",
+    "stdlib.h": "c",
+    "stdio.h": "c",
+    "utils.h": "c"
   }
 }
