@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calc_score.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:34:27 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:34:45 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "defs.h"
 #include "push_swap.h"
 #include "utils.h"
@@ -26,7 +38,7 @@ int	find_side(t_stack *s, int idx)
 	int	middle;
 
 	if (s->size % 2 == 0)
-		middle = s->size / 2 - 1; // WARNING if size == 0
+		middle = s->size / 2 - 1;
 	else
 		middle = s->size / 2;
 	if (idx <= middle)

@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   count_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:33:18 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:34:03 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 
 int	get_arg_count(char *s)
 {
 	int	count;
+	int	i;
+	int	j;
 
-	int i, j;
 	i = 0;
 	count = 0;
 	if (all_args_are_valide_phase1(s) == -1)
@@ -25,9 +38,9 @@ int	get_arg_count(char *s)
 
 int	get_correct_count(int ac, char **av)
 {
-	int i;
-	int count;
-	int current_count;
+	int	i;
+	int	count;
+	int	current_count;
 
 	i = 1;
 	count = 0;

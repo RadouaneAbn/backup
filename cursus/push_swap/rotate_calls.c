@@ -1,43 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate_calls.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:25:22 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:25:23 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "defs.h"
+
+void	rotate_stack(t_stack *stack)
+{
+	if (stack->size < 2)
+		return ;
+	stack->stack[stack->rear] = stack->stack[stack->front];
+	stack->front = (stack->front + 1) % stack->capacity;
+	stack->rear = (stack->rear + 1) % stack->capacity;
+}
 
 void	ra(t_stacks stack, int printable)
 {
 	if (printable)
 		printf("ra\n");
-	if (stack.a->size < 2)
-		return ;
-	stack.a->stack[stack.a->rear] = stack.a->stack[stack.a->front];
-	stack.a->front = (stack.a->front + 1) % stack.capacity;
-	stack.a->rear = (stack.a->rear + 1) % stack.capacity;
+	rotate_stack(stack.a);
 }
 
 void	rb(t_stacks stack, int printable)
 {
 	if (printable)
 		printf("rb\n");
-	if (stack.b->size < 2)
-		return ;
-	stack.b->stack[stack.b->rear] = stack.b->stack[stack.b->front];
-	stack.b->front = (stack.b->front + 1) % stack.capacity;
-	stack.b->rear = (stack.b->rear + 1) % stack.capacity;
+	rotate_stack(stack.b);
 }
 
 void	rr(t_stacks stack, int printable)
 {
 	if (printable)
 		printf("rr\n");
-	if (stack.a->size > 1)
-	{
-		stack.a->stack[stack.a->rear] = stack.a->stack[stack.a->front];
-		stack.a->front = (stack.a->front + 1) % stack.capacity;
-		stack.a->rear = (stack.a->rear + 1) % stack.capacity;
-	}
-	if (stack.b->size > 1)
-	{
-		stack.b->stack[stack.b->rear] = stack.b->stack[stack.b->front];
-		stack.b->front = (stack.b->front + 1) % stack.capacity;
-		stack.b->rear = (stack.b->rear + 1) % stack.capacity;
-	}
-	// ra(stack);
-	// rb(stack);
+	rotate_stack(stack.a);
+	rotate_stack(stack.b);
 }

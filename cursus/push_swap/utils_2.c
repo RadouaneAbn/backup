@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:13:57 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:15:08 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 
 int	find_max(t_stack *s, t_move *move)
 {
 	int	i;
 	int	current;
+	int	max;
+	int	max_idx;
 
 	i = 0;
-	int max, max_idx;
 	max = INT_MIN;
 	while (i < s->size)
 	{
@@ -27,9 +40,10 @@ int	find_min_idx(t_stack *s)
 {
 	int	i;
 	int	current;
+	int	min;
+	int	min_idx;
 
 	i = 0;
-	int min, min_idx;
 	min = INT_MAX;
 	while (i < s->size)
 	{
@@ -46,7 +60,7 @@ int	find_min_idx(t_stack *s)
 
 int	find_min(t_stack *s, t_move *move)
 {
-	int min_idx;
+	int	min_idx;
 
 	min_idx = find_min_idx(s);
 	move->target_idx = min_idx;

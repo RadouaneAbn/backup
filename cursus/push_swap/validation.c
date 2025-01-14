@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:13:22 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:13:34 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "defs.h"
 #include "utils.h"
 
@@ -54,10 +66,8 @@ int	is_not_sorted(t_stack *stack)
 	int	i;
 
 	i = 0;
-	/* Stack empty */
 	if (stack_isempty(stack))
 		return (0);
-	/* Stack not full (which means stack is not sorted) */
 	if (stack->size != stack->capacity)
 		return (1);
 	while (i < stack->size - 1)

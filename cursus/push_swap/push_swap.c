@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 15:25:55 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/14 15:26:15 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "operations.h"
 #include "push_swap.h"
 #include "utils.h"
@@ -31,10 +43,8 @@ int	sort_stack(t_stacks stack)
 {
 	t_move	*move;
 
-	/* push 2 elements to stack b  */
 	while ((stack.a->size > 3) && (stack.b->size < 2))
 		pb(stack, 1);
-	/* push the an element to the correct position */
 	while (stack.a->size > 0)
 	{
 		move = push_best_element(stack);
@@ -42,10 +52,8 @@ int	sort_stack(t_stacks stack)
 		pb(stack, 1);
 		free(move);
 	}
-	/* push back all elements to stack a */
 	while (stack.b->size > 0)
 		pa(stack, 1);
-	/* rotate the stack to make the smallest element in the top */
 	organize_stack_a(stack);
 	return (1);
 }
