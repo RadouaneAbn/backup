@@ -83,7 +83,7 @@ int	main(int ac, char **av)
 		return (0);
 	init_stack(&stack, ac, av);
 	read_instructions(stack);
-	if (is_not_sorted(stack.a))
+	if (is_not_sorted(stack.a) || stack_isempty(stack.b) == 0)
 		write(1, "KO\n", 3);
 	else
 	{

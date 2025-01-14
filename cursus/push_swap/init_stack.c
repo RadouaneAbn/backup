@@ -48,6 +48,8 @@ int	init_stack(t_stacks *stack, int ac, char **av)
 
 	i = 1;
 	elements_count = get_correct_count(ac, av);
+	if (elements_count == 0)
+		return (0);
 	if (elements_count == -1)
 		return (clean_exit(NULL, NULL, NULL, NULL), -1);
 	status = allocate_stack(stack, elements_count);
@@ -58,9 +60,10 @@ int	init_stack(t_stacks *stack, int ac, char **av)
 	{
 		if (convert_args_to_int(stack->a, av[i]) == -1)
 			return (clean_exit(stack->b->stack, stack->a->stack,
-					stack->b, stack->b));
+					stack->b, stack->a), -1);
+		i++;
 	}
 	stack->a->rear = stack->a->size % stack->a->capacity;
 	stack->b->rear = stack->b->size % stack->b->capacity;
-	return (0);
+	return (1);
 }

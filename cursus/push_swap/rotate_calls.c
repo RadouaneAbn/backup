@@ -24,21 +24,21 @@ void	rotate_stack(t_stack *stack)
 void	ra(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("ra\n");
+		write(1, "ra\n", 3);
 	rotate_stack(stack.a);
 }
 
 void	rb(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("rb\n");
+		write(1, "rb\n", 3);
 	rotate_stack(stack.b);
 }
 
 void	rr(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("rr\n");
+		write(1, "rr\n", 3);
 	rotate_stack(stack.a);
 	rotate_stack(stack.b);
 }

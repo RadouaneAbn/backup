@@ -27,21 +27,21 @@ void	swap_elements(t_stack *stack)
 void	sa(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("sa\n");
+		write(1, "sa\n", 3);
 	swap_elements(stack.a);
 }
 
 void	sb(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("sb\n");
+		write(1, "sb\n", 3);
 	swap_elements(stack.b);
 }
 
 void	ss(t_stacks stack, int printable)
 {
 	if (printable)
-		printf("ss\n");
+		write(1, "ss\n", 3);
 	swap_elements(stack.a);
 	swap_elements(stack.b);
 }

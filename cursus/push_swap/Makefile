@@ -14,6 +14,7 @@ OBJ_FILES := $(SRC_FILES:.c=.o) $(SRC_FILES_MANDATORY:.c=.o)
 OBJ_FILES_BONUS := $(SRC_FILES:.c=.o) $(SRC_FILES_BONUS:.c=.o)
 
 NAME := push_swap
+BONUS_NAME := checker
 
 all: $(NAME)
 
@@ -21,15 +22,15 @@ $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $^ -o $@
 
 bonus: $(OBJ_FILES_BONUS)
-	$(CC) $(CFLAGS) $^ -o checker
+	$(CC) $(CFLAGS) $^ -o $(BONUS_NAME)
 
 clean:
 	$(RM) $(OBJ_FILES) $(OBJ_FILES_BONUS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean
-.SECONDARY: $(OBJ_FILES)
+.SECONDARY: $(OBJ_FILES) $(OBJ_FILES_BONUS)

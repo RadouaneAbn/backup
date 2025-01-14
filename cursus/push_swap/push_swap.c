@@ -69,10 +69,14 @@ int	main(int ac, char **av)
 	status = init_stack(&stack, ac, av);
 	if (status == -1)
 		return (1);
+	if (status == 0)
+		return (0);
 	if (is_not_sorted(stack.a))
 	{
 		if (stack.capacity <= 3)
 			status = short_sort_a(stack);
+		else if (stack.capacity <= 5)
+			status = short_sort_5(stack);
 		else
 			status = sort_stack(stack);
 	}

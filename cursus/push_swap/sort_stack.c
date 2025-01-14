@@ -14,7 +14,7 @@
 #include "utils.h"
 
 /**
- * short_sort: Sort a stack of size 3 or less
+ * short_sort_a: Sort a stack of size 3 or less
  * Note:
  *  The sorting is done by making sure that the highest
  *  number is in the buttom of the stack
@@ -32,4 +32,24 @@ int	short_sort_a(t_stacks s)
 	if (get_element(s.a, 0) > get_element(s.a, 1))
 		sa(s, 1);
 	return (1);
+}
+
+/**
+ * short_sort_5: Sort a stack of size 3 or less
+ * Note:
+ *  The sorting is done by making sure that the highest
+ *  number is in the buttom of the stack
+ *  then swith the first two elements if needed
+ */
+
+int	short_sort_5(t_stacks s)
+{
+	while (s.a->size != 3)
+		pb(s);
+
+	short_sort_a(s);
+	while (s.b->size != 0)
+	{
+		if (get_element())
+	}
 }
