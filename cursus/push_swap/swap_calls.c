@@ -1,10 +1,11 @@
 #include "defs.h"
 
-void	sb(t_stacks stack)
+void	sb(t_stacks stack, int printable)
 {
 	int	tmp;
 
-	printf("sb\n");
+	if (printable)
+		printf("sb\n");
 	if (stack.b->size < 2)
 		return ;
 	tmp = stack.b->stack[stack.b->front];
@@ -13,11 +14,12 @@ void	sb(t_stacks stack)
 	stack.b->stack[(stack.b->front + 1) % stack.capacity] = tmp;
 }
 
-void	sa(t_stacks stack)
+void	sa(t_stacks stack, int printable)
 {
 	int	tmp;
 
-	printf("sa\n");
+	if (printable)
+		printf("sa\n");
 	if (stack.a->size < 2)
 		return ;
 	tmp = stack.a->stack[stack.a->front];
@@ -26,11 +28,12 @@ void	sa(t_stacks stack)
 	stack.a->stack[(stack.a->front + 1) % stack.capacity] = tmp;
 }
 
-void	ss(t_stacks stack)
+void	ss(t_stacks stack, int printable)
 {
-	printf("ss\n");
-
 	int tmp;
+
+	if (printable)
+		printf("ss\n");
 	if (stack.b->size < 2)
 	{
 		tmp = stack.b->stack[stack.b->front];

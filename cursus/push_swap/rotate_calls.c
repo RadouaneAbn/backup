@@ -1,8 +1,9 @@
 #include "defs.h"
 
-void	ra(t_stacks stack)
+void	ra(t_stacks stack, int printable)
 {
-	printf("ra\n");
+	if (printable)
+		printf("ra\n");
 	if (stack.a->size < 2)
 		return ;
 	stack.a->stack[stack.a->rear] = stack.a->stack[stack.a->front];
@@ -10,9 +11,10 @@ void	ra(t_stacks stack)
 	stack.a->rear = (stack.a->rear + 1) % stack.capacity;
 }
 
-void	rb(t_stacks stack)
+void	rb(t_stacks stack, int printable)
 {
-	printf("rb\n");
+	if (printable)
+		printf("rb\n");
 	if (stack.b->size < 2)
 		return ;
 	stack.b->stack[stack.b->rear] = stack.b->stack[stack.b->front];
@@ -20,9 +22,10 @@ void	rb(t_stacks stack)
 	stack.b->rear = (stack.b->rear + 1) % stack.capacity;
 }
 
-void	rr(t_stacks stack)
+void	rr(t_stacks stack, int printable)
 {
-	printf("rr\n");
+	if (printable)
+		printf("rr\n");
 	if (stack.a->size > 1)
 	{
 		stack.a->stack[stack.a->rear] = stack.a->stack[stack.a->front];

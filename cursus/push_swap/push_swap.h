@@ -10,7 +10,6 @@
 # define DESC 1
 
 int sort_stack(t_stacks stack);
-int is_not_sorted(t_stack *stack);
 int short_sort_a(t_stacks s);
 
 void s_print(t_stack *a, t_stack *b);

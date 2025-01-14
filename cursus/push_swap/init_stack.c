@@ -1,23 +1,24 @@
 #include "utils.h"
 
-void	allocate_stack(t_stacks *stack, int args_count)
+int	allocate_stack(t_stacks *stack, int args_count)
 {
 	stack->a = (t_stack *)malloc(sizeof(t_stack));
 	if (stack->a == NULL)
-		clean_exit(NULL, NULL, NULL, NULL);
+		return (clean_exit(NULL, NULL, NULL, NULL), -1);
 	/*----------------------------------------------*/
 	stack->a->stack = malloc(sizeof(int) * (args_count));
 	if (stack->a->stack == NULL)
-		clean_exit(stack->a, NULL, NULL, NULL);
+		return (clean_exit(stack->a, NULL, NULL, NULL), -1);
 	/*----------------------------------------------*/
 	/*----------------------------------------------*/
 	stack->b = (t_stack *)malloc(sizeof(t_stack));
 	if (stack->b == NULL)
-		clean_exit(stack->a->stack, stack->a, NULL, NULL);
+		return (clean_exit(stack->a->stack, stack->a, NULL, NULL), -1);
 	/*----------------------------------------------*/
 	stack->b->stack = malloc(sizeof(int) * (args_count));
 	if (stack->b->stack == NULL)
-		clean_exit(stack->b, stack->a->stack, stack->a, NULL);
+		return (clean_exit(stack->b, stack->a->stack, stack->a, NULL), -1);
+	return (0);
 }
 
 void	set_stack(t_stacks *stacks, int elements_count)
@@ -34,23 +35,27 @@ void	set_stack(t_stacks *stacks, int elements_count)
 	/*---------------------------------*/
 }
 
-void	init_stack(t_stacks *stack, int ac, char **av)
+int 	init_stack(t_stacks *stack, int ac, char **av)
 {
 	int	i;
 	int	elements_count;
+	int status;
 
 	i = 1;
 	elements_count = get_correct_count(ac, av);
 	if (elements_count == -1)
-		clean_exit(NULL, NULL, NULL, NULL);
-	allocate_stack(stack, elements_count);
+		return (clean_exit(NULL, NULL, NULL, NULL), -1);
+	status = allocate_stack(stack, elements_count);
+	if (status == -1)
+		return (-1);
 	set_stack(stack, elements_count);
 	while (i < ac)
 	{
 		if (convert_args_to_int(stack->a, av[i]) == -1)
-			clean_exit(stack->a, stack->a->stack, stack->b, stack->b->stack);
+			return (clean_exit(stack->a, stack->a->stack, stack->b, stack->b->stack), -1);
 		i++;
 	}
 	stack->a->rear = stack->a->size % stack->a->capacity;
 	stack->b->rear = stack->b->size % stack->b->capacity;
+	return (0);
 }

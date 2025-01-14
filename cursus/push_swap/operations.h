@@ -3,19 +3,19 @@
 
 #include "defs.h"
 
-void pa(t_stacks stack);
-void pb(t_stacks stack);
+void pa(t_stacks stack, int printable);
+void pb(t_stacks stack, int printable);
 
-void sa(t_stacks stack);
-void sb(t_stacks stack);
-void ss(t_stacks stack);
+void sa(t_stacks stack, int printable);
+void sb(t_stacks stack, int printable);
+void ss(t_stacks stack, int printable);
 
-void ra(t_stacks stack);
-void rb(t_stacks stack);
-void rr(t_stacks stack);
+void ra(t_stacks stack, int printable);
+void rb(t_stacks stack, int printable);
+void rr(t_stacks stack, int printable);
 
-void rra(t_stacks stack);
-void rrb(t_stacks stack);
-void rrr(t_stacks stack);
+void rra(t_stacks stack, int printable);
+void rrb(t_stacks stack, int printable);
+void rrr(t_stacks stack, int printable);
 
 #endif

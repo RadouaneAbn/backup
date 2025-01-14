@@ -13,7 +13,7 @@ void	organize_stack_a(t_stacks stack)
 	{
 		while (moves_count > 0)
 		{
-			ra(stack);
+			ra(stack, 1);
 			moves_count--;
 		}
 	}
@@ -21,7 +21,7 @@ void	organize_stack_a(t_stacks stack)
 	{
 		while (moves_count < 0)
 		{
-			rra(stack);
+			rra(stack, 1);
 			moves_count++;
 		}
 	}
@@ -33,18 +33,18 @@ int	sort_stack(t_stacks stack)
 
 	/* push 2 elements to stack b  */
 	while ((stack.a->size > 3) && (stack.b->size < 2))
-		pb(stack);
+		pb(stack, 1);
 	/* push the an element to the correct position */
 	while (stack.a->size > 0)
 	{
 		move = push_best_element(stack);
 		make_move(stack, move);
-		pb(stack);
+		pb(stack, 1);
 		free(move);
 	}
 	/* push back all elements to stack a */
 	while (stack.b->size > 0)
-		pa(stack);
+		pa(stack, 1);
 	/* rotate the stack to make the smallest element in the top */
 	organize_stack_a(stack);
 	return (1);
@@ -55,16 +55,20 @@ int	main(int ac, char **av)
 	t_stacks	stack;
 	int			status;
 
-	init_stack(&stack, ac, av);
-	if (is_not_sorted(stack.a) == 0)
+	status = 0;
+	if (ac == 1)
 		return (0);
-	if (stack.capacity <= 3)
+	status = init_stack(&stack, ac, av);
+	if (status == -1)
+		return (1);
+	if (is_not_sorted(stack.a))
 	{
-		/* WARNNING: 2 elem is not working */
-		status = short_sort_a(stack);
+		if (stack.capacity <= 3)
+			status = short_sort_a(stack);
+		else
+			status = sort_stack(stack);
 	}
-	else
-		status = sort_stack(stack);
+	free_stacks(stack);
 	if (status == -1)
 		exit(1);
 	return (0);

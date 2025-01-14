@@ -13,11 +13,11 @@ int	short_sort_a(t_stacks s)
 {
 	if (get_element(s.a, 0) > get_element(s.a, 1) && get_element(s.a,
 			0) > get_element(s.a, 2))
-		ra(s);
+		ra(s, 1);
 	else if (get_element(s.a, 1) > get_element(s.a, 0) && get_element(s.a,
 			1) > get_element(s.a, 2))
-		rra(s);
+		rra(s, 1);
 	if (get_element(s.a, 0) > get_element(s.a, 1))
-		sa(s);
+		sa(s, 1);
 	return (1);
 }

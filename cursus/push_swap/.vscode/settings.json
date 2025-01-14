@@ -11,6 +11,8 @@
     "defs.h": "c",
     "stdlib.h": "c",
     "stdio.h": "c",
-    "utils.h": "c"
+    "utils.h": "c",
+    "checker.h": "c",
+    "operations.h": "c"
   }
 }

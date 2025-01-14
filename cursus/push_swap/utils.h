@@ -8,7 +8,7 @@
 
 #include "defs.h"
 
-void init_stack(t_stacks *stack, int ac, char **av);
+int init_stack(t_stacks *stack, int ac, char **av);
 
 int already_in_stack(t_stack *s, int n);
 int notvalid_number(char *s);
@@ -28,6 +28,8 @@ int stack_isempty(t_stack *stack);
 int get_element(t_stack *stack, int idx);
 
 int get_correct_count(int ac, char **av);
+int is_not_sorted(t_stack *stack);
 
+void free_stacks(t_stacks stacks);
 
 #endif

@@ -10,6 +10,6 @@ void	clean_exit(void *p1, void *p2, void *p3, void *p4)
 		free(p3);
 	if (p4)
 		free(p4);
-	printf("Error\n");
-	exit(1);
+	write(1, "Error\n", 7);
+	// exit(1);
 }
