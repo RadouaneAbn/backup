@@ -6,11 +6,11 @@
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:37:04 by rabounou          #+#    #+#             */
-/*   Updated: 2025/01/14 15:37:46 by rabounou         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:57:34 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "../includes/checker.h"
 
 int	get_instruction(char *s)
 {
@@ -56,7 +56,26 @@ void	init_instructions(t_instruct (*instructions)[12])
 	(*instructions)[OP_COUNT] = NULL;
 }
 
-void	read_instructions(t_stacks stacks)
+int create_and_append_node(t_linkedlist *list, int n)
+{
+	t_list *node;
+
+	node = (t_list *) malloc(sizeof(t_list));
+	if (node == NULL)
+		return (free_list(list->head), -1);
+	node->n = n;
+	node->next = NULL;
+	if (list->head == NULL)
+	{
+		list->head = node;
+		//list->tail = node;
+	}
+	else
+		list->tail->next = node;
+	list->tail = node;
+}
+
+void	read_instructions(t_linkedlist *list, t_stacks stacks)
 {
 	char		*s;
 	int			op_idx;
@@ -67,9 +86,11 @@ void	read_instructions(t_stacks stacks)
 	while (s != NULL)
 	{
 		op_idx = get_instruction(s);
-		if (op_idx == -1)
+		if ( op_idx == -1)
 			return ;
-		instruction[op_idx](stacks, 0);
+		if (create_and_append_node(list, op_idx) == -1)
+			return ;
+		//instruction[op_idx](stacks, 0);
 		s = get_next_line(0);
 	}
 }
@@ -77,11 +98,18 @@ void	read_instructions(t_stacks stacks)
 int	main(int ac, char **av)
 {
 	t_stacks	stack;
+	t_list		list;
 
 	if (ac == 1)
 		return (0);
 	init_stack(&stack, ac, av);
-	read_instructions(stack);
+	list.head = NULL;
+	list.tail = NULL;
+	read_instructions(&linked_list, stack);
+
+	if (linked_list.head == NULL)
+		clean_exit(stack.a->stack, stack.b->stack, stack.a, stack.b);
+	execute_instructions(stack, instructions_linkedlist);
 	if (is_not_sorted(stack.a) || stack_isempty(stack.b) == 0)
 		write(1, "KO\n", 3);
 	else
