@@ -23,7 +23,7 @@
 
 int		sort_stack(t_stacks stack);
 int		short_sort_a(t_stacks s);
-int		short_sort_5(t_stacks s);
+int		short_sort_6(t_stacks s);
 
 void	s_print(t_stack *a, t_stack *b);
 

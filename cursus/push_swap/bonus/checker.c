@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../debug/debug.h"
 #include "checker.h"
 
 int	get_instruction(char *s)
