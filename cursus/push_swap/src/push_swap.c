@@ -67,10 +67,8 @@ int	main(int ac, char **av)
 	if (ac == 1)
 		return (0);
 	status = init_stack(&stack, ac, av);
-	if (status == -1)
-		return (1);
-	if (status == 0)
-		return (0);
+	if (status == 0 || status == -1)
+		return (status);
 	if (is_not_sorted(stack.a))
 	{
 		if (stack.capacity <= 3)

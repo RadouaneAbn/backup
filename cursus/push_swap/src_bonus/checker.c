@@ -66,56 +66,66 @@ int create_and_append_node(t_linkedlist *list, int n)
 	node->n = n;
 	node->next = NULL;
 	if (list->head == NULL)
-	{
 		list->head = node;
-		//list->tail = node;
-	}
 	else
 		list->tail->next = node;
 	list->tail = node;
+	return (0);
 }
 
-void	read_instructions(t_linkedlist *list, t_stacks stacks)
+int	read_instructions(t_linkedlist *list)
 {
 	char		*s;
 	int			op_idx;
-	t_instruct	instruction[12];
 
-	init_instructions(&instruction);
 	s = get_next_line(0);
 	while (s != NULL)
 	{
 		op_idx = get_instruction(s);
-		if ( op_idx == -1)
-			return ;
+		free(s);
+		if (op_idx == -1)
+			return (-1);
 		if (create_and_append_node(list, op_idx) == -1)
-			return ;
-		//instruction[op_idx](stacks, 0);
+			return (-1);
 		s = get_next_line(0);
+	}
+	return (0);
+}
+
+void	execute_instructions(t_stacks stack, t_linkedlist list)
+{
+	t_list *current;
+	t_instruct	instruction[12];
+
+	init_instructions(&instruction);
+	current = list.head;
+	while (current)
+	{
+		instruction[current->n](stack, 0);
+		current = current->next;
 	}
 }
 
 int	main(int ac, char **av)
 {
 	t_stacks	stack;
-	t_list		list;
+	t_linkedlist	list;
+	int status;
 
 	if (ac == 1)
 		return (0);
 	init_stack(&stack, ac, av);
 	list.head = NULL;
 	list.tail = NULL;
-	read_instructions(&linked_list, stack);
-
-	if (linked_list.head == NULL)
+	status = read_instructions(&list);
+	if (status == -1)
 		clean_exit(stack.a->stack, stack.b->stack, stack.a, stack.b);
-	execute_instructions(stack, instructions_linkedlist);
+	execute_instructions(stack, list);
 	if (is_not_sorted(stack.a) || stack_isempty(stack.b) == 0)
 		write(1, "KO\n", 3);
 	else
-	{
 		write(1, "OK\n", 3);
-	}
 	free_stacks(stack);
+	free_list(list.head);
 	return (0);
 }
