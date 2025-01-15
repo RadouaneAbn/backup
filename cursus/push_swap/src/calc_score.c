@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
-#include "push_swap.h"
-#include "utils.h"
+#include "../includes/defs.h"
+#include "../includes/push_swap.h"
+#include "../includes/utils.h"
 
 void	calculate_score(t_stacks stack, t_move *move)
 {

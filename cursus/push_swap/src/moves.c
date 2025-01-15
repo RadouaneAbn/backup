@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
-#include "operations.h"
+#include "../includes/defs.h"
+#include "../includes/operations.h"
 
 t_move	*init_move(void)
 {

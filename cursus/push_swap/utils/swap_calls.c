@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
+#include "../includes/defs.h"
 
 void	swap_elements(t_stack *stack)
 {

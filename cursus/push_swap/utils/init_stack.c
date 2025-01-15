@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../includes/utils.h"
 
 int	allocate_stack(t_stacks *stack, int args_count)
 {
@@ -59,8 +59,8 @@ int	init_stack(t_stacks *stack, int ac, char **av)
 	while (i < ac)
 	{
 		if (convert_args_to_int(stack->a, av[i]) == -1)
-			return (clean_exit(stack->b->stack, stack->a->stack,
-					stack->b, stack->a), -1);
+			return (clean_exit(stack->b->stack, stack->a->stack, stack->b,
+					stack->a), -1);
 		i++;
 	}
 	stack->a->rear = stack->a->size % stack->a->capacity;

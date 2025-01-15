@@ -3,15 +3,15 @@ CFLAGS := -Wall -Wextra -Werror
 RM := rm -rf
 MAKE := make
 
-SRC_FILES := count_args.c init_stack.c push_calls.c reverse_rotate_calls.c rotate_calls.c \
-	swap_calls.c utils.c convert.c exit.c stack_utils.c validation.c free_stacks.c
+UTILS := utils/count_args.c utils/init_stack.c utils/push_calls.c utils/reverse_rotate_calls.c utils/rotate_calls.c \
+	utils/swap_calls.c utils/utils.c utils/convert.c utils/exit.c utils/stack_utils.c utils/validation.c utils/free_stacks.c
 
-SRC_FILES_MANDATORY := calc_score.c sort_stack.c moves.c push_swap.c utils_2.c 
-SRC_FILES_BONUS := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+SRC := src/calc_score.c src/sort_stack.c src/moves.c src/push_swap.c src/utils_2.c 
+BONUS := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
 	bonus/checker.c bonus/ft_strcmp.c
 
-OBJ_FILES := $(SRC_FILES:.c=.o) $(SRC_FILES_MANDATORY:.c=.o)
-OBJ_FILES_BONUS := $(SRC_FILES:.c=.o) $(SRC_FILES_BONUS:.c=.o)
+OBJ_FILES := $(UTILS:.c=.o) $(SRC:.c=.o)
+OBJ_FILES_BONUS := $(UTILS:.c=.o) $(BONUS:.c=.o)
 
 NAME := push_swap
 BONUS_NAME := checker

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../includes/utils.h"
 
 int	get_arg_count(char *s)
 {

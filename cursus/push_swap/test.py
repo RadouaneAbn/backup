@@ -26,20 +26,22 @@ def execute(test_string, n):
         ).strip()
         nlen = len(push_swap_output.split("\n"))
         print_result("push swap    ", nlen, n)
+        if n == 500 and nlen > 5500:
+            print(test_string)
         # print(f"push_swap: {nlen}")
     except subprocess.CalledProcessError as e:
         print(f"Error executing ./push_swap: {e}")
-    
-    # # Execute the `push_swap2` program
-    # try:
-    #     push_swap2_output = subprocess.check_output(
-    #         f'./push_swap_new {test_string}', shell=True, text=True
-    #     ).strip()
-    #     nlen = len(push_swap2_output.split("\n"))
-    #     print_result("push swap new", nlen, n)
-    #     # print(f"push_swap2: {nlen}")
-    # except subprocess.CalledProcessError as e:
-    #     print(f"Error executing ./push_swap2: {e}")
+
+def execute_p(test_string, n):
+    try:
+        push_swap_output = subprocess.check_output(
+            f'./push_swap {test_string}', shell=True, text=True
+        ).strip()
+        nlen = len(push_swap_output.split("\n"))
+        print_result("push swap    ", nlen, n)
+        # print(f"push_swap: {nlen}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing ./push_swap: {e}")
 
 def test_all():
     n = 100
@@ -69,6 +71,17 @@ def main():
             unique_numbers = generate_unique_numbers(n)
             test_string = " ".join(map(str, unique_numbers))
             print(test_string)
+            sys.exit(0)
+        except ValueError as e:
+            print(f"Invalid input: {e}")
+            sys.exit(1)
+    
+    if sys.argv[1] == "-p":
+        try:
+            n = int(sys.argv[2])
+            unique_numbers = generate_unique_numbers(n)
+            test_string = " ".join(map(str, unique_numbers))
+            execute_p(test_string, n)
             sys.exit(0)
         except ValueError as e:
             print(f"Invalid input: {e}")

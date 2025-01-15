@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../includes/utils.h"
 
 int	find_max(t_stack *s, t_move *move)
 {

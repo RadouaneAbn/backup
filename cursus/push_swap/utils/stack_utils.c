@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 15:33:07 by rabounou          #+#    #+#             */
-/*   Updated: 2025/01/14 15:33:08 by rabounou         ###   ########.fr       */
+/*   Created: 2025/01/14 15:24:51 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/15 13:08:17 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
+#include "../includes/defs.h"
 
-void	clean_exit(void *p1, void *p2, void *p3, void *p4)
+int	stack_isempty(t_stack *stack)
 {
-	if (p1)
-		free(p1);
-	if (p2)
-		free(p2);
-	if (p3)
-		free(p3);
-	if (p4)
-		free(p4);
-	write(1, "Error\n", 7);
+	return (stack->size == 0);
+}
+
+int	get_element(t_stack *stack, int idx)
+{
+	if (idx < 0)
+		return (stack->stack[(stack->rear + idx + stack->capacity)
+				% stack->capacity]);
+	return (stack->stack[(stack->front + idx) % stack->capacity]);
 }

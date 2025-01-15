@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
-#include "utils.h"
+#include "../includes/defs.h"
+#include "../includes/utils.h"
 
 int	notvalid_number(char *s)
 {

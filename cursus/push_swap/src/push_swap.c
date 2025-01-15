@@ -6,13 +6,13 @@
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:25:55 by rabounou          #+#    #+#             */
-/*   Updated: 2025/01/14 15:26:15 by rabounou         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:07:52 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "operations.h"
-#include "push_swap.h"
-#include "utils.h"
+#include "../includes/operations.h"
+#include "../includes/push_swap.h"
+#include "../includes/utils.h"
 
 void	organize_stack_a(t_stacks stack)
 {
@@ -75,8 +75,6 @@ int	main(int ac, char **av)
 	{
 		if (stack.capacity <= 3)
 			status = short_sort_a(stack);
-	//	else if (stack.capacity <= 6)
-	//		status = short_sort_6(stack);
 		else
 			status = sort_stack(stack);
 	}

@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 15:13:42 by rabounou          #+#    #+#             */
-/*   Updated: 2025/01/14 15:13:44 by rabounou         ###   ########.fr       */
+/*   Created: 2025/01/14 15:33:07 by rabounou          #+#    #+#             */
+/*   Updated: 2025/01/15 18:36:04 by rabounou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defs.h"
+#include "../includes/defs.h"
 
-int	ft_isspace(int c)
+void	clean_exit(void *p1, void *p2, void *p3, void *p4)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	return (0);
-}
-
-int	ft_isnum(int c)
-{
-	if ((c >= '0' && c <= '9'))
-		return (1);
-	return (0);
-}
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
+	if (p1)
+		free(p1);
+	if (p2)
+		free(p2);
+	if (p3)
+		free(p3);
+	if (p4)
+		free(p4);
+	write(2, "Error\n", 7);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../includes/utils.h"
 
 int	ft_atoi_safe(t_stack *stack, char *s, int size)
 {
