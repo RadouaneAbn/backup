@@ -52,4 +52,7 @@ int		get_correct_count(int ac, char **av);
 int		get_arg_count(char *s);
 // int convert_args_to_int(t_stack *a, char *s);
 
+void	make_move_separate(t_stacks stack, int *move, void rv(t_stacks, int),
+		void rrv(t_stacks, int));
+
 #endif

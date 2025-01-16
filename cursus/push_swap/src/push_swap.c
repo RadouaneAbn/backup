@@ -73,6 +73,8 @@ int	main(int ac, char **av)
 	{
 		if (stack.capacity <= 3)
 			status = short_sort_a(stack);
+		else if (stack.capacity <= 6)
+			status = short_sort_6(stack);
 		else
 			status = sort_stack(stack);
 	}
