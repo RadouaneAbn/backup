@@ -1,7 +1,6 @@
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 RM := rm -rf
-MAKE := make
 
 UTILS := utils/count_args.c utils/init_stack.c utils/push_calls.c utils/reverse_rotate_calls.c utils/rotate_calls.c \
 	utils/swap_calls.c utils/utils.c utils/convert.c utils/exit.c utils/stack_utils.c utils/validation.c utils/free_stacks.c
