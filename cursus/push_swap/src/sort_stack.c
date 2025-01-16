@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/operations.h"
-#include "../includes/utils.h"
 #include "../includes/push_swap.h"
+#include "../includes/utils.h"
 
 /**
  * short_sort_a: Sort a stack of size 3 or less
@@ -37,9 +37,11 @@ int	short_sort_a(t_stacks s)
 
 int	short_sort_b(t_stacks s)
 {
-	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b, 0) < get_element(s.b, 2))
+	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,
+			0) < get_element(s.b, 2))
 		rb(s, 1);
-	else if (get_element(s.b, 1) < get_element(s.b, 0) && get_element(s.b, 1) < get_element(s.b, 2))
+	else if (get_element(s.b, 1) < get_element(s.b, 0) && get_element(s.b,
+			1) < get_element(s.b, 2))
 		rrb(s, 1);
 	if (get_element(s.b, 0) < get_element(s.b, 1))
 		sb(s, 1);
@@ -56,8 +58,8 @@ int	short_sort_b(t_stacks s)
 
 int	short_sort_6(t_stacks s)
 {
-	int min_idx;
-	int side;
+	int	min_idx;
+	int	side;
 
 	while (s.a->size > 3)
 	{

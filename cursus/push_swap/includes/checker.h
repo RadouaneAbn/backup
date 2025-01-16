@@ -17,17 +17,19 @@
 # include "operations.h"
 # include "utils.h"
 
-typedef struct s_list {
-	int n;
-	struct s_list *next;
-}	t_list;
+typedef struct s_list
+{
+	int				n;
+	struct s_list	*next;
+}					t_list;
 
-typedef struct s_linkedlist {
-	t_list *head;
-	t_list *tail;
-}	t_linkedlist;
+typedef struct s_linkedlist
+{
+	t_list			*head;
+	t_list			*tail;
+}					t_linkedlist;
 
-enum			e_op
+enum				e_op
 {
 	PA,
 	PB,
@@ -43,9 +45,14 @@ enum			e_op
 	OP_COUNT
 };
 
-typedef void	(*t_instruct)(t_stacks, int);
+typedef void		(*t_instruct)(t_stacks, int);
 
-int				ft_strcmp(const char *s1, const char *s2);
-void	free_list(t_list *head);
+int					ft_strcmp(const char *s1, const char *s2);
+void				free_list(t_list *head);
+void				init_instructions(t_instruct (*instructions)[12]);
+int					get_instruction(char *s);
+int					read_instructions(t_linkedlist *list);
+void				execute_instructions(t_stacks stack, t_linkedlist list);
+int					create_and_append_node(t_linkedlist *list, int n);
 
 #endif
