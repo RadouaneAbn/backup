@@ -1,0 +1,9 @@
+a.out
+includes
+libft
+Makefile
+notes
+pipex
+src
+test.txt
+utils
