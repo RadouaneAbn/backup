@@ -107,37 +107,108 @@ int main (int ac, char **av, char **env)
 	return (0);
 }*/
 
+char **create_path_var(char **env)
+{
+	char *path_str;
+	char **path;
+
+	path_str = find_path(env);
+	path = ft_split(path_str + 5, ':');
+	return (path);
+}
+
+void creat_command_list(char ***commands, char **path, char **av, int ac)
+{
+	int i = 2;
+	int cmd_idx = 0;
+	while (i < ac - 1) {
+		commands[cmd_idx++] = build_command(av[i], path);
+		i++;
+	}
+	commands[cmd_idx] = NULL;
+	// printf("count: %d\n", cmd_idx);
+}
+
 int main(int ac, char **av, char **env)
 {
-	if (ac != 5)
-	{
+	// t_cmd_list *commands = malloc(sizeof(t_cmd_list));
+	char ***commands = malloc((ac - 2) * sizeof(char *));
+	// ft_bzero(commands, sizeof(t_cmd_list));
+	if (ac < 5) {
 		printf("Wrong format: ./pipex file1 cmd1 cmd2 file2\n");
 		exit(1);
 	}
-	char **path = ft_split(find_path(env) + 5, ':');
-	char **cmd1 = build_command(av[2], path);
-	char **cmd2 = build_command(av[3], path);
-
-	char **arr[2] = {cmd1, cmd2};
-	int id;
+	char **path = create_path_var(env);
 	int i = 0;
+	int j = 0;
+	
+	creat_command_list(commands, path, av, ac);
+	// while (commands[i])
+	// {
+	// 	j = 0;
+	// 	while (commands[i][j])
+	// 		printf("%s ", commands[i][j++]);
+	// 	printf("\n");
+	// 	i++;
+	// }
+	// char **cmd1 = build_command(av[2], path);
+	// char **cmd2 = build_command(av[3], path);
+	int in = open("in", O_RDONLY);
+
+	// char **arr[2] = {cmd1, cmd2};
+	int id, id1, id2, id3, id4;
+	// int i = 0;
 	int fd[2];
 	char buf[5000];
 	int ss;
+
+	i = 0;
+
 	pipe(fd);
-	while (i < 2) {
-		id = fork();
-		if (id == 0) {
-			dup2(fd[1], 1);
-			dup2(0, fd[0]);
-			execve(arr[i][0], arr[i], env);
-		} else {
-			wait(NULL);
-			close(fd[1]);
-			ss = read(fd[0], buf, 5000);
-			buf[ss] = 0;
-		}
-		i++;
+	// while (commands[i]) {
+	// 	// printf("%s\n", commands[i][0]);
+	// 	id = fork();
+	// 	if (id == 0) {
+	// 		if (commands[i + 1])
+	// 			dup2(fd[1], 1);
+	// 		if (i == 0)
+	// 			dup2(in, 0);
+	// 		else
+	// 			dup2(fd[0], 0);
+	// 		execve(commands[i][0], commands[i], env);
+	// 	}
+	// 	i++;
+	// }
+	// printf("reach: %d\n", i);
+
+	pipe(fd);
+	id1 = fork();
+	if (id1 == 0) {
+		dup2(fd[1], 1);
+		dup2(in, 0);
+		execve(commands[0][0], commands[0], env);
 	}
-	printf("%s\n", buf);
+
+	id2 = fork();
+	if (id2 == 0) {
+		// dup2(fd[1], 1);
+		dup2(fd[0], 0);
+		execve(commands[1][0], commands[1], env);
+	}
+
+	id3 = fork();
+	if (id3 == 0) {
+		// dup2(fd[1], 1);
+		dup2(fd[0], 0);
+		execve(commands[2][0], commands[2], env);
+	}
+
+	// id4 = fork();
+	// if (id4 == 0) {
+	// 	// dup2(fd[1], 1);
+	// 	dup2(fd[0], 0);
+	// 	execve(commands[2][0], commands[2], env);
+	// }
+
+	// printf("%s\n", buf);
 }

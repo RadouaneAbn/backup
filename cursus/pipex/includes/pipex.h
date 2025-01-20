@@ -9,4 +9,9 @@
 
 #include "../libft/libft.h"
 
+typedef struct s_cmd_list {
+    char ***cmd_list;
+    int cmd_count;
+} t_cmd_list;
+
 #endif
