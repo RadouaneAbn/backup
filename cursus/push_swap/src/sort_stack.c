@@ -48,14 +48,6 @@ int	short_sort_b(t_stacks s)
 	return (1);
 }
 
-/**
- * short_sort_6: Sort a stack of size 6 or less
- * Note:
- *  The sorting is done by making sure that the highest
- *  number is in the buttom of the stack
- *  then swith the first two elements if needed
- */
-
 int	short_sort_6(t_stacks s)
 {
 	int	min_idx;
