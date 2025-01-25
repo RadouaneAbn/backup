@@ -11,5 +11,5 @@ NAME := pipex
 
 all: $(NAME)
 
-$(NAME): src/pipex.c libft/libft.a
-	$(CC) $^ -o $@
+$(NAME): src/pipex.c utils/clean.c libft/libft.a
+	$(CC) -g $^ -o $@

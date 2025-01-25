@@ -131,77 +131,146 @@ void creat_command_list(char ***commands, char **path, char **av, int ac)
 
 int main(int ac, char **av, char **env)
 {
-	// t_cmd_list *commands = malloc(sizeof(t_cmd_list));
+	if (ac < 5) {
+		printf("Wrong format: ./pipex file1 cmd1 cmd2 file2\n");
+		exit(1);
+	}
 	char ***commands = malloc((ac - 2) * sizeof(char *));
+	char **path = create_path_var(env);
+	creat_command_list(commands, path, av, ac);
+	int in = open("in", O_RDONLY);
+	int id, id1, id2, id3, id4;
+	char buf[5000];
+	int i, j;
+	int fd[1024][2];
+
+	i = 0;
+	int n = ac - 3;
+	while (i < n)
+	{
+		if (i < n - 1)
+			pipe(fd[i]);
+		id = fork();
+		if (id == 0)
+		{
+			if (i < n - 1)
+			{
+				dup2(fd[i][1], STDOUT_FILENO);
+				close (fd[i][1]);
+			}
+			if (i == 0)
+			{
+				dup2(in, STDIN_FILENO);
+				// close (fd[i][0]);
+				close (in);
+			}
+			else if (i > 0)
+			{
+				dup2(fd[i - 1][0], STDIN_FILENO);
+				close(fd[i - 1][0]);
+			}
+			if (i < n - 1)
+				close (fd[i][0]);
+			execve(commands[i][0], commands[i], env);
+		}
+		if (i < n - 1)
+			close(fd[i][1]);
+		if (i > 0)
+			close(fd[i - 1][0]);
+		i++;
+	}
+
+	clean_all(commands, path);
+
+
+}
+/*
+int main(int ac, char **av, char **env)
+{
+	// t_cmd_list *commands = malloc(sizeof(t_cmd_list));
 	// ft_bzero(commands, sizeof(t_cmd_list));
 	if (ac < 5) {
 		printf("Wrong format: ./pipex file1 cmd1 cmd2 file2\n");
 		exit(1);
 	}
+	char ***commands = malloc((ac - 2) * sizeof(char *));
 	char **path = create_path_var(env);
-	int i = 0;
-	int j = 0;
-	
 	creat_command_list(commands, path, av, ac);
-	// while (commands[i])
-	// {
-	// 	j = 0;
-	// 	while (commands[i][j])
-	// 		printf("%s ", commands[i][j++]);
-	// 	printf("\n");
-	// 	i++;
-	// }
-	// char **cmd1 = build_command(av[2], path);
-	// char **cmd2 = build_command(av[3], path);
 	int in = open("in", O_RDONLY);
-
-	// char **arr[2] = {cmd1, cmd2};
 	int id, id1, id2, id3, id4;
-	// int i = 0;
-	int fd[2];
 	char buf[5000];
-	int ss;
+	int i, j;
+	int fd[5][2];
 
-	i = 0;
-
-	pipe(fd);
-	// while (commands[i]) {
-	// 	// printf("%s\n", commands[i][0]);
-	// 	id = fork();
-	// 	if (id == 0) {
-	// 		if (commands[i + 1])
-	// 			dup2(fd[1], 1);
-	// 		if (i == 0)
-	// 			dup2(in, 0);
-	// 		else
-	// 			dup2(fd[0], 0);
-	// 		execve(commands[i][0], commands[i], env);
-	// 	}
-	// 	i++;
-	// }
-	// printf("reach: %d\n", i);
-
-	pipe(fd);
+	
+	pipe(fd[0]);
 	id1 = fork();
 	if (id1 == 0) {
-		dup2(fd[1], 1);
-		dup2(in, 0);
+		dup2(fd[0][1], STDOUT_FILENO);
+		dup2(in, STDIN_FILENO);
+		close(fd[0][0]);
+		close(fd[0][1]);
 		execve(commands[0][0], commands[0], env);
 	}
 
+	close(fd[0][1]);
+	// fd[0][0] is still open
+
+	pipe(fd[1]);
 	id2 = fork();
 	if (id2 == 0) {
-		// dup2(fd[1], 1);
-		dup2(fd[0], 0);
+		dup2(fd[0][0], STDIN_FILENO);
+		dup2(fd[1][1], STDOUT_FILENO);
+		close(fd[0][0]);
+		close(fd[1][0]);
+		close(fd[1][1]);
 		execve(commands[1][0], commands[1], env);
 	}
 
+	close(fd[0][0]);
+	close(fd[1][1]);
+	// fd[1][0] is still open
+
+	pipe(fd[2]);
 	id3 = fork();
 	if (id3 == 0) {
-		// dup2(fd[1], 1);
-		dup2(fd[0], 0);
+		dup2(fd[1][0], STDIN_FILENO);
+		dup2(fd[2][1], STDOUT_FILENO);
+		close(fd[1][0]);
+		close(fd[2][0]);
+		close(fd[2][1]);
 		execve(commands[2][0], commands[2], env);
 	}
+
+	close(fd[1][0]);
+	close(fd[2][1]);
+	// fd[2][0] is still open
+
+
+	// pipe(fd[2]);
+	id4 = fork();
+	if (id4 == 0) {
+		// dup2(fd[2][1], STDOUT_FILENO);
+		dup2(fd[2][0], STDIN_FILENO);
+		close(fd[2][0]);
+		execve(commands[3][0], commands[3], env);
+	}
+
+	close(fd[2][0]);
+
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+
+	clean_all(commands, path);
+	// pipe(fd);
+	// id3 = fork();
+	// if (id3 == 0) {
+	// 	// dup2(fd[1], 1);
+	// 	dup2(fd[0], 0);
+	// 	execve(commands[2][0], commands[2], env);
+	// }
 
 	// id4 = fork();
 	// if (id4 == 0) {
@@ -212,3 +281,4 @@ int main(int ac, char **av, char **env)
 
 	// printf("%s\n", buf);
 }
+*/

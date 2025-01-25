@@ -9,9 +9,16 @@
 
 #include "../libft/libft.h"
 
+// typedef struct s_list {
+//     void *data;
+//     struct s_list *next;
+// } t_list;
+
 typedef struct s_cmd_list {
     char ***cmd_list;
     int cmd_count;
 } t_cmd_list;
+
+int clean_all(char ***cmds, char **path);
 
 #endif
