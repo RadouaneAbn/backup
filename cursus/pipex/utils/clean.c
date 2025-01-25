@@ -24,4 +24,5 @@ int clean_all(char ***cmds, char **path)
 		i++;
 	}
 	free(path);
+	return (0);
 }

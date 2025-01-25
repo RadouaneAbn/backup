@@ -145,6 +145,10 @@ int main(int ac, char **av, char **env)
 	int fd[1024][2];
 
 	i = 0;
+	/*
+		Use an old_read_end_pipe istead of using an array to store the value of
+		the read end file descriptor to be used in the nest command (iteration)
+	*/
 	int n = ac - 3;
 	while (i < n)
 	{
@@ -179,6 +183,8 @@ int main(int ac, char **av, char **env)
 			close(fd[i - 1][0]);
 		i++;
 	}
+
+	close(in);
 
 	clean_all(commands, path);
 
