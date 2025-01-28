@@ -113,21 +113,58 @@ void insertion_sort(t_chunks *chunks)
 	}
 }
 
-int find_best_target(t_stack *a, int chunk_n, t_chunks *chunks)
-{
-	int start;
-	int end;
-	int i;
-	int best_idx;
+// int element_in_chunk(int n, int start, int end, t_chunks *chunks)
+// {
+// 	while (start < end)
+// 	{
+// 		if (start < chunks->size && n == chunks->arr[start])
+// 			return (1);
+// 		start++;
+// 	}
+// 	return (0);
+// }
 
-	start = chunk_n * chunks->chunksize;
-	end = (chunk_n + 1) * chunks->chunksize;
-	i = 0;
-	while (i < a->size)
-	{
-		if (element_in_chunk(get_element(a, i), start, end));
-	}
-}
+// int find_best_target(t_stack *a, int chunk_n, t_chunks *chunks)
+// {
+// 	int start;
+// 	int end;
+// 	int i, j;
+// 	int best_idx;
+// 	int	middle;
+
+// 	if (a->size % 2 == 0)
+// 		middle = a->size / 2 - 1;
+// 	else
+// 		middle = a->size / 2;
+
+// 	start = chunk_n * chunks->chunksize;
+// 	end = (chunk_n + 1) * chunks->chunksize;
+// 	best_idx = -1;
+// 	i = 0;
+// 	while (i <= middle)
+// 	{
+// 		if (element_in_chunk(get_element(a, i), start, end, chunks))
+// 		{
+// 			best_idx = i;
+// 			break;
+// 		}
+// 		i++;
+// 	}
+// 	j = a->size - 1;
+// 	while (j > i)
+// 	{
+// 		if (element_in_chunk(get_element(a, j), start, end, chunks))
+// 		{
+// 			if (a->size - j < best_idx)
+// 			{
+// 				best_idx = -(a->size - j);
+// 				break;
+// 			}
+// 		}
+// 		j--;
+// 	}
+// 	return (best_idx);
+// }
 
 // 8 6 4 9 6 4 5 9 0 5 3 7 9 
 
@@ -140,14 +177,15 @@ int sort_stack_new(t_stacks stacks)
 	chunks = create_chunks(stacks);
 	insertion_sort(chunks);
 
-	chunk_n = 0;
-	best_idx = -1;
-	while (stacks.a->size != 0)
-	{
-		best_idx = find_best_target(stacks.a, chunk_n, chunks);
-	}
+	// chunk_n = 0;
+	// best_idx = -1;
+	// while (stacks.a->size != 0)
+	// {
+	// 	best_idx = find_best_target(stacks.a, chunk_n, chunks);
+	// 	// make
+	// }
 
-	return (1);
+	int median = chunks->arr[chunks->size / 2];
 }
 
 int	main(int ac, char **av)
