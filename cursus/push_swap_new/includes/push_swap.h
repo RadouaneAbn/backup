@@ -34,6 +34,7 @@ void	copy_move_to(t_move *src, t_move *dst);
 int		find_max(t_stack *s, t_move *move);
 int		find_min(t_stack *s, t_move *move);
 int		find_min_idx(t_stack *s);
+void	insertion_sort(int *arr, int size);
 
 int		short_sort_a(t_stacks s);
 int		find_side(t_stack *s, int idx);

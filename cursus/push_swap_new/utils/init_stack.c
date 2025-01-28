@@ -39,7 +39,7 @@ void	set_stack(t_stacks *stacks, int elements_count)
 	stacks->b->front = 0;
 }
 
-int	init_stack(t_stacks *stack, int ac, char **av)
+int	init_stacks(t_stacks *stack, int ac, char **av)
 {
 	int	i;
 	int	elements_count;

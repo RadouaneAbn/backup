@@ -39,177 +39,88 @@ void	organize_stack_a(t_stacks stack)
 	}
 }
 
-int	sort_stack(t_stacks stack)
+int	*copy_array(t_stack *stack, int size)
+{
+	int	*array;
+	int	i;
+
+	array = malloc(sizeof(int) * size);
+	if (array == NULL)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		array[i] = get_element(stack, i);
+		i++;
+	}
+	return (array);
+}
+
+int	push_to_b_according_to_median(t_stacks stacks)
+{
+	int	*array;
+	int	median;
+
+	array = copy_array(stacks.a, stacks.capacity);
+	if (array == NULL)
+		return (-1);
+	insertion_sort(array, stacks.capacity);
+	median = array[stacks.capacity / 2];
+	while (stacks.a->size != 0)
+	{
+		if (get_element(stacks.a, 0) > median)
+		{
+			pb(stacks, 1);
+			rb(stacks, 1);
+		}
+		else
+			pb(stacks, 1);
+	}
+	free(array);
+	return (0);
+}
+
+int	sort_stack(t_stacks stacks)
 {
 	t_move	*move;
 
-	while ((stack.a->size > 3) && (stack.b->size < 2))
-		pb(stack, 1);
-	while (stack.a->size > 0)
+	if (push_to_b_according_to_median(stacks) == -1)
+		return (-1);
+	while (stacks.a->size != 2)
+		pa(stacks, 1);
+	while (stacks.b->size != 0)
 	{
-		move = push_best_element(stack);
-		make_move(stack, move);
-		pb(stack, 1);
+		move = push_best_element(stacks);
+		if (move == NULL)
+			return (-1);
+		make_move(stacks, move);
+		pa(stacks, 1);
 		free(move);
 	}
-	while (stack.b->size > 0)
-		pa(stack, 1);
-	organize_stack_a(stack);
-	return (1);
-}
-
-t_chunks *create_chunks(t_stacks stacks)
-{
-	t_chunks *chunks;
-	int i;
-
-	chunks = malloc(sizeof(t_chunks));
-	if (chunks == NULL)
-		return (NULL);
-	chunks->size = stacks.capacity;
-	if (chunks->size < 100)
-		chunks->chunksize = chunks->size / SMALL_CHUNK;
-	else
-		chunks->chunksize = chunks->size / BIG_CHUNK;
-	chunks->arr = malloc(sizeof(int) * chunks->size);
-	if (chunks->arr == NULL)
-		return (free(chunks), NULL);
-	i = 0;
-	while (i < chunks->size)
-	{
-		chunks->arr[i] = get_element(stacks.a, i);
-		i++;
-	}
-	return (chunks);
-}
-
-void swap(int *a, int *b)
-{
-	int tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-void insertion_sort(t_chunks *chunks)
-{
-	int *arr;
-	int start;
-	int i;
-
-	arr = chunks->arr;
-	start = 0;
-	i = 1;
-	while (i < chunks->size)
-	{
-		start = i;
-		while (start > 0 && arr[start] < arr[start - 1])
-		{
-			swap(&arr[start], &arr[start - 1]);
-			start--;
-		}
-		i++;
-	}
-}
-
-// int element_in_chunk(int n, int start, int end, t_chunks *chunks)
-// {
-// 	while (start < end)
-// 	{
-// 		if (start < chunks->size && n == chunks->arr[start])
-// 			return (1);
-// 		start++;
-// 	}
-// 	return (0);
-// }
-
-// int find_best_target(t_stack *a, int chunk_n, t_chunks *chunks)
-// {
-// 	int start;
-// 	int end;
-// 	int i, j;
-// 	int best_idx;
-// 	int	middle;
-
-// 	if (a->size % 2 == 0)
-// 		middle = a->size / 2 - 1;
-// 	else
-// 		middle = a->size / 2;
-
-// 	start = chunk_n * chunks->chunksize;
-// 	end = (chunk_n + 1) * chunks->chunksize;
-// 	best_idx = -1;
-// 	i = 0;
-// 	while (i <= middle)
-// 	{
-// 		if (element_in_chunk(get_element(a, i), start, end, chunks))
-// 		{
-// 			best_idx = i;
-// 			break;
-// 		}
-// 		i++;
-// 	}
-// 	j = a->size - 1;
-// 	while (j > i)
-// 	{
-// 		if (element_in_chunk(get_element(a, j), start, end, chunks))
-// 		{
-// 			if (a->size - j < best_idx)
-// 			{
-// 				best_idx = -(a->size - j);
-// 				break;
-// 			}
-// 		}
-// 		j--;
-// 	}
-// 	return (best_idx);
-// }
-
-// 8 6 4 9 6 4 5 9 0 5 3 7 9 
-
-int sort_stack_new(t_stacks stacks)
-{
-	t_chunks *chunks;
-	int chunk_n;
-	int best_idx;
-
-	chunks = create_chunks(stacks);
-	insertion_sort(chunks);
-
-	// chunk_n = 0;
-	// best_idx = -1;
-	// while (stacks.a->size != 0)
-	// {
-	// 	best_idx = find_best_target(stacks.a, chunk_n, chunks);
-	// 	// make
-	// }
-
-	int median = chunks->arr[chunks->size / 2];
+	organize_stack_a(stacks);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	t_stacks	stack;
+	t_stacks	stacks;
 	int			status;
 
-	status = 0;
 	if (ac == 1)
 		return (0);
-	status = init_stack(&stack, ac, av);
+	status = init_stacks(&stacks, ac, av);
 	if (status == 0)
 		return (status);
-	if (is_not_sorted(stack.a))
+	if (is_not_sorted(stacks.a))
 	{
-		if (stack.capacity <= 3)
-			status = short_sort_a(stack);
-		else if (stack.capacity <= 6)
-			status = short_sort_6(stack);
+		if (stacks.capacity <= 3)
+			status = short_sort_a(stacks);
+		else if (stacks.capacity <= 6)
+			status = short_sort_6(stacks);
 		else
-			status = sort_stack_new(stack);
-			// status = sort_stack(stack);
+			status = sort_stack(stacks);
 	}
-	free_stacks(stack);
+	free_stacks(stacks);
 	if (status == -1)
 		exit(1);
 	return (0);

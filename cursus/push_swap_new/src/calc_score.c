@@ -20,8 +20,8 @@ void	calculate_score(t_stacks stack, t_move *move)
 	int	b;
 	int	score;
 
-	a = move->targeted_idx;
-	b = move->target_idx;
+	a = move->target_idx;
+	b = move->targeted_idx;
 	if (move->a_move >= 0 && move->b_move >= 0)
 		score = max(a, b);
 	else if (move->a_move < 0 && move->b_move < 0)
@@ -56,7 +56,7 @@ int	find_target(t_stack *s, t_move *move)
 	while (i < s->size)
 	{
 		current = get_element(s, i);
-		if (move->targeted > current && move->target < current)
+		if (move->targeted < current && move->target > current)
 		{
 			move->target = current;
 			move->target_idx = i;
@@ -65,14 +65,14 @@ int	find_target(t_stack *s, t_move *move)
 	}
 	if (move->target_idx != -1)
 		return (move->target_idx);
-	return (find_max(s, move));
+	return (find_min(s, move));
 }
 
-void	find_best_move(t_stacks stack, t_stack *s, t_move *move)
+void	find_best_move(t_stacks stack, t_stack *a, t_move *move)
 {
-	move->target_idx = find_target(s, move);
-	move->a_move = find_side(stack.a, move->targeted_idx);
-	move->b_move = find_side(stack.b, move->target_idx);
+	move->target_idx = find_target(a, move);
+	move->a_move = find_side(stack.a, move->target_idx);
+	move->b_move = find_side(stack.b, move->targeted_idx);
 	calculate_score(stack, move);
 }
 
@@ -84,13 +84,17 @@ t_move	*push_best_element(t_stacks stack)
 
 	i = 0;
 	current = init_move();
+	if (current == NULL)
+		return (NULL);
 	move = init_move();
-	while (i < stack.a->size)
+	if (move == NULL)
+		return (free(current), NULL);
+	while (i < stack.b->size)
 	{
 		clear_move(current);
-		current->targeted = get_element(stack.a, i);
+		current->targeted = get_element(stack.b, i);
 		current->targeted_idx = i;
-		find_best_move(stack, stack.b, current);
+		find_best_move(stack, stack.a, current);
 		if (current->score < move->score)
 			copy_move_to(current, move);
 		if (move->score == 0)

@@ -9,8 +9,11 @@ SRC := src/calc_score.c src/sort_stack.c src/moves.c src/push_swap.c src/utils_2
 BONUS := get_next_line/get_next_line.c get_next_line/get_next_line_utils.c src_bonus/checker.c \
 	src_bonus/ft_strcmp.c src_bonus/checker_utils.c src_bonus/instructions_utils.c
 
+DEBUG := debug/print_stack.c
+
 OBJ_FILES := $(UTILS:.c=.o) $(SRC:.c=.o)
 OBJ_FILES_BONUS := $(UTILS:.c=.o) $(BONUS:.c=.o)
+OBJ_FILES_DEBUG := $(DEBUG:.c=.o)
 
 NAME := push_swap
 BONUS_NAME := checker
@@ -24,10 +27,14 @@ bonus: $(OBJ_FILES_BONUS)
 	$(CC) $(CFLAGS) $^ -o $(BONUS_NAME)
 
 clean:
-	$(RM) $(OBJ_FILES) $(OBJ_FILES_BONUS)
+	$(RM) $(OBJ_FILES) $(OBJ_FILES_BONUS) $(OBJ_FILES_DEBUG)
+
+debug: $(OBJ_FILES) $(OBJ_FILES_DEBUG)
+	$(CC) $(CFLAGS) $^ -o $(NAME)
 
 fclean: clean
 	$(RM) $(NAME) $(BONUS_NAME)
+
 
 re: fclean all
 
