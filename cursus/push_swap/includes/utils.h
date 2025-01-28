@@ -20,7 +20,7 @@
 
 # include "defs.h"
 
-int		init_stack(t_stacks *stack, int ac, char **av);
+int		init_stacks(t_stacks *stack, int ac, char **av);
 
 int		already_in_stack(t_stack *s, int n);
 int		notvalid_number(char *s);

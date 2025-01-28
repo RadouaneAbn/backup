@@ -18,7 +18,7 @@ t_move	*init_move(void)
 	t_move	*move;
 
 	move = malloc(sizeof(t_move));
-	move->target = INT_MIN;
+	move->target = INT_MAX;
 	move->target_idx = -1;
 	move->targeted = 0;
 	move->targeted_idx = 0;
@@ -30,7 +30,7 @@ t_move	*init_move(void)
 
 void	clear_move(t_move *move)
 {
-	move->target = INT_MIN;
+	move->target = INT_MAX;
 	move->target_idx = -1;
 	move->targeted = 0;
 	move->targeted_idx = 0;

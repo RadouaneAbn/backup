@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 
 	if (ac == 1)
 		return (0);
-	init_stack(&stack, ac, av);
+	init_stacks(&stack, ac, av);
 	list.head = NULL;
 	list.tail = NULL;
 	status = read_instructions(&list);
