@@ -22,7 +22,7 @@
  *  then swith the first two elements if needed
  */
 
-int	short_sort_a(t_stacks s)
+int	short_sort_a(t_stack_group s)
 {
 	if (get_element(s.a, 0) > get_element(s.a, 1) && get_element(s.a,
 			0) > get_element(s.a, 2))
@@ -35,7 +35,7 @@ int	short_sort_a(t_stacks s)
 	return (1);
 }
 
-int	short_sort_b(t_stacks s)
+int	short_sort_b(t_stack_group s)
 {
 	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,
 			0) < get_element(s.b, 2))
@@ -48,7 +48,7 @@ int	short_sort_b(t_stacks s)
 	return (1);
 }
 
-int	short_sort_6(t_stacks s)
+int	short_sort_6(t_stack_group s)
 {
 	int	min_idx;
 	int	side;
@@ -65,4 +65,25 @@ int	short_sort_6(t_stacks s)
 	while (s.b->size != 0)
 		pa(s, 1);
 	return (1);
+}
+
+int	sort_stack(t_stack_group stacks)
+{
+	t_move	*move;
+
+	if (push_to_b_according_to_median(stacks) == -1)
+		return (-1);
+	while (stacks.a->size != 2)
+		pa(stacks, 1);
+	while (stacks.b->size != 0)
+	{
+		move = push_best_element(stacks);
+		if (move == NULL)
+			return (-1);
+		make_move(stacks, move);
+		pa(stacks, 1);
+		free(move);
+	}
+	organize_stack_a(stacks);
+	return (0);
 }

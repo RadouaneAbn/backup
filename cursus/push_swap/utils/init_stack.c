@@ -12,7 +12,7 @@
 
 #include "../includes/utils.h"
 
-void	allocate_stack(t_stacks *stack, int args_count)
+void	allocate_stack(t_stack_group *stack, int args_count)
 {
 	stack->a = (t_stack *)malloc(sizeof(t_stack));
 	if (stack->a == NULL)
@@ -28,7 +28,7 @@ void	allocate_stack(t_stacks *stack, int args_count)
 		clean_exit(stack->b, stack->a->stack, stack->a, NULL);
 }
 
-void	set_stack(t_stacks *stacks, int elements_count)
+void	set_stack(t_stack_group *stacks, int elements_count)
 {
 	stacks->capacity = elements_count;
 	stacks->a->capacity = elements_count;
@@ -39,7 +39,7 @@ void	set_stack(t_stacks *stacks, int elements_count)
 	stacks->b->front = 0;
 }
 
-int	init_stacks(t_stacks *stack, int ac, char **av)
+int	init_stacks(t_stack_group *stack, int ac, char **av)
 {
 	int	i;
 	int	elements_count;
@@ -55,8 +55,7 @@ int	init_stacks(t_stacks *stack, int ac, char **av)
 	while (i < ac)
 	{
 		if (convert_args_to_int(stack->a, av[i]) == -1)
-			clean_exit(stack->b->stack, stack->a->stack,
-				stack->b, stack->a);
+			clean_exit(stack->b->stack, stack->a->stack, stack->b, stack->a);
 		i++;
 	}
 	stack->a->rear = stack->a->size % stack->a->capacity;

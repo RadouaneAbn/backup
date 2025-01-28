@@ -21,21 +21,21 @@ void	rotate_stack(t_stack *stack)
 	stack->rear = (stack->rear + 1) % stack->capacity;
 }
 
-void	ra(t_stacks stack, int printable)
+void	ra(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "ra\n", 3);
 	rotate_stack(stack.a);
 }
 
-void	rb(t_stacks stack, int printable)
+void	rb(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "rb\n", 3);
 	rotate_stack(stack.b);
 }
 
-void	rr(t_stacks stack, int printable)
+void	rr(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "rr\n", 3);

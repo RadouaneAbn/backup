@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	t_stacks		stack;
+	t_stack_group	stack;
 	t_linkedlist	list;
 	int				status;
 

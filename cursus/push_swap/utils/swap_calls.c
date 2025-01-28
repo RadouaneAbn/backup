@@ -24,21 +24,21 @@ void	swap_elements(t_stack *stack)
 	stack->stack[(stack->front + 1) % stack->capacity] = tmp;
 }
 
-void	sa(t_stacks stack, int printable)
+void	sa(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "sa\n", 3);
 	swap_elements(stack.a);
 }
 
-void	sb(t_stacks stack, int printable)
+void	sb(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "sb\n", 3);
 	swap_elements(stack.b);
 }
 
-void	ss(t_stacks stack, int printable)
+void	ss(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "ss\n", 3);

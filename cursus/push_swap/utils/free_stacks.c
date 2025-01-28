@@ -12,7 +12,7 @@
 
 #include "../includes/defs.h"
 
-void	free_stacks(t_stacks stacks)
+void	free_stacks(t_stack_group stacks)
 {
 	free(stacks.a->stack);
 	free(stacks.b->stack);

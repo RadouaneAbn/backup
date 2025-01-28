@@ -14,7 +14,7 @@
 #include "../includes/push_swap.h"
 #include "../includes/utils.h"
 
-void	calculate_score(t_stacks stack, t_move *move)
+void	calculate_score(t_stack_group stack, t_move *move)
 {
 	int	a;
 	int	b;
@@ -68,15 +68,15 @@ int	find_target(t_stack *s, t_move *move)
 	return (find_min(s, move));
 }
 
-void	find_best_move(t_stacks stack, t_stack *a, t_move *move)
+void	find_best_move(t_stack_group stacks, t_stack *a, t_move *move)
 {
 	move->target_idx = find_target(a, move);
-	move->a_move = find_side(stack.a, move->target_idx);
-	move->b_move = find_side(stack.b, move->targeted_idx);
-	calculate_score(stack, move);
+	move->a_move = find_side(stacks.a, move->target_idx);
+	move->b_move = find_side(stacks.b, move->targeted_idx);
+	calculate_score(stacks, move);
 }
 
-t_move	*push_best_element(t_stacks stack)
+t_move	*push_best_element(t_stack_group stacks)
 {
 	t_move	*move;
 	t_move	*current;
@@ -89,12 +89,12 @@ t_move	*push_best_element(t_stacks stack)
 	move = init_move();
 	if (move == NULL)
 		return (free(current), NULL);
-	while (i < stack.b->size)
+	while (i < stacks.b->size)
 	{
 		clear_move(current);
-		current->targeted = get_element(stack.b, i);
+		current->targeted = get_element(stacks.b, i);
 		current->targeted_idx = i;
-		find_best_move(stack, stack.a, current);
+		find_best_move(stacks, stacks.a, current);
 		if (current->score < move->score)
 			copy_move_to(current, move);
 		if (move->score == 0)
