@@ -50,7 +50,7 @@ void	copy_move_to(t_move *src, t_move *dst)
 	dst->score = src->score;
 }
 
-void	make_move_separate(t_stack_group stack, int *move,
+void	 make_move_separate(t_stack_group stack, int *move,
 		void rv(t_stack_group, int), void rrv(t_stack_group, int))
 {
 	while (*move > 0)

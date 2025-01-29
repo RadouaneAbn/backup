@@ -70,18 +70,39 @@ int ft_abs(int n)
 	return (n);
 }
 
+void copy_and_sort_array(t_stack_group stacks, int arr[5])
+{
+	int i;
+
+	i = -1;
+	while (++i < stacks.a->size)
+		arr[i] = get_element(stacks.a, i);
+	insertion_sort(arr, stacks.a->size);
+}
+
+void short_sort_5_healper(t_stack_group s, int elm1, int elm2)
+{
+	int a;
+	int b;
+	int last;
+
+	a = find_side(s.a, get_idx(s.a, elm1));
+	b = find_side(s.a, get_idx(s.a, elm2));
+	last = 1;
+	if (ft_abs(a) < ft_abs(b))
+		make_move_separate(s, &a, ra, rra);
+	else
+		make_move_separate(s, &b, ra, rra);
+}
+
 int	short_sort_5(t_stack_group s)
 {
 	int arr[5];
-	int i;
 	int a;
 	int b;
 	int c;
 
-	i = -1;
-	while (++i < s.a->size)
-		arr[i] = get_element(s.a, i);
-	insertion_sort(arr, s.a->size);
+	copy_and_sort_array(s, arr);
 	a = find_side(s.a, get_idx(s.a, arr[0]));
 	b = find_side(s.a, get_idx(s.a, arr[1]));
 	if (ft_abs(a) < ft_abs(b))
