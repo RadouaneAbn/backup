@@ -175,7 +175,13 @@ int main(int ac, char **av, char **env)
 			}
 			if (i < n - 1)
 				close (fd[i][0]);
-			execve(commands[i][0], commands[i], env);
+			if (access(commands[i][0], F_OK) == -1)
+			{
+				// dup2(1, 2);
+				write(2, "zsh: command not found: cmd", 27);
+			}
+			else
+				execve(commands[i][0], commands[i], env);
 		}
 		if (i < n - 1)
 			close(fd[i][1]);
@@ -186,7 +192,7 @@ int main(int ac, char **av, char **env)
 
 	close(in);
 
-	clean_all(commands, path);
+	// clean_all(commands, path);
 
 
 }
