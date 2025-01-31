@@ -35,6 +35,7 @@ int	short_sort_a(t_stacks s)
 	return (1);
 }
 
+
 int	short_sort_b(t_stacks s)
 {
 	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,

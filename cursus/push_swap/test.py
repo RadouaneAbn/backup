@@ -30,6 +30,8 @@ def execute(test_string, n):
             return 1
         elif n == 100 and nlen < 700:
             return 1
+        else:
+            print(test_string)
         return 0
     except subprocess.CalledProcessError as e:
         print(f"Error executing ./push_swap: {e}")

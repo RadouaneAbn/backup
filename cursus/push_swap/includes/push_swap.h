@@ -25,7 +25,6 @@ int		sort_stack(t_stacks stack);
 int		short_sort_a(t_stacks s);
 int		short_sort_6(t_stacks s);
 
-void	s_print(t_stack *a, t_stack *b);
 
 /* Stack call functions */
 
@@ -38,6 +37,7 @@ int		find_min(t_stack *s, t_move *move);
 int		find_min_idx(t_stack *s);
 
 int		short_sort_a(t_stacks s);
+int		short_sort_b(t_stacks s);
 int		find_side(t_stack *s, int idx);
 
 t_move	*push_best_element(t_stacks stack);

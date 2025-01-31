@@ -39,12 +39,20 @@ void	organize_stack_a(t_stacks stack)
 	}
 }
 
+int swappable(t_stack *s)
+{
+	if (get_element(s, 0) > get_element(s, 1))
+		return (1);
+	return (0);
+}
+
 int	sort_stack(t_stacks stack)
 {
 	t_move	*move;
 
 	while ((stack.a->size > 3) && (stack.b->size < 2))
 		pb(stack, 1);
+	// short_sort_b(stack);
 	while (stack.a->size > 0)
 	{
 		move = push_best_element(stack);
