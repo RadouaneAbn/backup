@@ -75,37 +75,6 @@ char **build_command(char *cmd, char **path)
     // execve(cmd_parsed[0], cmd_parsed, env);
     return (cmd_parsed);
 }
-/*
-int main (int ac, char **av, char **env)
-{
-	char buf[5000];
-	int size;
-	if (ac != 2)
-		return (0);
-	int fd[2];
-	pipe(fd);
-	char **path = ft_split(find_path(env) + 5, ':');
-	char **cmd_parsed = build_command(av[1], path);
-	
-	int id = fork();
-	if (id == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		execve(cmd_parsed[0], cmd_parsed, env);
-	}
-	else
-	{
-		int f = open("test.txt", O_RDWR);
-		//wait(NULL);
-		size = read(fd[0], buf, 5000);
-		buf[size] = 0;
-		printf("%s\n", buf);
-		write(f, buf, size);
-	}
-	printf("Done\n");
-	return (0);
-}*/
 
 char **create_path_var(char **env)
 {
@@ -142,7 +111,9 @@ int main(int ac, char **av, char **env)
 	int id, id1, id2, id3, id4;
 	char buf[5000];
 	int i, j;
-	int fd[1024][2];
+	// int fd[1024][2];
+	int fd[2];
+	int fd_in;
 
 	i = 0;
 	/*
@@ -150,37 +121,44 @@ int main(int ac, char **av, char **env)
 		the read end file descriptor to be used in the nest command (iteration)
 	*/
 	int n = ac - 3;
+	fd_in = in;
 	while (i < n)
 	{
 		if (i < n - 1)
-			pipe(fd[i]);
+			pipe(fd);
 		id = fork();
 		if (id == 0)
 		{
-			if (i < n - 1)
-			{
-				dup2(fd[i][1], STDOUT_FILENO);
-				close (fd[i][1]);
-			}
-			if (i == 0)
-			{
-				dup2(in, STDIN_FILENO);
-				// close (fd[i][0]);
-				close (in);
-			}
-			else if (i > 0)
-			{
-				dup2(fd[i - 1][0], STDIN_FILENO);
-				close(fd[i - 1][0]);
-			}
-			if (i < n - 1)
-				close (fd[i][0]);
+			dup2(fd_in, STDIN_FILENO);
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+			close(fd_in);
+			// if (i < n - 1)
+			// {
+			// 	dup2(fd[1], STDOUT_FILENO);
+			// 	close (fd[1]);
+			// }
+			// if (i == 0)
+			// {
+			// 	dup2(in, STDIN_FILENO);
+			// 	// close (fd[0]);
+			// 	close (in);
+			// }
+			// else if (i > 0)
+			// {
+			// 	dup2(fd[0], STDIN_FILENO);
+			// 	close(fd[0]);
+			// }
+			// if (i < n - 1)
+			// 	close (fd[0]);
 			execve(commands[i][0], commands[i], env);
 		}
-		if (i < n - 1)
-			close(fd[i][1]);
-		if (i > 0)
-			close(fd[i - 1][0]);
+		// if (i < n - 1)
+		// 	close(fd[1]);
+		// if (i > 0)
+		// 	close(fd[0]);
+		close(fd_in);
+		fd_in = fd[0];
 		i++;
 	}
 
