@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "debug.h"
 
 void	print_move(t_move *move)
 {
@@ -78,7 +78,7 @@ void	print_stack_solo(t_stack *stack, char stack_name)
 	printf("#=============#\n\n");
 }
 
-void	print_stack(t_stacks stack)
+void	print_stack(t_stack_group stack)
 {
 	printf("#=============#    #=============#\n");
 	print_stack_ab(stack.a, stack.b, stack.capacity);

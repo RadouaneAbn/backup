@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 	{
 		if (stacks.capacity <= 3)
 			status = short_sort_a(stacks);
-		else if (stacks.capacity <= 6)
+		else if (stacks.capacity <= 5)
 			status = short_sort_6(stacks);
 		else
 			status = sort_stack(stacks);

@@ -164,7 +164,7 @@ int main(int ac, char **av, char **env)
 
 	close(in);
 
-	clean_all(commands, path);
+	// clean_all(commands, path);
 
 
 }

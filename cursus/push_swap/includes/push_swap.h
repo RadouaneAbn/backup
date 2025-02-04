@@ -21,7 +21,7 @@
 int		sort_stack(t_stack_group stacks);
 void	insertion_sort(int *arr, int size);
 int		short_sort_a(t_stack_group s);
-int		short_sort_6(t_stack_group s);
+int		short_sort_5(t_stack_group s);
 
 t_move	*init_move(void);
 void	clear_move(t_move *move);

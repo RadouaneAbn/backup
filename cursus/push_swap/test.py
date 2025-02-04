@@ -13,11 +13,11 @@ def generate_unique_numbers(n):
 
 def print_result(str, nlen, n):
     if (n <= 100 and nlen <= 700) or ((n > 100 and n <= 500) and nlen <= 5500):
-        print(f"{str}: \033[32m{nlen}\033[0m")
+        print(f"{str}: \033[32m{nlen}\033[0m", end=" ")
     elif (n <= 100 and nlen <= 800) or ((n > 100 and n <= 500) and nlen <= 6000):
-        print(f"{str}: \033[33m{nlen}\033[0m")
+        print(f"{str}: \033[33m{nlen}\033[0m", end=" ")
     else:
-        print(f"{str}: \033[31m{nlen}\033[0m")
+        print(f"{str}: \033[31m{nlen}\033[0m", end=" ")
 
 def execute(test_string, n):
     try:
@@ -26,6 +26,12 @@ def execute(test_string, n):
         ).strip()
         nlen = len(push_swap_output.split("\n"))
         print_result("push swap    ", nlen, n)
+        result = subprocess.check_output(
+            f'./push_swap {test_string} | ./checker {test_string}', shell=True, text=True
+        ).strip()
+        print(result)
+        if (result != "OK"):
+            print(test_string)
         if n == 500 and nlen < 5500:
             return 1
         elif n == 100 and nlen < 700:
