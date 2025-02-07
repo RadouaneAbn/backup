@@ -67,3 +67,31 @@ int	find_min(t_stack *s, t_move *move)
 	move->target = get_element(s, min_idx);
 	return (min_idx);
 }
+
+void	swap(int *a, int *b)
+{
+	int	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+void	insertion_sort(int *arr, int size)
+{
+	int	start;
+	int	i;
+
+	start = 0;
+	i = 1;
+	while (i < size)
+	{
+		start = i;
+		while (start > 0 && arr[start] < arr[start - 1])
+		{
+			swap(&arr[start], &arr[start - 1]);
+			start--;
+		}
+		i++;
+	}
+}

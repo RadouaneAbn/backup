@@ -14,13 +14,13 @@
 
 int	main(int ac, char **av)
 {
-	t_stacks		stack;
+	t_stack_group	stack;
 	t_linkedlist	list;
 	int				status;
 
 	if (ac == 1)
 		return (0);
-	init_stack(&stack, ac, av);
+	init_stacks(&stack, ac, av);
 	list.head = NULL;
 	list.tail = NULL;
 	status = read_instructions(&list);

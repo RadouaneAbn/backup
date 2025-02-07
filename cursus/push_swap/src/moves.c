@@ -18,7 +18,7 @@ t_move	*init_move(void)
 	t_move	*move;
 
 	move = malloc(sizeof(t_move));
-	move->target = INT_MIN;
+	move->target = INT_MAX;
 	move->target_idx = -1;
 	move->targeted = 0;
 	move->targeted_idx = 0;
@@ -30,7 +30,7 @@ t_move	*init_move(void)
 
 void	clear_move(t_move *move)
 {
-	move->target = INT_MIN;
+	move->target = INT_MAX;
 	move->target_idx = -1;
 	move->targeted = 0;
 	move->targeted_idx = 0;
@@ -50,8 +50,8 @@ void	copy_move_to(t_move *src, t_move *dst)
 	dst->score = src->score;
 }
 
-void	make_move_separate(t_stacks stack, int *move, void rv(t_stacks, int),
-		void rrv(t_stacks, int))
+void	 make_move_separate(t_stack_group stack, int *move,
+		void rv(t_stack_group, int), void rrv(t_stack_group, int))
 {
 	while (*move > 0)
 	{
@@ -65,7 +65,7 @@ void	make_move_separate(t_stacks stack, int *move, void rv(t_stacks, int),
 	}
 }
 
-void	make_move(t_stacks stack, t_move *move)
+void	make_move(t_stack_group stack, t_move *move)
 {
 	if (move->a_move >= 0 && move->b_move >= 0)
 	{

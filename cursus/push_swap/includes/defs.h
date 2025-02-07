@@ -32,7 +32,7 @@ typedef struct s_stacks
 	t_stack	*a;
 	t_stack	*b;
 	int		capacity;
-}			t_stacks;
+}			t_stack_group;
 
 typedef struct s_move
 {
@@ -44,5 +44,15 @@ typedef struct s_move
 	int		b_move;
 	int		score;
 }			t_move;
+
+# define SMALL_CHUNK 5
+# define BIG_CHUNK 11
+
+typedef struct s_chunks
+{
+	int		*arr;
+	int		chunksize;
+	int		size;
+}			t_chunks;
 
 #endif

@@ -21,21 +21,21 @@ void	reverse_rotate_stack(t_stack *stack)
 	stack->stack[stack->front] = stack->stack[stack->rear];
 }
 
-void	rra(t_stacks stack, int printable)
+void	rra(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "rra\n", 4);
 	reverse_rotate_stack(stack.a);
 }
 
-void	rrb(t_stacks stack, int printable)
+void	rrb(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "rrb\n", 4);
 	reverse_rotate_stack(stack.b);
 }
 
-void	rrr(t_stacks stack, int printable)
+void	rrr(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "rrr\n", 4);

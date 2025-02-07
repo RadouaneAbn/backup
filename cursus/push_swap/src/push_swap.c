@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/operations.h"
-#include "../includes/push_swap.h"
 #include "../includes/utils.h"
+<<<<<<< HEAD
 
 void	organize_stack_a(t_stacks stack)
 {
@@ -65,28 +65,30 @@ int	sort_stack(t_stacks stack)
 	organize_stack_a(stack);
 	return (1);
 }
+=======
+#include "../includes/push_swap.h"
+>>>>>>> 218e8f4af2b25ed20c6f3afbe6fed82b29308091
 
 int	main(int ac, char **av)
 {
-	t_stacks	stack;
-	int			status;
+	t_stack_group	stacks;
+	int				status;
 
-	status = 0;
 	if (ac == 1)
 		return (0);
-	status = init_stack(&stack, ac, av);
+	status = init_stacks(&stacks, ac, av);
 	if (status == 0)
 		return (status);
-	if (is_not_sorted(stack.a))
+	if (is_not_sorted(stacks.a))
 	{
-		if (stack.capacity <= 3)
-			status = short_sort_a(stack);
-		else if (stack.capacity <= 6)
-			status = short_sort_6(stack);
+		if (stacks.capacity <= 3)
+			status = short_sort_a(stacks);
+		else if (stacks.capacity <= 5)
+			status = short_sort_6(stacks);
 		else
-			status = sort_stack(stack);
+			status = sort_stack(stacks);
 	}
-	free_stacks(stack);
+	free_stacks(stacks);
 	if (status == -1)
 		exit(1);
 	return (0);

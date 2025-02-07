@@ -12,7 +12,7 @@
 
 #include "../includes/defs.h"
 
-void	pa(t_stacks stack, int printable)
+void	pa(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "pa\n", 3);
@@ -25,7 +25,7 @@ void	pa(t_stacks stack, int printable)
 	stack.b->front = (stack.b->front + 1) % stack.capacity;
 }
 
-void	pb(t_stacks stack, int printable)
+void	pb(t_stack_group stack, int printable)
 {
 	if (printable)
 		write(1, "pb\n", 3);

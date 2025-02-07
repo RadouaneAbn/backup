@@ -13,3 +13,6 @@ all: $(NAME)
 
 $(NAME): src/pipex.c utils/clean.c libft/libft.a
 	$(CC) -g $^ -o $@
+
+clean:
+	$(RM) $(NAME)

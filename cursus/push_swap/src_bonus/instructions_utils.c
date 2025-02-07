@@ -75,11 +75,13 @@ int	read_instructions(t_linkedlist *list)
 	return (0);
 }
 
-void	execute_instructions(t_stacks stack, t_linkedlist list)
+void	execute_instructions(t_stack_group stack, t_linkedlist list)
 {
 	t_list		*current;
 	t_instruct	instruction[12];
 
+	if (list.head == NULL)
+		return ;
 	init_instructions(&instruction);
 	current = list.head;
 	while (current)
