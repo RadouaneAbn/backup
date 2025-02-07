@@ -1,20 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef enum e_types {
-	INT,
-	CHAR,
-	STRING,
-	GARBAGE_COLLECTOR
-}	DataType;
-
-typedef struct s_list
-{
-	void						*data;
-	DataType					type;
-	struct s_list	*next;
-}	t_list;
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+#include "../includes/garbage_collector.h"
 
 t_list **collector()
 {
@@ -115,7 +102,7 @@ void	*ft_malloc(int size, int save)
 		save_ptr(mal);
 	return (mal);
 }
-
+/*
 int	main()
 {
 	t_list **head, *cur;
@@ -147,3 +134,4 @@ int	main()
 	free(s6);
 	return (0);
 }
+*/
