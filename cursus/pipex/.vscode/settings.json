@@ -1,5 +1,7 @@
 {
   "files.associations": {
-    "pipex.h": "c"
+    "pipex.h": "c",
+    "string.h": "c",
+    "garbage_collector.h": "c"
   }
 }
