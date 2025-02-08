@@ -3,6 +3,8 @@
 
 #include "../includes/defs.h"
 
+// #define SAVE 1
+// #define NO_SAVE 0
 
 typedef enum e_types {
 	INT,
@@ -11,14 +13,13 @@ typedef enum e_types {
 	GARBAGE_COLLECTOR
 }	DataType;
 
-typedef struct s_list
+typedef struct s_node
 {
 	void						*data;
-	DataType					type;
-	struct s_list	*next;
-}	t_list;
+	struct s_node	*next;
+}	t_node;
 
-void	*ft_malloc(int size, int save);
+void	*ft_malloc(int size);
 void free_all();
 void free_ptr(void *addr);
 void	save_ptr(void *data);

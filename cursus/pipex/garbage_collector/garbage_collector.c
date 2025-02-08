@@ -2,19 +2,20 @@
 // #include <stdlib.h>
 // #include <string.h>
 #include "../includes/garbage_collector.h"
+#include "../includes/utils.h"
 
-t_list **collector()
+t_node **collector()
 {
-	static t_list *head = NULL;
+	static t_node *head = NULL;
 
 	return (&head);
 }
 
 void free_all()
 {
-	t_list **head;
-	t_list *cur;
-	t_list *next;
+	t_node **head;
+	t_node *cur;
+	t_node *next;
 
 	head = collector();
 	cur = *head;
@@ -30,10 +31,10 @@ void free_all()
 
 void free_ptr(void *addr)
 {
-	t_list **head;
-	t_list *current;
-	t_list *prev;
-	t_list *tmp;
+	t_node **head;
+	t_node *current;
+	t_node *prev;
+	t_node *tmp;
 
 	head = collector();
 	if (head == NULL || *head == NULL)
@@ -58,11 +59,11 @@ void free_ptr(void *addr)
 	}
 }
 
-t_list *create_node(void *data)
+t_node *create_node(void *data)
 {
-	t_list *node;
+	t_node *node;
 
-	node = malloc(sizeof(t_list));
+	node = malloc(sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	node->data = data;
@@ -70,9 +71,9 @@ t_list *create_node(void *data)
 	return (node);
 }
 
-t_list *add_front(t_list **head, void *data)
+t_node *add_front(t_node **head, void *data)
 {
-	t_list *node;
+	t_node *node;
 
 	node = create_node(data);
 	if (node == NULL)
@@ -84,28 +85,28 @@ t_list *add_front(t_list **head, void *data)
 
 void	save_ptr(void *data)
 {
-	t_list **head;
-	t_list *node;
+	t_node **head;
+	t_node *node;
 
 	head = collector();
 	add_front(head, data);
 }
 
-void	*ft_malloc(int size, int save)
+void	*ft_malloc(int size)
 {
 	void *mal;
 
 	mal = malloc(size);
 	if (mal == NULL)
-		return (NULL);
-	if (save)
-		save_ptr(mal);
+		clean_exit(1);
+	// if (save)
+	// 	save_ptr(mal);
 	return (mal);
 }
 /*
 int	main()
 {
-	t_list **head, *cur;
+	t_node **head, *cur;
 	char *s1 = ft_malloc(20, 1);
 	char *s2 = ft_malloc(20, 1);
 	char *s3 = ft_malloc(20, 1);
