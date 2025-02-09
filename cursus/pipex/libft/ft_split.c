@@ -82,7 +82,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	slen = ft_strlen(s);
 	size = get_word_count(s, c, slen) + 1;
-	arr = (char **) malloc(size * sizeof(char *));
+	arr = (char **)malloc(size * sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	arr = split_string(s, c, arr, slen);

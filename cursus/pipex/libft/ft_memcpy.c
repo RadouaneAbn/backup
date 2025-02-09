@@ -28,13 +28,14 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
-#include <string.h>
 #include <stdio.h>
-int main ()
+#include <string.h>
+
+int	main(void)
 {
-    char a[] = "oussama";
+	char	a[];
 
-    ft_memcpy((a + 1) , a, 3);
-
-    printf("%s", a + 1);
+	a[] = "oussama";
+	ft_memcpy((a + 1), a, 3);
+	printf("%s", a + 1);
 }

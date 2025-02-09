@@ -11,7 +11,7 @@ NAME := pipex
 
 all: $(NAME)
 
-$(NAME): src/pipex.c utils/clean.c utils/parser.c garbage_collector/garbage_collector.c \
+$(NAME): src/pipex.c src/pipex_utils.c utils/clean.c utils/parser.c garbage_collector/garbage_collector.c \
 	libft/libft.a test/malloc_test.c
 	$(CC) -g $^ -o $@
 

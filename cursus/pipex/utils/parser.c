@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "../includes/garbage_collector.h"
 #include "../includes/utils.h"
+#include "../libft/libft.h"
 
 static size_t	get_word_count(char *s, char c, size_t slen)
 {
@@ -37,9 +37,9 @@ static size_t	get_word_count(char *s, char c, size_t slen)
 	return (wcount);
 }
 
-char **free_array(char **words)
+char	**free_array(char **words)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (words[i])
@@ -48,13 +48,13 @@ char **free_array(char **words)
 	return (NULL);
 }
 
-char *ft_strndup(char *s, int slen)
+char	*ft_strndup(char *s, int slen)
 {
-	char *new_s;
-	int i;
+	char	*new_s;
+	int		i;
 
 	i = 0;
-	new_s = (char *) ft_malloc(slen + 1);
+	new_s = (char *)ft_smalloc(slen + 1);
 	if (new_s == NULL)
 		return (NULL);
 	while (s[i] && i < slen)
@@ -104,7 +104,7 @@ char	**ft_parser(char *s, char c)
 		return (NULL);
 	slen = ft_strlen(s);
 	size = get_word_count(s, c, slen) + 1;
-	arr = (char **) ft_malloc(size * sizeof(char *));
+	arr = (char **)ft_smalloc(size * sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	arr = split_string(s, c, arr, slen);
