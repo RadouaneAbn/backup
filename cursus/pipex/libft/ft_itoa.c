@@ -18,7 +18,7 @@ static char	*itoa_helper(char *arr, int size)
 	char	*s;
 
 	i = 0;
-	s = (char *) malloc((size + 1) * sizeof(char));
+	s = (char *)malloc((size + 1) * sizeof(char));
 	if (s == NULL)
 		return (NULL);
 	while (--size >= 0)

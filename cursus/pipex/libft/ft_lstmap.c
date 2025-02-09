@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	void	lstmap_healper(t_list **head, t_list **tail, t_list *node)
+static void	lstmap_healper(t_list **head, t_list **tail, t_list *node)
 {
 	if (*head == NULL)
 	{
@@ -42,7 +42,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		new_node = ft_lstnew(tmp);
 		if (new_node == NULL)
 		{
-			free(tmp);    
+			free(tmp);
 			ft_lstclear(&head, del);
 			return (NULL);
 		}

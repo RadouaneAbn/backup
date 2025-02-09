@@ -2,6 +2,8 @@
   "files.associations": {
     "pipex.h": "c",
     "string.h": "c",
-    "garbage_collector.h": "c"
+    "garbage_collector.h": "c",
+    "libft.h": "c",
+    "ft_fprintf.h": "c"
   }
 }

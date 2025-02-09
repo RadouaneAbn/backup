@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/garbage_collector.h"
+#include "../includes/utils.h"
+#include "../libft/libft.h"
 
-static size_t	get_word_count(char const *s, char c, size_t slen)
+static size_t	get_word_count(char *s, char c, size_t slen)
 {
 	size_t	wcount;
 	size_t	i;
@@ -35,44 +37,64 @@ static size_t	get_word_count(char const *s, char c, size_t slen)
 	return (wcount);
 }
 
-static void	*free_all(char **arr, size_t idx)
+char	**free_array(char **words)
 {
-	while (--idx > 0)
-		free(arr[idx - 1]);
-	free(arr);
+	int	i;
+
+	i = 0;
+	while (words[i])
+		free(words[i++]);
+	free(words);
 	return (NULL);
 }
 
-static char	**split_string(char const *s, char c, char **arr, int slen)
+char	*ft_strndup(char *s, int slen)
+{
+	char	*new_s;
+	int		i;
+
+	i = 0;
+	new_s = (char *)ft_smalloc(slen + 1);
+	if (new_s == NULL)
+		return (NULL);
+	while (s[i] && i < slen)
+	{
+		new_s[i] = s[i];
+		i++;
+	}
+	new_s[i] = 0;
+	return (new_s);
+}
+
+static char	**split_string(char *s, char c, char **arr, int slen)
 {
 	int	i;
 	int	j;
 	int	idx;
 	int	word_found;
 
-	i = -1;
+	i = 0;
 	word_found = 0;
 	idx = 0;
-	while (++i <= slen)
+	while (i <= slen)
 	{
-		if (!word_found && (s[i] != c && s[i] != '\0'))
+		while (s[i] == c)
+			i++;
+		j = i;
+		while (s[j] != c)
+			j++;
+		if (i != j)
 		{
-			j = i;
-			word_found = 1;
+			arr[idx] = ft_strndup(s + i, j - i);
+			idx++;
 		}
-		else if (word_found && (s[i] == c || s[i] == '\0'))
-		{
-			arr[idx] = ft_substr(s, j, i - j);
-			word_found = 0;
-			if (arr[idx++] == NULL)
-				return (free_all(arr, idx));
-		}
+		i = j;
 	}
 	arr[idx] = NULL;
 	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_parser(char *s, char c)
 {
 	size_t	size;
 	char	**arr;
@@ -82,7 +104,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	slen = ft_strlen(s);
 	size = get_word_count(s, c, slen) + 1;
-	arr = (char **)malloc(size * sizeof(char *));
+	arr = (char **)ft_smalloc(size * sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	arr = split_string(s, c, arr, slen);

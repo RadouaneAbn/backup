@@ -36,7 +36,12 @@ int	short_sort_a(t_stack_group s)
 	return (1);
 }
 
+<<<<<<< HEAD
+
+int	short_sort_b(t_stacks s)
+=======
 int	short_sort_b(t_stack_group s)
+>>>>>>> 218e8f4af2b25ed20c6f3afbe6fed82b29308091
 {
 	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,
 			0) < get_element(s.b, 2))
