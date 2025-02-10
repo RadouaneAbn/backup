@@ -86,7 +86,6 @@ t_node	*add_front(t_node **head, void *data)
 void	save_ptr(void *data)
 {
 	t_node	**head;
-	t_node	*node;
 
 	head = collector();
 	add_front(head, data);

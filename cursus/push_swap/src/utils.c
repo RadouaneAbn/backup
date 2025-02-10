@@ -1,6 +1,18 @@
-#include "../includes/utils.h"
-#include "../includes/push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/08 16:00:11 by rabounou          #+#    #+#             */
+/*   Updated: 2025/02/08 16:00:27 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/operations.h"
+#include "../includes/push_swap.h"
+#include "../includes/utils.h"
 
 void	organize_stack_a(t_stack_group stack)
 {

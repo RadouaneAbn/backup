@@ -1,9 +1,8 @@
 {
-  "files.associations": {
-    "pipex.h": "c",
-    "string.h": "c",
-    "garbage_collector.h": "c",
-    "libft.h": "c",
-    "ft_fprintf.h": "c"
-  }
+    "files.associations": {
+        "garbage_collector.h": "c",
+        "utils.h": "c",
+        "unistd.h": "c",
+        "stdio.h": "c"
+    }
 }

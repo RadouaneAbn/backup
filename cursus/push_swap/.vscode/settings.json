@@ -1,7 +1,7 @@
 {
   "files.associations": {
-    "utils.h": "c",
-    "debug.h": "c",
-    "defs.h": "c"
+    "push_swap.h": "c",
+    "operations.h": "c",
+    "utils.h": "c"
   }
 }

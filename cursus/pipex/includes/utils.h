@@ -6,5 +6,7 @@ void *ft_malloc_test(int size);
 
 char	**ft_parser(char *s, char c);
 void clean_exit(int exit_code);
+void print_cmd_v(char **cmd_v);
+void ft_puts(char *s);
 
 #endif

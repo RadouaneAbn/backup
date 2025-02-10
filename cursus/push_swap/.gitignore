@@ -1,1 +1,5 @@
-push_swap_visualizer
+.vscode
+**/.*
+**/*.o
+checker
+push_swap

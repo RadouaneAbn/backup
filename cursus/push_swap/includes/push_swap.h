@@ -21,7 +21,7 @@
 int		sort_stack(t_stack_group stacks);
 void	insertion_sort(int *arr, int size);
 int		short_sort_a(t_stack_group s);
-int		short_sort_5(t_stack_group s);
+int		short_sort_6(t_stack_group s);
 
 t_move	*init_move(void);
 void	clear_move(t_move *move);
@@ -33,7 +33,7 @@ int		find_min_idx(t_stack *s);
 int		find_side(t_stack *s, int idx);
 
 t_move	*push_best_element(t_stack_group stack);
-int	push_to_b_according_to_median(t_stack_group stacks); 
+int		push_to_b_according_to_median(t_stack_group stacks);
 void	make_move(t_stack_group stack, t_move *move);
 
 int		get_correct_count(int ac, char **av);
@@ -43,7 +43,7 @@ void	make_move_separate(t_stack_group stack, int *move,
 			void rv(t_stack_group, int), void rrv(t_stack_group, int));
 
 void	organize_stack_a(t_stack_group stack);
-int	*copy_array(t_stack *stack, int size);
+int		*copy_array(t_stack *stack, int size);
 
 void	clean_exit(void *p1, void *p2, void *p3, void *p4);
 

@@ -13,7 +13,6 @@ BONUS_FILES := ft_printf_bonus.c src_bonus/number_2_bonus.c src_bonus/more_bonus
 	src_bonus/writer_bonus.c src_bonus/options_bonus.c src_bonus/print_all_bonus.c src_bonus/print_plus_bonus.c \
 	src_bonus/converter_bonus.c src_bonus/calculate_width_precision_bonus.c
 
-
 OBG_FILES := $(SRC_FILES:.c=.o)
 BONUS_OBG_FILES := $(BONUS_FILES:.c=.o)
 NAME := libftprintf.a
@@ -38,4 +37,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean bonus
-.SECONDARY: $(OBG_FILES)
+.SECONDARY: $(OBG_FILES) $(BONUS_OBG_FILES)

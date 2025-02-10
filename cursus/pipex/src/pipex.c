@@ -19,7 +19,6 @@ char *append_path_to_command(char *cmd, char *path)
 char	*find_command(char *cmd, char **path)
 {
 	int		i;
-	char	*new_cmd_path;
     char *tmp;
 
 	i = 0;
@@ -33,19 +32,30 @@ char	*find_command(char *cmd, char **path)
 	}
     return (cmd);
 }
-char	**ft_path_join(char ***cmd_v, char **path)
-{
-	int		i;
-	char	*new_path_cmd;
 
-	i = 0;
-	if (ft_strchr((*cmd_v)[0], '/') == NULL)
-		(*cmd_v)[0] = find_command((*cmd_v)[0], path);
-	if (file_exists((*cmd_v)[0]) == 0)
-		print_error((*cmd_v)[0], ": command not found\n");
-    else if (file_executable((*cmd_v)[0]) == 0)
-		print_error((*cmd_v)[0], ": Permission denied\n");
-    return (*cmd_v);
+int command_executable(char **cmd_v, int *status)
+{
+	if (file_exists(cmd_v[0]) == 0)
+	{
+		print_error(cmd_v[0], ": command not found\n");
+		*status = 127;
+		return (0);
+	}
+    if (file_executable(cmd_v[0]) == 0)
+	{
+		print_error(cmd_v[0], ": Permission denied\n");
+		*status = 126;
+		return (0);
+	}
+	// printf("Command is executable\n");
+	return (1);
+}
+
+char	**ft_path_join(char **cmd_v, char **path)
+{
+	if (ft_strchr(cmd_v[0], '/') == NULL)
+		cmd_v[0] = find_command(cmd_v[0], path);
+    return (cmd_v);
 }
 
 char	**build_command(char *full_command, char **path)
@@ -55,11 +65,11 @@ char	**build_command(char *full_command, char **path)
 
 	i = 0;
 	cmd_v = ft_split(full_command, ' ');
-	ft_path_join(&cmd_v, path);
+	cmd_v = ft_path_join(cmd_v, path);
 	return (cmd_v);
 }
 
-void	pipex(int ac, char **av, char **env, int cmd_count)
+void	pipex(int ac, char **av, char **env)
 {
 	char	**path;
 	char	**command;
@@ -67,46 +77,61 @@ void	pipex(int ac, char **av, char **env, int cmd_count)
 	int		pid;
 	int		fd[2];
     int     input_fd;
+    int     output_fd;
+	int    cmd_count;
+	int status;
 
+	cmd_count = ac - 1;
 	path = export_path_var(env);
 	i = 2;
-	input_fd = open_input_file(av[1]);
-    if (input_fd == -1)
-    {
-        input_fd = open("/dev/null", O_RDONLY);
-        i++;
-    }
 	while (i < cmd_count)
 	{
-        command = build_command(av[i], path);
         if (i < cmd_count - 1)
             pipe(fd);
         pid = fork();
         if (pid == 0)
         {
+			if (i == 2)
+				input_fd = open_input_file(av[1]);
+			if (input_fd == -1)
+				exit(1);
             dup2(input_fd, STDIN_FILENO);
-            close(input_fd);
+	        close(input_fd);
+        	command = build_command(av[i], path);
             if (i < cmd_count - 1)
             {
                 dup2(fd[1], STDOUT_FILENO);
                 close(fd[1]);
                 close(fd[0]);
             }
-            execve(command[0], command, env);
+			else
+			{
+				output_fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+				dup2(output_fd, STDOUT_FILENO);
+				close(output_fd);
+			}
+			if (command_executable(command, &status))
+			// command get checked even if its without a path
+			// example grepp gets treated like a valid command even tho its not in path
+			// demo run: ./pipex in cat grepp out
+            	execve(command[0], command, env);
+			else 
+				free_command(command), free_all(), exit(status);
         }
-        free_command(command);
-        close(input_fd);
+		input_fd = fd[0];
         if (i < cmd_count - 1)
-        {
-            input_fd = fd[0];
             close(fd[1]);
-        }
 		i++;
 	}
-
-    while (wait(NULL) > 0)
-        ;
-    
+	i = 0;
+	while (wait(NULL) > 0) ;
+	// while (++i < ac - 3)
+	// 	printf("c"), wait(NULL);
+	waitpid(pid, &status, 0);
+	// printf("[%d]\n", status);
+	close(fd[0]);
+	// if (status != 0)
+	// 	free_all(), exit(status);
 }
 
 int	main(int ac, char **av, char **env)
@@ -116,7 +141,7 @@ int	main(int ac, char **av, char **env)
 		printf("Wrong format: %s input_file cmd1 cmd2 output_file\n", av[0]);
 		exit(1);
 	}
-	pipex(ac, av, env, ac - 1);
+	pipex(ac, av, env);
     free_all();
 	return (0);
 }
