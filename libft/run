@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ ! -f "libft.a" ]]; then
+	echo "libft.a not found"
+	exit 1
+fi
+
+TEST_FILES=$(ls test/*.c | awk -F '/' '{print $2}')
+
+#echo "$TEST_FILES"
+
+for FILE in $TEST_FILES; do
+    echo "test for $FILE is running..."
+    cc -Wall -Wextra -Werror "test/$FILE" -L. -lft
+    if [[ $? -ne 0 ]]; then
+	echo ">>>>>>> $FILE failed to compile <<<<<<<"
+	exit 1
+    fi
+    ./a.out
+    echo ""
+    echo ""
+    echo ""
+done
