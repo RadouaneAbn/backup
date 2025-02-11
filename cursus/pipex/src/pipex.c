@@ -61,9 +61,6 @@ char	**ft_path_join(char **cmd_v, char **path)
 char	**build_command(char *full_command, char **path)
 {
 	char	**cmd_v;
-	int		i;
-
-	i = 0;
 	cmd_v = ft_split(full_command, ' ');
 	cmd_v = ft_path_join(cmd_v, path);
 	return (cmd_v);
@@ -79,7 +76,7 @@ void	pipex(int ac, char **av, char **env)
 	int     input_fd;
 	int     output_fd;
 	int    cmd_count;
-	int status;
+	// int status;
 
 	cmd_count = ac - 1;
 	path = export_path_var(env);
@@ -93,6 +90,12 @@ void	pipex(int ac, char **av, char **env)
 		if (pid == 0)
 		{
 			command = build_command(av[i], path);
+			if (ft_strchr(command[0], '/') == NULL)
+			{
+				print_error(command[0], ": Command not found\n");
+				free_command(command), free_all(), exit(127);
+			}
+			// NOTE: Alwase handle the output before the input pipe
 			if (i < cmd_count - 1)
 			{
 				close(fd[0]);
@@ -113,10 +116,13 @@ void	pipex(int ac, char **av, char **env)
 			close(input_fd);
 
 
-			if (command_executable(command, &status))
-				execve(command[0], command, env);
+			// if (command_executable(command, &status))
+			if (execve(command[0], command, env) == -1)
+				perror("execve");
+				//^ NOTIC: i should guard execve not the command above ^
+				// execve(command[0], command, env);
 			else
-				free_command(command), free_all(), exit(status);
+				free_command(command), free_all(), exit(1);
 		}
 		if (input_fd != -1)
 			close(input_fd);
@@ -135,15 +141,30 @@ void	pipex(int ac, char **av, char **env)
 	// if (status != 0)
 	// 	free_all(), exit(status);
 }
+void child_execute(char **env, int command_index, char **commands, int out, int in, char **path)
+{
+	int status;
+	char **command = build_command(commands[command_index], path);
+
+	dup2(in, STDIN_FILENO);
+	close(in);
+	dup2(out, STDOUT_FILENO);
+	close(out);
+	if (command_executable(command, &status))
+		execve(command[0], command, env);
+	else
+		free_command(command), free_all(), exit(status);
+}
+
 // void child_execute(char **env, int command_index, char **commands, int out, int in, char **path)
 // {
 // 	int status;
 // 	char **command = build_command(commands[command_index], path);
 
-// 	dup2(in, STDIN_FILENO);
-// 	close(in);
 // 	dup2(out, STDOUT_FILENO);
 // 	close(out);
+// 	dup2(in, STDIN_FILENO);
+// 	close(in);
 // 	if (command_executable(command, &status))
 // 		execve(command[0], command, env);
 // 	else

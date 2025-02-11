@@ -71,10 +71,8 @@ static char	**split_string(char *s, char c, char **arr, int slen)
 	int	i;
 	int	j;
 	int	idx;
-	int	word_found;
 
 	i = 0;
-	word_found = 0;
 	idx = 0;
 	while (i <= slen)
 	{
