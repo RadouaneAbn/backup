@@ -76,7 +76,7 @@ void	pipex(int ac, char **av, char **env)
 	int     input_fd;
 	int     output_fd;
 	int    cmd_count;
-	// int status;
+	int status;
 
 	cmd_count = ac - 1;
 	path = export_path_var(env);
@@ -90,11 +90,11 @@ void	pipex(int ac, char **av, char **env)
 		if (pid == 0)
 		{
 			command = build_command(av[i], path);
-			if (ft_strchr(command[0], '/') == NULL)
-			{
-				print_error(command[0], ": Command not found\n");
-				free_command(command), free_all(), exit(127);
-			}
+			// if (ft_strchr(command[0], '/') == NULL)
+			// {
+			// 	print_error(command[0], ": Command not found\n");
+			// 	free_command(command), free_all(), exit(127);
+			// }
 			// NOTE: Alwase handle the output before the input pipe
 			if (i < cmd_count - 1)
 			{
@@ -115,8 +115,9 @@ void	pipex(int ac, char **av, char **env)
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
 
+			if (command_executable(command, &status))
+				exit(status);
 
-			// if (command_executable(command, &status))
 			if (execve(command[0], command, env) == -1)
 				perror("execve");
 				//^ NOTIC: i should guard execve not the command above ^
