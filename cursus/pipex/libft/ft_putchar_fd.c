@@ -16,10 +16,3 @@ void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
-
-int	main(void)
-{
-	//int fd = open("/dev/ttys005", O_WRONLY);
-	close(1);
-	ft_putstr_fd("Hello world", 1);
-}

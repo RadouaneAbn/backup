@@ -1,41 +1,41 @@
-CC := cc
-CFLAGS := -Wall -Wextra -Werror -g
-RM := rm -rf
-MAKE := make
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
+RM = rm -rf
+MAKE = make
 
-UTILS := utils/utils.c utils/clean.c utils/parser.c garbage_collector/garbage_collector.c \
-	test/malloc_test.c
+UTILS = utils/utils.c utils/clean.c utils/parser.c garbage_collector/garbage_collector.c \
+	utils/executing_command.c utils/path_exractor.c utils/build_command.c \
+	utils/file_access.c utils/init_pipex.c utils/error.c utils/process_management.c
 
-SRC := src/pipex.c
-# SRC_BONUS := src_bonus/pipex_bonus.c
+ENTRY_FILE = pipex.c
 
-OBJ_FILES := $(SRC:.c=.o)
-OBJ_OUTILS := $(UTILS:.c=.o)
-# OBJ_FILES_BONUS := $(SRC_BONUS:.c=.o)
+SRC = src/pipex_mandatory.c
+SRC_BONUS = src_bonus/pipex_bonus.c
 
-TEST := test/print.c
+OBJ_ENTRY = $(ENTRY_FILE:.c=.o)
+OBJ_OUTILS = $(UTILS:.c=.o)
+OBJ_FILES_BONUS = $(SRC_BONUS:.c=.o)
 
-NAME := pipex
-NAME_BONUS := pipex
-LIBFT_DIR := libft
-LIBFT := $(LIBFT_DIR)/libft.a
+NAME = pipex
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
+$(NAME): $(OBJ_FILES_BONUS) $(OBJ_OUTILS) $(OBJ_ENTRY) $(LIBFT)
+	$(CC) $(OBJ_FILES_BONUS) $(OBJ_OUTILS) $(OBJ_ENTRY) -L$(LIBFT_DIR) -lft -o $(NAME)
 
-$(NAME): $(OBJ_FILES) $(OBJ_OUTILS) $(LIBFT) $(TEST)
-	$(CC) $^ -L$(LIBFT_DIR) -lft -o $@
+bonus: $(NAME)
 
 $(LIBFT): 
 	$(MAKE) -C $(LIBFT_DIR)
 
-all: $(NAME)
-
+all: bonus
 
 clean:
 	$(RM) $(OBJ_FILES) $(OBJ_OUTILS) $(OBJ_FILES_BONUS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS)
+	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all

@@ -3,6 +3,8 @@
         "garbage_collector.h": "c",
         "utils.h": "c",
         "unistd.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "defs.h": "c",
+        "pipex_bonus.h": "c"
     }
 }

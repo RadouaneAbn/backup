@@ -1,0 +1,70 @@
+#include "../includes/utils.h"
+
+int	file_exists(char *file_path)
+{
+	if (access(file_path, F_OK) == 0)
+		return (1);
+	return (0);
+}
+
+int	file_is_directory(char *file_path)
+{
+	int	file_fd;
+
+	file_fd = open(file_path, __O_DIRECTORY);
+	if (file_fd == -1)
+		return (0);
+	close(file_fd);
+	return (1);
+}
+
+int	file_executable(char *file_path)
+{
+	if (file_exists(file_path) == 0)
+		return (0);
+	if (access(file_path, X_OK) == 0)
+		return (1);
+	return (0);
+}
+
+int	command_executable(char **cmd_v, int *status)
+{
+	if (ft_strncmp(cmd_v[0], ".", 2) == 0)
+	{
+		print_error(cmd_v[0], ": filename argument required\n");
+		*status = 2;
+	}
+	else if (file_exists(cmd_v[0]) == 0 || ft_strchr(cmd_v[0], '/') == NULL)
+	{
+		print_error(cmd_v[0], ": command not found\n");
+		*status = 127;
+	}
+	else if (file_is_directory(cmd_v[0]))
+	{
+		print_error(cmd_v[0], ": Is a directory\n");
+		*status = 126;
+	}
+	else if (file_executable(cmd_v[0]) == 0)
+	{
+		print_error(cmd_v[0], ": Permission denied\n");
+		*status = 126;
+	}
+	else
+		return (1);
+	return (0);
+}
+
+int	open_input_file(char *filename)
+{
+	if (access(filename, F_OK) == -1)
+	{
+		print_perror(filename);
+		return (-1);
+	}
+	if (access(filename, R_OK) == -1)
+	{
+		print_perror(filename);
+		return (-1);
+	}
+	return (open(filename, O_RDONLY));
+}
