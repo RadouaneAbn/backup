@@ -42,7 +42,7 @@ static char	**ft_path_join(char **cmd_v, char **path)
 
 char	**build_command(char *full_command, char **path)
 {
-	char	**cmd_v;
+	char **cmd_v;
 
 	cmd_v = ft_split(full_command, ' ');
 	cmd_v = ft_path_join(cmd_v, path);

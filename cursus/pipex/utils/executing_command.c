@@ -6,8 +6,10 @@ void	execute_command(char **cmdv, char **env)
 {
 	int	status;
 
-	if (command_executable(cmdv, &status))
+	if (command_executable(cmdv, &status) == 0)
+	{
 		free_command(cmdv), free_all(), exit(status);
+	}
 	if (execve(cmdv[0], cmdv, env) == -1)
 	{
 		perror("execve");
@@ -53,10 +55,10 @@ void	run_mid_command(int fd[2], int prev)
 }
 
 void	run_child_proccess(t_cmd_v *commands, t_fd_holder *file_descriptors,
-    int i, char **env)
+		int i, char **env)
 {
 	commands->current_command = build_command(commands->commands_list[i],
-			commands->path);
+												commands->path);
 	if (i == 0)
 		run_first_command(file_descriptors->input_file, file_descriptors->fd);
 	else if (i == commands->command_count - 1)

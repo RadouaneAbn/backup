@@ -29,7 +29,12 @@ int	file_executable(char *file_path)
 
 int	command_executable(char **cmd_v, int *status)
 {
-	if (file_exists(cmd_v[0]) == 0 || ft_strchr(cmd_v[0], '/') == NULL)
+	if (ft_strncmp(cmd_v[0], ".", 2) == 0)
+	{
+		print_error(cmd_v[0], ": filename argument required\n");
+		*status = 2;
+	}
+	else if (file_exists(cmd_v[0]) == 0 || ft_strchr(cmd_v[0], '/') == NULL)
 	{
 		print_error(cmd_v[0], ": command not found\n");
 		*status = 127;
@@ -45,8 +50,8 @@ int	command_executable(char **cmd_v, int *status)
 		*status = 126;
 	}
 	else
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	open_input_file(char *filename)

@@ -16,6 +16,7 @@ void	print_error(char *name, char *error)
 		i = ft_strcat(str, "pipex: ");
 		i += ft_strcat(str + i, name);
 		i += ft_strcat(str + i, error);
+		write(2, str, i);
 		free(str);
 	}
 }

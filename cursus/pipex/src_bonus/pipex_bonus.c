@@ -3,10 +3,10 @@
 
 void	pipex(int ac, char **av, char **env)
 {
-	t_cmd_v commands;
-	t_fd_holder file_descriptors;
-	int *pid;
-	int i;
+	t_cmd_v		commands;
+	t_fd_holder	file_descriptors;
+	int			*pid;
+	int			i;
 
 	pid = make_pid_array(ac - 3);
 	init_pipex(&commands, &file_descriptors, av, ac);
