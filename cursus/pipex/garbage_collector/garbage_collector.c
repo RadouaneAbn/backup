@@ -1,13 +1,11 @@
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
 #include "../includes/garbage_collector.h"
 #include "../includes/utils.h"
 
 t_node	**collector(void)
 {
-	static t_node	*head = NULL;
+	static t_node	*head;
 
+	head = NULL;
 	return (&head);
 }
 
@@ -111,41 +109,3 @@ void	*ft_malloc(int size)
 		clean_exit(1);
 	return (mal);
 }
-/*
-int	main(void)
-{
-	char	*s1;
-	char	*s2;
-	char	*s3;
-	char	*s4;
-	char	*s5;
-	char	*s6;
-
-	t_node **head, *cur;
-	s1 = ft_malloc(20, 1);
-	s2 = ft_malloc(20, 1);
-	s3 = ft_malloc(20, 1);
-	s4 = ft_malloc(20, 1);
-	s5 = ft_malloc(20, 1);
-	s6 = ft_malloc(20, 0);
- 
-	strcpy(s1, "hello s1");
-	strcpy(s2, "hello s2");
-	strcpy(s3, "hello s3");
-	strcpy(s4, "hello s4");
-	strcpy(s5, "hello s5");
-	free_ptr(s1);
-	free_ptr(s3);
-	free_ptr(s5);
-	head = collector();
-	cur = *head;
-	while (cur)
-	{
-		printf("%s\n", (char *)cur->data);
-		cur = cur->next;
-	}
-	free_all();
-	free(s6);
-	return (0);
-}
-*/

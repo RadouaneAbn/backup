@@ -106,28 +106,32 @@ void	creat_command_list(char ***commands, char **path, char **av, int ac)
 	// printf("count: %d\n", cmd_idx);
 }
 
-
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	if (ac < 5) {
+	char	***commands;
+	char	**path;
+	int		in;
+	char	buf[5000];
+	int		fd[1024][2];
+	int		n;
+
+	if (ac < 5)
+	{
 		printf("Wrong format: ./pipex file1 cmd1 cmd2 file2\n");
 		exit(1);
 	}
-	char ***commands = malloc((ac - 2) * sizeof(char *));
-	char **path = create_path_var(env);
+	commands = malloc((ac - 2) * sizeof(char *));
+	path = create_path_var(env);
 	creat_command_list(commands, path, av, ac);
-	int in = open("in", O_RDONLY);
+	in = open("in", O_RDONLY);
 	int id, id1, id2, id3, id4;
-	char buf[5000];
 	int i, j;
-	int fd[1024][2];
-
 	i = 0;
 	/*
 		Use an old_read_end_pipe istead of using an array to store the value of
 		the read end file descriptor to be used in the nest command (iteration)
 	*/
-	int n = ac - 3;
+	n = ac - 3;
 	while (i < n)
 	{
 		if (i < n - 1)
@@ -138,12 +142,12 @@ int main(int ac, char **av, char **env)
 			if (i < n - 1)
 			{
 				dup2(fd[i][1], STDOUT_FILENO);
-				close (fd[i][1]);
+				close(fd[i][1]);
 			}
 			if (i == 0)
 			{
 				dup2(in, STDIN_FILENO);
-				close (in);
+				close(in);
 			}
 			else if (i > 0)
 			{
@@ -151,7 +155,7 @@ int main(int ac, char **av, char **env)
 				close(fd[i - 1][0]);
 			}
 			if (i < n - 1)
-				close (fd[i][0]);
+				close(fd[i][0]);
 			if (access(commands[i][0], F_OK) == -1)
 				write(2, "zsh: command not found: cmd", 27);
 			else
@@ -165,7 +169,6 @@ int main(int ac, char **av, char **env)
 	}
 	close(in);
 }
-
 
 /*
 int	main(int ac, char **av, char **env)
