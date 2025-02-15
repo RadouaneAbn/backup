@@ -6,18 +6,15 @@ void	execute_command(char **cmdv, char **env)
 {
 	int	status;
 
-	if (command_executable(cmdv, &status) == 0)
+	status = 1;
+	if (command_executable(cmdv, &status) == 1)
 	{
-		free_command(cmdv), free_all(), exit(status);
-	}
-	if (execve(cmdv[0], cmdv, env) == -1)
-	{
-		perror("execve");
-		free_command(cmdv), free_all(), exit(1);
+		if (execve(cmdv[0], cmdv, env) == -1)
+			perror("execve");
 	}
 	free_command(cmdv);
 	free_all();
-	exit(1);
+	exit(status);
 }
 
 void	run_first_command(char *input_file, int fd[2])

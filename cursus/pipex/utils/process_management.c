@@ -24,4 +24,5 @@ void	wait_for_children(int *pid)
 	free_all();
 	if (WIFEXITED(status))
 		exit(WEXITSTATUS(status));
+	exit(1);
 }

@@ -12,28 +12,6 @@
 
 #include "get_next_line.h"
 
-// char	*ft_strdup(char *s)
-// {
-// 	size_t	i;
-// 	size_t	slen;
-// 	char	*new;
-
-// 	if (s == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	slen = ft_strlen(s);
-// 	new = malloc(slen + 1);
-// 	if (new == NULL)
-// 		return (NULL);
-// 	while (s[i])
-// 	{
-// 		new[i] = s[i];
-// 		i++;
-// 	}
-// 	new[i] = '\0';
-// 	return (new);
-// }
-
 void	appendto_buffer(char *tmp, t_buf *buffer, char **line)
 {
 	int	i;
