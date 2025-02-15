@@ -17,7 +17,7 @@ void	execute_command(char **cmdv, char **env)
 	}
 	free_command(cmdv);
 	free_all();
-	exit(0);
+	exit(1);
 }
 
 void	run_first_command(char *input_file, int fd[2])

@@ -61,67 +61,123 @@ t_list *read_from_input(char *delimiter, int delimiter_len)
 
 // $> ./pipex here_doc LIMITER cmd cmd1 file
 
-void	here_doc(int ac, char **av, char **env)
+void first_execution(char **env, t_execute_info *info)
 {
 	t_list *head;
-	// t_fd_holder file_descriptors;
-	char	**command;
-	char **path;
-	int fd[2][2];
-	int pid[3];
-	int i;
-	int output_file;
-	
-	// init_here_doc(&commands, &file_descriptors, av, ac);
-	i = 0;
-	if (ac) {}
-	path = export_path_var(env);
-	ft_bzero(pid, sizeof(int) * 3);
-	// TODO: guard the head if its NULL
-	pipe(fd[0]);
-	pipe(fd[1]);
-	pid[i] = fork();
-	if (pid[i] == 0)
-	{
-		head = read_from_input(av[2], ft_strlen(av[2]));
-		dup2(fd[0][0], STDIN_FILENO);
-		close(fd[0][0]);
-		dup2(fd[1][1], STDOUT_FILENO);
-		close(fd[1][1]);
-		close(fd[1][0]);
-		command = build_command(av[3], path);
-		while (head)
-		{
-			write(fd[0][1], (char *)head->content, ft_strlen(head->content));
-			head = head->next;
-		}
-		close(fd[0][1]);
-		execute_command(command, env);
-	}
-	close(fd[0][1]);
-	close(fd[0][0]);
-	i++;
-	pid[i] = fork();
-	if (pid[i] == 0)
-	{
-		output_file = open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-		dup2(output_file, STDOUT_FILENO);
-		close(output_file);
-		dup2(fd[1][0], STDIN_FILENO);
-		close(fd[1][0]);
-		close(fd[1][1]);
-		command = build_command(av[4], path);
-		execute_command(command, env);
-	}
 
-	close(fd[1][1]);
-	close(fd[1][0]);
-
-	// close(file_descriptors.fd[0]);
-	// close(file_descriptors.fd[1]);
-	wait_for_children(pid);
-	free_all();
+	head = read_from_input(info->delimiter, ft_strlen(info->delimiter));
+	dup2(info->fd[0][0], STDIN_FILENO);
+	close(info->fd[0][0]);
+	dup2(info->fd[1][1], STDOUT_FILENO);
+	close(info->fd[1][1]);
+	close(info->fd[1][0]);
+	info->current_command = build_command(info->commands_list[0], info->path);
+	while (head)
+	{
+		write(info->fd[0][1], (char *)head->content, ft_strlen((char *)head->content));
+		head = head->next;
+	}
+	close(info->fd[0][1]);
+	execute_command(info->current_command, env);
 }
+
+void second_execution(char **env, t_execute_info *info)
+{
+	int output_fd;
+
+	output_fd = open(info->output_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (output_fd == -1)
+		exit(1);
+	dup2(output_fd, STDOUT_FILENO);
+	close(output_fd);
+	dup2(info->fd[1][0], STDIN_FILENO);
+	close(info->fd[1][0]);
+	close(info->fd[1][1]);
+	info->current_command = build_command(info->commands_list[1], info->path);
+	execute_command(info->current_command, env);
+}
+
+void here_doc(int ac, char **av, char **env)
+{
+	t_execute_info info;
+	int pid[3];
+
+	init_here_doc(&info, ac, av, env);
+	pid[2] = 0;
+	pid[0] = fork();
+	if (pid[0] == 0)
+		first_execution(env, &info);
+	close(info.fd[0][0]);
+	close(info.fd[0][1]);
+	pid[1] = fork();
+	if (pid[1] == 0)
+		second_execution(env, &info);
+	close(info.fd[1][0]);
+	close(info.fd[1][1]);
+	wait_for_children(pid);
+}
+
+// void	here_doc(int ac, char **av, char **env)
+// {
+// 	t_list *head;
+// 	// t_fd_holder file_descriptors;
+// 	char	**command;
+// 	char **path;
+// 	int fd[2][2];
+// 	int pid[3];
+// 	int i;
+// 	int output_file;
+	
+// 	// init_here_doc(&commands, &file_descriptors, av, ac);
+// 	i = 0;
+// 	if (ac) {}
+// 	path = export_path_var(env);
+// 	ft_bzero(pid, sizeof(int) * 3);
+// 	// TODO: guard the head if its NULL
+// 	pipe(fd[0]);
+// 	pipe(fd[1]);
+// 	pid[i] = fork();
+// 	if (pid[i] == 0)
+// 	{
+// 		head = read_from_input(av[2], ft_strlen(av[2]));
+// 		dup2(fd[0][0], STDIN_FILENO);
+// 		close(fd[0][0]);
+// 		dup2(fd[1][1], STDOUT_FILENO);
+// 		close(fd[1][1]);
+// 		close(fd[1][0]);
+// 		command = build_command(ainfo->commands_list[0] path);
+// 		while (head)
+// 		{
+// 			write(fd[0][1], (char *)head->content, ft_strlen(head->content));
+// 			head = head->next;
+// 		}
+// 		close(fd[0][1]);
+// 		execute_command(command, env);
+// 	}
+// 	close(fd[0][1]);
+// 	close(fd[0][0]);
+// 	i++;
+// 	pid[i] = fork();
+// 	if (pid[i] == 0)
+// 	{
+// 		output_file = open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 		dup2(output_file, STDOUT_FILENO);
+// 		close(output_file);
+// 		dup2(fd[1][0], STDIN_FILENO);
+// 		close(fd[1][0]);
+// 		close(fd[1][1]);
+// 		command = build_command(av[4], path);
+// 		execute_command(command, env);
+// 	}
+
+// 	close(fd[1][1]);
+// 	close(fd[1][0]);
+
+// 	// close(file_descriptors.fd[0]);
+// 	// close(file_descriptors.fd[1]);
+// 	wait_for_children(pid);
+// 	free_all();
+// }
 
 
 // void	here_doc(int ac, char **av, char **env)

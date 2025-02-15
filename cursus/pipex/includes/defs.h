@@ -31,6 +31,16 @@ typedef struct s_fd_holder
 	char	*output_file;
 }			t_fd_holder;
 
+typedef struct s_execute_info
+{
+	int fd[2][2];
+	char *output_file;
+	char **path;
+	char **commands_list;
+	char **current_command;
+	char *delimiter;
+} t_execute_info;
+
 # define MALLOC_R 3
 
 #endif

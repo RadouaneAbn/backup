@@ -13,8 +13,7 @@
 
 void	pipex(int ac, char **av, char **env);
 void	here_doc(int ac, char **av, char **env);
-void	init_here_doc(t_cmd_v *commands, t_fd_holder *file_descriptors, char **av,
-	int ac);
+void	init_here_doc(t_execute_info *info, int ac, char **av, char **env);
 
 
 #endif
