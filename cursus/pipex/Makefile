@@ -10,7 +10,8 @@ UTILS = utils/utils.c utils/clean.c utils/parser.c garbage_collector/garbage_col
 ENTRY_FILE = pipex.c
 
 SRC = src/pipex_mandatory.c
-SRC_BONUS = src_bonus/pipex_bonus.c
+SRC_BONUS = src_bonus/pipex_bonus.c src_bonus/here_doc.c \
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 OBJ_ENTRY = $(ENTRY_FILE:.c=.o)
 OBJ_OUTILS = $(UTILS:.c=.o)
@@ -21,12 +22,12 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 $(NAME): $(OBJ_FILES_BONUS) $(OBJ_OUTILS) $(OBJ_ENTRY) $(LIBFT)
-	$(CC) $(OBJ_FILES_BONUS) $(OBJ_OUTILS) $(OBJ_ENTRY) -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES_BONUS) $(OBJ_OUTILS) $(OBJ_ENTRY) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 bonus: $(NAME)
 
 $(LIBFT): 
-	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) bonus
 
 all: bonus
 

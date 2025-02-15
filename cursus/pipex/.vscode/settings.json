@@ -5,6 +5,7 @@
         "unistd.h": "c",
         "stdio.h": "c",
         "defs.h": "c",
-        "pipex_bonus.h": "c"
+        "pipex_bonus.h": "c",
+        "get_next_line.h": "c"
     }
 }

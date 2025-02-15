@@ -31,4 +31,6 @@ typedef struct s_fd_holder
 	char	*output_file;
 }			t_fd_holder;
 
+# define MALLOC_R 3
+
 #endif

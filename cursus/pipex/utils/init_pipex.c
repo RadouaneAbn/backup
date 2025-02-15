@@ -1,5 +1,16 @@
 #include "../includes/defs.h"
 
+void	init_here_doc(t_cmd_v *commands, t_fd_holder *file_descriptors, char **av,
+	int ac)
+{
+commands->commands_list = av + 3;
+commands->current_command = NULL;
+commands->command_count = 2;
+file_descriptors->input_file = NULL;
+file_descriptors->output_file = av[ac - 1];
+file_descriptors->prev = -1;
+}
+
 void	init_pipex(t_cmd_v *commands, t_fd_holder *file_descriptors, char **av,
 		int ac)
 {
