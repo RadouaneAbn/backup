@@ -59,51 +59,130 @@ t_list *read_from_input(char *delimiter, int delimiter_len)
 	return (head);
 }
 
+// $> ./pipex here_doc LIMITER cmd cmd1 file
+
 void	here_doc(int ac, char **av, char **env)
 {
 	t_list *head;
-	t_cmd_v		commands;
-	t_fd_holder	file_descriptors;
-	
-	// t_fd_holder file_desc;
+	// t_fd_holder file_descriptors;
+	char	**command;
+	char **path;
+	int fd[2][2];
 	int pid[3];
 	int i;
-	// char *s;
+	int output_file;
 	
-	// ft_bzero(pid, sizeof(int) * 3);
-	init_here_doc(&commands, &file_descriptors, av, ac);
-	if (ac && env)
-	{}
+	// init_here_doc(&commands, &file_descriptors, av, ac);
 	i = 0;
-	// TODO: guard the head if its NULL
+	if (ac) {}
+	path = export_path_var(env);
 	ft_bzero(pid, sizeof(int) * 3);
-	pipe(file_descriptors.fd);
+	// TODO: guard the head if its NULL
+	pipe(fd[0]);
+	pipe(fd[1]);
 	pid[i] = fork();
 	if (pid[i] == 0)
 	{
 		head = read_from_input(av[2], ft_strlen(av[2]));
-		close(file_descriptors.fd[0]);
-		dup2(file_descriptors.fd[1], STDOUT_FILENO);
-		close(file_descriptors.fd[1]);
+		dup2(fd[0][0], STDIN_FILENO);
+		close(fd[0][0]);
+		dup2(fd[1][1], STDOUT_FILENO);
+		close(fd[1][1]);
+		close(fd[1][0]);
+		command = build_command(av[3], path);
 		while (head)
 		{
-			write(1, (char *)head->content, ft_strlen(head->content));
+			write(fd[0][1], (char *)head->content, ft_strlen(head->content));
 			head = head->next;
 		}
-		free_all();
+		close(fd[0][1]);
+		execute_command(command, env);
 	}
-	close(file_descriptors.fd[1]);
+	close(fd[0][1]);
+	close(fd[0][0]);
 	i++;
 	pid[i] = fork();
 	if (pid[i] == 0)
 	{
-		close(file_descriptors.fd[1]);
-		dup2(file_descriptors.fd[0], STDIN_FILENO);
-		close(file_descriptors.fd[0]);
-		run_child_proccess(&commands, &file_descriptors, i, env);
+		output_file = open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
+		dup2(output_file, STDOUT_FILENO);
+		close(output_file);
+		dup2(fd[1][0], STDIN_FILENO);
+		close(fd[1][0]);
+		close(fd[1][1]);
+		command = build_command(av[4], path);
+		execute_command(command, env);
 	}
-	close(file_descriptors.fd[0]);
-	close(file_descriptors.fd[1]);
+
+	close(fd[1][1]);
+	close(fd[1][0]);
+
+	// close(file_descriptors.fd[0]);
+	// close(file_descriptors.fd[1]);
 	wait_for_children(pid);
 	free_all();
 }
+
+
+// void	here_doc(int ac, char **av, char **env)
+// {
+// 	t_list *head;
+// 	// t_fd_holder file_descriptors;
+// 	char	**command;
+// 	char **path;
+// 	int fd[2][2];
+// 	int pid[4];
+// 	int i;
+	
+// 	// init_here_doc(&commands, &file_descriptors, av, ac);
+// 	i = 0;
+// 	if (ac) {}
+// 	path = export_path_var(env);
+// 	ft_bzero(pid, sizeof(int) * 4);
+// 	// TODO: guard the head if its NULL
+// 	pipe(fd[0]);
+// 	pipe(fd[1]);
+// 	pid[i] = fork();
+// 	if (pid[i] == 0)
+// 	{
+// 		head = read_from_input(av[2], ft_strlen(av[2]));
+// 		close(fd[0][0]);
+// 		close(fd[1][0]);
+// 		close(fd[1][1]);
+// 		// dup2(fd[0][0], STDIN_FILENO);
+// 		// dup2(fd[1][1], STDOUT_FILENO);
+// 		command = build_command(av[3], path);
+// 		while (head)
+// 		{
+// 			write(fd[0][1], (char *)head->content, ft_strlen((char *)head->content));
+// 			head = head->next;
+// 		}
+// 		close(fd[0][1]);
+// 		// execute_command(command, env);
+// 		exit(1);
+// 	}
+// 	close(fd[0][1]);
+// 	close(fd[0][0]);
+// 	i++;
+// 	pid[i] = fork();
+// 	if (pid[i] == 0)
+// 	{
+// 		close(fd[0][1]);
+// 		close(fd[1][0]);
+// 		dup2(fd[0][0], STDIN_FILENO);
+// 		dup2(fd[1][1], STDOUT_FILENO);
+// 		close(fd[0][0]);
+// 		close(fd[1][1]);
+// 		command = build_command(av[4], path);
+// 		execute_command(command, env);
+// 		exit(1);
+// 	}
+
+// 	close(fd[0][1]);
+// 	close(fd[0][0]);
+
+// 	// close(file_descriptors.fd[0]);
+// 	// close(file_descriptors.fd[1]);
+// 	wait_for_children(pid);
+// 	free_all();
+// }

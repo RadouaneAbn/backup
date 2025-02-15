@@ -14,11 +14,13 @@ static char	*append_path_to_command(char *cmd, char *path)
 	return (cmd_path);
 }
 
-static char	*find_command(char *cmd, char **path)
+static char	* find_command(char *cmd, char **path)
 {
 	int		i;
 	char	*tmp;
 
+	if (path == NULL)
+		return (cmd);
 	i = 0;
 	while (path[i])
 	{

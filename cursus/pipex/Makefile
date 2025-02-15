@@ -32,7 +32,7 @@ $(LIBFT):
 all: bonus
 
 clean:
-	$(RM) $(OBJ_FILES) $(OBJ_OUTILS) $(OBJ_FILES_BONUS)
+	$(RM) $(OBJ_FILES) $(OBJ_OUTILS) $(OBJ_FILES_BONUS) $(OBJ_ENTRY)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
