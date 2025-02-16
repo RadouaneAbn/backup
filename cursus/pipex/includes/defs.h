@@ -41,6 +41,12 @@ typedef struct s_execute_info
 	char *delimiter;
 } t_execute_info;
 
-# define MALLOC_R 3
+enum
+{
+	MALLOC_R,
+	READ_ERR,
+	OPEN_ERR,
+	DIR_ERR
+};
 
 #endif

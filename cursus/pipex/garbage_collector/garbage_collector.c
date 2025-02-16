@@ -5,7 +5,6 @@ static t_list	**collector(void)
 {
 	static t_list	*head;
 
-	head = NULL;
 	return (&head);
 }
 

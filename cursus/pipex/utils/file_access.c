@@ -27,18 +27,13 @@ int	file_executable(char *file_path)
 	return (0);
 }
 
+
 int	command_executable(char **cmd_v, int *status)
 {
-	if (ft_strncmp(cmd_v[0], ".", 2) == 0)
-	{
-		print_error(cmd_v[0], ": filename argument required\n");
+	if (file_missing_argument(cmd_v[0]))
 		*status = 2;
-	}
-	else if (file_exists(cmd_v[0]) == 0 || ft_strchr(cmd_v[0], '/') == NULL)
-	{
-		print_error(cmd_v[0], ": command not found\n");
+	else if (file_missing(cmd_v[0]))
 		*status = 127;
-	}
 	else if (file_is_directory(cmd_v[0]))
 	{
 		print_error(cmd_v[0], ": Is a directory\n");

@@ -5,7 +5,8 @@ MAKE = make
 
 UTILS = utils/utils.c utils/clean.c utils/parser.c garbage_collector/garbage_collector.c \
 	utils/executing_command.c utils/path_exractor.c utils/build_command.c \
-	utils/file_access.c utils/init_pipex.c utils/error.c utils/process_management.c
+	utils/file_access.c utils/init_pipex.c utils/error.c utils/process_management.c \
+	utils/file_check.c
 
 ENTRY_FILE = pipex.c
 

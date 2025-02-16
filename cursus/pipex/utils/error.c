@@ -1,4 +1,11 @@
+#include "../includes/garbage_collector.h"
 #include "../includes/utils.h"
+
+void	clean_exit(int exit_code)
+{
+	free_all();
+	exit(exit_code);
+}
 
 void	print_error(char *name, char *error)
 {
@@ -28,4 +35,13 @@ void	print_perror(char *name)
 	str = ft_strjoin("pipex: ", name);
 	perror(str);
 	free(str);
+}
+
+void	exit_error(char *name, int error_code)
+{
+	if (error_code == MALLOC_R)
+		print_error(name, ": Malloc failed!\n");
+	else if (error_code == DIR_ERR)
+		print_error(name, ": Is a directory\n");
+	clean_exit(1);
 }
