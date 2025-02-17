@@ -18,9 +18,9 @@ void	pipex(int ac, char **av, char **env)
 		pipe(file_descriptors.fd);
 		pid[i] = fork();
 		if (pid[i] == 0)
-		run_child_proccess(&commands, &file_descriptors, i, env);
+			run_child_proccess(&commands, &file_descriptors, i, env);
 		if (file_descriptors.prev != -1)
-		close(file_descriptors.prev);
+			close(file_descriptors.prev);
 		file_descriptors.prev = file_descriptors.fd[0];
 		if (i != commands.command_count - 1)
 			close(file_descriptors.fd[1]);
