@@ -79,6 +79,7 @@ void	execute_instructions(t_stacks stack, t_linkedlist list)
 {
 	t_list		*current;
 	t_instruct	instruction[12];
+	void (*func[12])(t_stack, int);
 
 	init_instructions(&instruction);
 	current = list.head;
