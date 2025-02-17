@@ -12,12 +12,18 @@ int	check_type(char **av)
 
 int	input_check(int ac, char **av)
 {
-	if (ac < 5)
+	int type;
+
+	type = check_type(av);
+	if (type == PIPE && ac < 5)
 	{
-		printf("Wrong format: %s input_file cmd1 cmd2 ...[cmdn] output_file\n",
-				av[0]);
-		printf("            : %s here_doc LIMITER cmd cmd1 output_file\n",
-				av[0]);
+		printf("Wrong format: %s input_file cmd1 cmd2 ...[cmdn] output_file\n", av[0]);
+		exit(1);
+	}
+	else if (type == HEREDOC && ac < 6)
+	{
+
+		printf("Wrong format: %s here_doc LIMITER cmd cmd1 output_file\n",av[0]);
 		exit(1);
 	}
 	return (check_type(av));
