@@ -26,4 +26,8 @@ Expected:
 ```
 
 
-794p
+env -i ./pipex Makefile cat cat /dev/stdout
+➜  pipex git:(master) ✗ env -i ./pipex here_doc lim ./cat  /dev/stdout 
+here_doc> lim
+
+pipex: /dev/stdout: Permission denied

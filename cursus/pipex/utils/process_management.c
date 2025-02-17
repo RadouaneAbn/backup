@@ -1,5 +1,6 @@
 #include "../includes/defs.h"
 #include "../includes/garbage_collector.h"
+#include "../includes/utils.h"
 #include "../libft/libft.h"
 
 int	*make_pid_array(int commands_count)
@@ -9,6 +10,8 @@ int	*make_pid_array(int commands_count)
 
 	count = commands_count + 1;
 	pids = ft_smalloc(sizeof(int) * count);
+	if (pids == NULL)
+		exit_error("Malloc", MALLOC_R, 1);
 	ft_bzero(pids, sizeof(int) * count);
 	return (pids);
 }

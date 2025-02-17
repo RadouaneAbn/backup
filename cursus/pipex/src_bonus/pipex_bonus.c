@@ -15,16 +15,18 @@ void	pipex(int ac, char **av, char **env)
 	while (i < commands.command_count)
 	{
 		if (i != commands.command_count - 1)
-			pipe(file_descriptors.fd);
+		pipe(file_descriptors.fd);
 		pid[i] = fork();
 		if (pid[i] == 0)
 			run_child_proccess(&commands, &file_descriptors, i, env);
 		if (file_descriptors.prev != -1)
 			close(file_descriptors.prev);
 		file_descriptors.prev = file_descriptors.fd[0];
-		close(file_descriptors.fd[1]);
+		if (i != commands.command_count - 1)
+			close(file_descriptors.fd[1]);
 		i++;
 	}
+	// close(file_descriptors.fd[0]);
 	wait_for_children(pid);
 	close(file_descriptors.prev);
 }

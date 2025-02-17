@@ -28,5 +28,7 @@ char	**build_command(char *full_command, char **path);
 int	ft_strcat(char *dest, const char *src);
 void	print_error(char *name, char *error);
 void	print_perror(char *name);
-
+void exit_error(char *name, int error_code, int exit_code);
+int file_missing_argument(char *filename);
+int file_missing(char *filename);
 #endif

@@ -1,4 +1,16 @@
 #include "../includes/defs.h"
+#include "../includes/utils.h"
+
+void	init_here_doc(t_execute_info *info, int ac, char **av, char **env)
+{
+	info->commands_list = av + 3;
+	info->current_command = NULL;
+	info->output_file = av[ac - 1];
+	info->path = export_path_var(env);
+	info->delimiter = av[2];
+	pipe(info->fd[0]);
+	pipe(info->fd[1]);
+}
 
 void	init_pipex(t_cmd_v *commands, t_fd_holder *file_descriptors, char **av,
 		int ac)

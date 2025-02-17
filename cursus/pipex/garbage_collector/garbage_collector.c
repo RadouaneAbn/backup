@@ -1,26 +1,25 @@
 #include "../includes/garbage_collector.h"
 #include "../includes/utils.h"
 
-t_node	**collector(void)
+static t_list	**collector(void)
 {
-	static t_node	*head;
+	static t_list	*head;
 
-	head = NULL;
 	return (&head);
 }
 
 void	free_all(void)
 {
-	t_node	**head;
-	t_node	*cur;
-	t_node	*next;
+	t_list	**head;
+	t_list	*cur;
+	t_list	*next;
 
 	head = collector();
 	cur = *head;
 	while (cur)
 	{
 		next = cur->next;
-		free(cur->data);
+		free(cur->content);
 		free(cur);
 		cur = next;
 	}
@@ -29,10 +28,10 @@ void	free_all(void)
 
 void	free_ptr(void *addr)
 {
-	t_node	**head;
-	t_node	*current;
-	t_node	*prev;
-	t_node	*tmp;
+	t_list	**head;
+	t_list	*current;
+	t_list	*prev;
+	t_list	*tmp;
 
 	head = collector();
 	if (head == NULL || *head == NULL)
@@ -42,13 +41,13 @@ void	free_ptr(void *addr)
 	while (current)
 	{
 		tmp = current;
-		if (current->data == addr)
+		if (current->content == addr)
 		{
 			if (prev != NULL)
 				prev->next = current->next;
 			else
 				*head = current->next;
-			free(tmp->data);
+			free(tmp->content);
 			free(tmp);
 			break ;
 		}
@@ -57,21 +56,21 @@ void	free_ptr(void *addr)
 	}
 }
 
-t_node	*create_node(void *data)
+t_list	*create_node(void *data)
 {
-	t_node	*node;
+	t_list	*node;
 
-	node = malloc(sizeof(t_node));
+	node = malloc(sizeof(t_list));
 	if (node == NULL)
 		return (NULL);
-	node->data = data;
+	node->content = data;
 	node->next = NULL;
 	return (node);
 }
 
-t_node	*add_front(t_node **head, void *data)
+t_list	*add_front(t_list **head, void *data)
 {
-	t_node	*node;
+	t_list	*node;
 
 	node = create_node(data);
 	if (node == NULL)
@@ -83,7 +82,7 @@ t_node	*add_front(t_node **head, void *data)
 
 void	save_ptr(void *data)
 {
-	t_node	**head;
+	t_list	**head;
 
 	head = collector();
 	add_front(head, data);

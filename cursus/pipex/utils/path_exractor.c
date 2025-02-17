@@ -7,7 +7,7 @@ static char	*find_path(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			return (env[i]);
 		i++;
 	}
