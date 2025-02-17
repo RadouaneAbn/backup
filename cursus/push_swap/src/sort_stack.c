@@ -24,26 +24,26 @@
 
 int	short_sort_a(t_stack_group s)
 {
-	if (get_element(s.a, 0) > get_element(s.a, 1) && get_element(s.a,
+	if (s.a->size > 2 && get_element(s.a, 0) > get_element(s.a, 1) && get_element(s.a,
 			0) > get_element(s.a, 2))
 		ra(s, 1);
-	else if (get_element(s.a, 1) > get_element(s.a, 0) && get_element(s.a,
+	else if (s.a->size > 2 && get_element(s.a, 1) > get_element(s.a, 0) && get_element(s.a,
 			1) > get_element(s.a, 2))
 		rra(s, 1);
-	if (get_element(s.a, 0) > get_element(s.a, 1))
+	if (s.a->size > 1 && get_element(s.a, 0) > get_element(s.a, 1))
 		sa(s, 1);
 	return (1);
 }
 
 int	short_sort_b(t_stack_group s)
 {
-	if (get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,
+	if (s.b->size > 2 && get_element(s.b, 0) < get_element(s.b, 1) && get_element(s.b,
 			0) < get_element(s.b, 2))
 		rb(s, 1);
-	else if (get_element(s.b, 1) < get_element(s.b, 0) && get_element(s.b,
+	else if (s.b->size > 2 && get_element(s.b, 1) < get_element(s.b, 0) && get_element(s.b,
 			1) < get_element(s.b, 2))
 		rrb(s, 1);
-	if (get_element(s.b, 0) < get_element(s.b, 1))
+	if (s.b->size > 2 && get_element(s.b, 0) < get_element(s.b, 1))
 		sb(s, 1);
 	return (1);
 }

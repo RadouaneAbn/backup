@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g
 RM := rm -rf
 
 UTILS := utils/count_args.c utils/init_stack.c utils/push_calls.c utils/reverse_rotate_calls.c utils/rotate_calls.c \
@@ -18,9 +18,7 @@ BONUS_NAME := checker
 $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $^ -o $@
 
-bonus: $(BONUS_NAME)
-
-$(BONUS_NAME): $(OBJ_FILES_BONUS)
+bonus: $(OBJ_FILES_BONUS)
 	$(CC) $(CFLAGS) $^ -o $(BONUS_NAME)
 
 all: $(NAME) bonus
