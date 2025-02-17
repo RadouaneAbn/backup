@@ -1,4 +1,5 @@
 CC = cc
+DEBUG_FLAGS = -fsanitize=address -g3
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 MAKE = make

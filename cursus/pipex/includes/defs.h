@@ -46,7 +46,9 @@ enum
 	MALLOC_R,
 	READ_ERR,
 	OPEN_ERR,
-	DIR_ERR
+	DIR_ERR,
+	PERMISSION_ERR,
+	COMMAND_ERR
 };
 
 #endif

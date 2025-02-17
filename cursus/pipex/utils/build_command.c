@@ -48,26 +48,40 @@ static char	**ft_path_join(char **cmd_v, char **path)
 	return (cmd_v);
 }
 
-int empty_command(char *full_command)
+int empty_command(char *full_command, int *status, int *error)
 {
 	int i;
 
 	i = 0;
+	*status = 126;
+	*error = PERMISSION_ERR;
+	if (full_command[i] == 0)
+		return (1);
 	while (full_command[i])
 	{
-		if (ft_issp)
+		if (full_command[i] != ' ')
+			return (0);
+		i++;
 	}
+	*status = 127;
+	*error = COMMAND_ERR;
+	return (1);
 }
 
 char	**build_command(char *full_command, char **path)
 {
 	char **cmd_v;
+	int status;
+	int error;
 
-	if (empty_command(full_command))
-		return (build_empty_command(full_command));
+	// if (empty_command(full_command))
+	// 	return (ft_split(full_command, '\0'));
+
+	if (empty_command(full_command, &status, &error))
+		exit_error(full_command, error, status);
 	cmd_v = ft_split(full_command, ' ');
 	cmd_v = ft_path_join(cmd_v, path);
 	if (cmd_v == NULL)
-		exit_error("Malloc", MALLOC_R);
+		exit_error("Malloc", MALLOC_R, 1);
 	return (cmd_v);
 }

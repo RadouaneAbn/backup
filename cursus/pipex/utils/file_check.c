@@ -12,10 +12,9 @@ int file_missing_argument(char *filename)
 
 int file_missing(char *filename)
 {
-    if (file_exists(filename) == 0)
-    {
+
+    if (ft_strchr(filename, '/') != NULL && file_exists(filename) == 0)
         print_error(filename, ": No such file or directory\n");
-    }
     else if (ft_strchr(filename, '/') == NULL)
         print_error(filename, ": Command not found\n");
     else

@@ -21,7 +21,7 @@ void	append_to_list(t_list **head, char *s)
 
 	new_node = ft_lstnew(s);
 	if (new_node == NULL)
-		exit_error("Malloc", MALLOC_R);
+		exit_error("Malloc", MALLOC_R, 1);
 	save_ptr(new_node);
 	ft_lstadd_back(head, new_node);
 }
@@ -81,10 +81,10 @@ void	second_execution(char **env, t_execute_info *info)
 	close(info->fd[1][0]);
 	close(info->fd[1][1]);
 	if (file_is_directory(info->output_file))
-		exit_error(info->output_file, DIR_ERR);
+		exit_error(info->output_file, DIR_ERR, 1);
 	output_fd = open(info->output_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (output_fd == -1)
-		exit(1);
+		exit_error(info->output_file, OPEN_ERR, 1);
 	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
 	info->current_command = build_command(info->commands_list[1], info->path);
