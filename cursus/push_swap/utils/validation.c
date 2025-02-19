@@ -35,12 +35,12 @@ int	all_args_are_valide_phase1(char *s)
 	{
 		if (s[i] == '-')
 		{
-			if (i > 0 && !ft_isspace(s[i - 1]))
+			if (i > 0 && s[i - 1] != ' ')
 				return (-1);
 			if (s[i] && !ft_isnum(s[i + 1]))
 				return (-1);
 		}
-		else if (ft_isnum(s[i]) == 0 && ft_isspace(s[i]) == 0)
+		else if (ft_isnum(s[i]) == 0 && s[i] != ' ')
 			return (-1);
 		i++;
 	}

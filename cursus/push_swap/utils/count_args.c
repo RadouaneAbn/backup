@@ -24,10 +24,10 @@ int	get_arg_count(char *s)
 		return (-1);
 	while (s[i])
 	{
-		while (s[i] && ft_isspace(s[i]))
+		while (s[i] && s[i] == ' ')
 			i++;
 		j = i;
-		while (s[j] && !ft_isspace(s[j]))
+		while (s[j] && s[j] != ' ')
 			j++;
 		if (i != j)
 			count++;

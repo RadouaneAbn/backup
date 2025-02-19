@@ -12,13 +12,13 @@
 
 #include "../includes/defs.h"
 
-int	ft_isspace(int c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (1);
-	return (0);
-}
+// int	ft_isspace(int c)
+// {
+// 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+// 		|| c == '\r')
+// 		return (1);
+// 	return (0);
+// }
 
 int	ft_isnum(int c)
 {

@@ -43,7 +43,7 @@ int	short_sort_b(t_stack_group s)
 	else if (s.b->size > 2 && get_element(s.b, 1) < get_element(s.b, 0) && get_element(s.b,
 			1) < get_element(s.b, 2))
 		rrb(s, 1);
-	if (s.b->size > 2 && get_element(s.b, 0) < get_element(s.b, 1))
+	if (s.b->size > 1 && get_element(s.b, 0) < get_element(s.b, 1))
 		sb(s, 1);
 	return (1);
 }

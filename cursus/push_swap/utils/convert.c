@@ -50,10 +50,10 @@ int	convert_args_to_int(t_stack *a, char *s)
 	i = 0;
 	while (s[i])
 	{
-		while (s[i] && ft_isspace(s[i]))
+		while (s[i] && s[i] == ' ')
 			i++;
 		j = i;
-		while (s[j] && !ft_isspace(s[j]))
+		while (s[j] && s[j] != ' ')
 			j++;
 		if (i != j)
 		{
