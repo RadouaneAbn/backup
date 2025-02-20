@@ -7,6 +7,21 @@ void	clean_exit(int exit_code)
 	exit(exit_code);
 }
 
+void	print_usage_error(int type, char *filename)
+{
+	write(2, "Usage: ", 7);
+	write(2, filename, ft_strlen(filename));
+	if (type == MANDATORY_PART)
+		write(2, " input_file cmd1 cmd2 output_file\n", 34);
+	else
+	{
+		write(2, " input_file cmd1 cmd2 ...[cmdn] output_file\n     : ", 51);
+		write(2, filename, ft_strlen(filename));
+		write(2, " here_doc LIMITER cmd cmd1 output_file\n", 39);
+	}
+	exit(1);
+}
+
 void	print_error(char *name, char *error)
 {
 	char	*str;
@@ -39,13 +54,13 @@ void	print_perror(char *name)
 
 void	exit_error(char *name, int error_code, int exit_code)
 {
-	if (error_code == MALLOC_R)
-		print_error(name, ": malloc failed!\n");
-	else if (error_code == DIR_ERR)
-		print_error(name, ": is a directory\n");
-	else if (error_code == PERMISSION_ERR)
-		print_error(name, ": permission denied\n");
-	else if (error_code == COMMAND_ERR)
-		print_error(name, ": command not found\n");
+	if (error_code == MALC_EXIT)
+		print_error(name, MALC_EM);
+	else if (error_code == DIRE_EXIT)
+		print_error(name, DIRE_EM);
+	else if (error_code == PERM_EXIT)
+		print_error(name, PERM_EM);
+	else if (error_code == COMD_EXIT)
+		print_error(name, COMD_EM);
 	clean_exit(exit_code);
 }

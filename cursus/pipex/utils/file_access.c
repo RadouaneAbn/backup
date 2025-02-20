@@ -27,7 +27,6 @@ int	file_executable(char *file_path)
 	return (0);
 }
 
-
 int	command_executable(char **cmd_v, int *status)
 {
 	if (file_missing_argument(cmd_v[0]))
@@ -47,19 +46,4 @@ int	command_executable(char **cmd_v, int *status)
 	else
 		return (1);
 	return (0);
-}
-
-int	open_input_file(char *filename)
-{
-	if (access(filename, F_OK) == -1)
-	{
-		print_perror(filename);
-		return (-1);
-	}
-	if (access(filename, R_OK) == -1)
-	{
-		print_perror(filename);
-		return (-1);
-	}
-	return (open(filename, O_RDONLY));
 }

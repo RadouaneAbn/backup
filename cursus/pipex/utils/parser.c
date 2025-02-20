@@ -56,7 +56,7 @@ char	*ft_strndup(char *s, int slen)
 	i = 0;
 	new_s = (char *)ft_smalloc(slen + 1);
 	if (new_s == NULL)
-		exit_error("Malloc", MALLOC_R, 1);
+		exit_error("Malloc", MALC_EXIT, 1);
 	while (s[i] && i < slen)
 	{
 		new_s[i] = s[i];
@@ -104,7 +104,7 @@ char	**ft_parser(char *s, char c)
 	size = get_word_count(s, c, slen) + 1;
 	arr = (char **)ft_smalloc(size * sizeof(char *));
 	if (arr == NULL)
-		exit_error("Malloc", MALLOC_R, 1);
+		exit_error("Malloc", MALC_EXIT, 1);
 	arr = split_string(s, c, arr, slen);
 	return (arr);
 }

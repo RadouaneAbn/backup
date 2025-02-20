@@ -1,4 +1,5 @@
 #include "../includes/garbage_collector.h"
+#include "../includes/pipex_bonus.h"
 #include "../includes/utils.h"
 
 void	pipex(int ac, char **av, char **env)
@@ -15,7 +16,7 @@ void	pipex(int ac, char **av, char **env)
 	while (i < commands.command_count)
 	{
 		if (i != commands.command_count - 1)
-		pipe(file_descriptors.fd);
+			pipe(file_descriptors.fd);
 		pid[i] = fork();
 		if (pid[i] == 0)
 			run_child_proccess(&commands, &file_descriptors, i, env);
@@ -26,7 +27,40 @@ void	pipex(int ac, char **av, char **env)
 			close(file_descriptors.fd[1]);
 		i++;
 	}
-	// close(file_descriptors.fd[0]);
-	wait_for_children(pid);
+	wait_for_children(pid); /* NOTIC: close(file_descriptors.fd[0]); */
 	close(file_descriptors.prev);
+}
+
+int	check_type(char **av)
+{
+	int	pipe_type;
+
+	pipe_type = PIPE;
+	if (ft_strncmp(av[1], "here_doc", 9) == 0)
+		pipe_type = HEREDOC;
+	return (pipe_type);
+}
+
+int	input_check(int ac, char **av)
+{
+	int	type;
+
+	if (ac < 5)
+		print_usage_error(BONUS_PART, av[0]);
+	type = check_type(av);
+	if ((type == PIPE && ac < 5) || (type == HEREDOC && ac != 6))
+		print_usage_error(BONUS_PART, av[0]);
+	return (type);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	int pipe_type;
+
+	pipe_type = input_check(ac, av);
+	if (pipe_type == PIPE)
+		pipex(ac, av, env);
+	else
+		here_doc(ac, av, env);
+	return (0);
 }

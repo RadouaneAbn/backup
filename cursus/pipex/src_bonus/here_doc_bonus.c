@@ -3,25 +3,13 @@
 #include "../includes/pipex_bonus.h"
 #include "../includes/utils.h"
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (s1 == s2);
-	while (s1[i] && (unsigned char)s1[i] == (unsigned char)s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
 void	append_to_list(t_list **head, char *s)
 {
 	t_list	*new_node;
 
 	new_node = ft_lstnew(s);
 	if (new_node == NULL)
-		exit_error("Malloc", MALLOC_R, 1);
+		exit_error("Malloc", MALC_EXIT, 1);
 	save_ptr(new_node);
 	ft_lstadd_back(head, new_node);
 }
@@ -81,10 +69,13 @@ void	second_execution(char **env, t_execute_info *info)
 	close(info->fd[1][0]);
 	close(info->fd[1][1]);
 	if (file_is_directory(info->output_file))
-		exit_error(info->output_file, DIR_ERR, 1);
+		exit_error(info->output_file, DIRE_EXIT, 1);
 	output_fd = open(info->output_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (output_fd == -1)
-		exit_error(info->output_file, OPEN_ERR, 1);
+	{
+		print_perror(info->output_file);
+		exit(1);
+	}
 	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
 	info->current_command = build_command(info->commands_list[1], info->path);

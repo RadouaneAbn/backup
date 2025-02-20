@@ -26,3 +26,11 @@ void	pipex(int ac, char **av, char **env)
 	close(file_descriptors.prev);
 	wait_for_children(pid);
 }
+
+int	main(int ac, char **av, char **env)
+{
+	if (ac != 5)
+		print_usage_error(MANDATORY_PART, av[0]);
+	pipex(ac, av, env);
+	return (0);
+}

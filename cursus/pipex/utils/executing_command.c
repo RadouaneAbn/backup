@@ -23,11 +23,11 @@ void	first_command(char *input_file, int fd[2])
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	input_fd = open_input_file(input_file);
+	input_fd = open(input_file, O_RDONLY);
 	if (input_fd == -1)
 	{
-		// close(fd[0]);
-		exit_error(input_file, OPEN_ERR, 1);
+		print_perror(input_file);
+		exit(1);
 	}
 	dup2(input_fd, STDIN_FILENO);
 	close(input_fd);
@@ -36,14 +36,17 @@ void	first_command(char *input_file, int fd[2])
 void	last_command(char *output_file, int prev)
 {
 	int	output_fd;
-	
+
 	dup2(prev, STDIN_FILENO);
 	close(prev);
 	if (file_is_directory(output_file))
-		exit_error(output_file, DIR_ERR, 1);
+		exit_error(output_file, DIRE_EXIT, 1);
 	output_fd = open(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (output_fd == -1)
-		exit_error("Open", READ_ERR, 1);
+	{
+		print_perror(output_file);
+		exit(1);
+	}
 	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
 }

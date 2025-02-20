@@ -13,22 +13,25 @@ void	run_first_command(char *input_file, int fd[2]);
 void	run_last_command(char *output_file, int prev);
 void	run_mid_command(int fd[2], int prev);
 void	run_child_proccess(t_cmd_v *commands, t_fd_holder *file_descriptors,
-    int i, char **env);
+			int i, char **env);
 char	**export_path_var(char **env);
-int *make_pid_array(int commands_count);
+int		*make_pid_array(int commands_count);
 void	wait_for_children(int *pid);
 void	init_pipex(t_cmd_v *commands, t_fd_holder *file_descriptors, char **av,
-    int ac);
-    int	file_is_directory(char *file_path);
-int	command_executable(char **cmd_v, int *status);
-int	open_input_file(char *filename);
-int	file_exists(char *file_path);
-int	file_executable(char *file_path);
+			int ac);
+int		file_is_directory(char *file_path);
+int		command_executable(char **cmd_v, int *status);
+int		open_input_file(char *filename);
+int		file_exists(char *file_path);
+int		file_executable(char *file_path);
 char	**build_command(char *full_command, char **path);
-int	ft_strcat(char *dest, const char *src);
+int		ft_strcat(char *dest, const char *src);
 void	print_error(char *name, char *error);
 void	print_perror(char *name);
-void exit_error(char *name, int error_code, int exit_code);
-int file_missing_argument(char *filename);
-int file_missing(char *filename);
+void	exit_error(char *name, int error_code, int exit_code);
+int		file_missing_argument(char *filename);
+int		file_missing(char *filename);
+void	exit_error(char *name, int error_code, int exit_code);
+void	print_usage_error(int type, char *filename);
+
 #endif

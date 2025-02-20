@@ -1,13 +1,12 @@
 #ifndef DEFS_H
 # define DEFS_H
 
-
-# include <stdio.h>
 # include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <stdlib.h>
 
 typedef struct s_cmd_list
 {
@@ -33,22 +32,34 @@ typedef struct s_fd_holder
 
 typedef struct s_execute_info
 {
-	int fd[2][2];
-	char *output_file;
-	char **path;
-	char **commands_list;
-	char **current_command;
-	char *delimiter;
-} t_execute_info;
+	int		fd[2][2];
+	char	*output_file;
+	char	**path;
+	char	**commands_list;
+	char	**current_command;
+	char	*delimiter;
+}			t_execute_info;
 
 enum
 {
-	MALLOC_R,
-	READ_ERR,
-	OPEN_ERR,
-	DIR_ERR,
-	PERMISSION_ERR,
-	COMMAND_ERR
+	MALC_EXIT = 1,
+	DIRE_EXIT,
+	PERM_EXIT,
+	COMD_EXIT,
+	FILE_EXIT,
+	READ_EXIT,
+	OPEN_EXIT,
+	MANDATORY_PART,
+	BONUS_PART
 };
+
+# define MALC_EM ": malloc failed!\n"
+# define DIRE_EM ": is a directory\n"
+# define PERM_EM ": permission denied\n"
+# define COMD_EM ": command not found\n"
+# define FILE_EM ": No such file or directory\n"
+# define FARG_EM ": Filename argument required\n"
+// # define READ_EM ": Permi"
+// # define OPEN_EM ": Cannot open file"
 
 #endif
