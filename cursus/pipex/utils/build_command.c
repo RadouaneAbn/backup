@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_command.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 22:33:37 by rabounou          #+#    #+#             */
+/*   Updated: 2025/02/22 22:38:38 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/utils.h"
 
 static char	*append_path_to_command(char *cmd, char *path)
@@ -41,9 +53,9 @@ static char	**ft_path_join(char **cmd_v, char **path)
 {
 	if (cmd_v == NULL)
 		return (NULL);
-	if (cmd_v[0] && ft_strchr(cmd_v[0], '/') == NULL &&
-		ft_strncmp(cmd_v[0], ".", 2) != 0 &&
-		ft_strncmp(cmd_v[0], "..", 3) != 0)
+	if (cmd_v[0] && ft_strchr(cmd_v[0], '/') == NULL
+		&& ft_strncmp(cmd_v[0], ".", 2) != 0
+		&& ft_strncmp(cmd_v[0], "..", 3) != 0)
 		cmd_v[0] = find_command(cmd_v[0], path);
 	return (cmd_v);
 }

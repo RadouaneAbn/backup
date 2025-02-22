@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 22:33:26 by rabounou          #+#    #+#             */
+/*   Updated: 2025/02/22 22:40:28 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/garbage_collector.h"
 #include "../includes/pipex_bonus.h"
 #include "../includes/utils.h"
@@ -27,7 +39,7 @@ void	pipex(int ac, char **av, char **env)
 			close(file_descriptors.fd[1]);
 		i++;
 	}
-	wait_for_children(pid); /* NOTIC: close(file_descriptors.fd[0]); */
+	wait_for_children(pid);
 	close(file_descriptors.prev);
 }
 
@@ -55,7 +67,7 @@ int	input_check(int ac, char **av)
 
 int	main(int ac, char **av, char **env)
 {
-	int pipe_type;
+	int	pipe_type;
 
 	pipe_type = input_check(ac, av);
 	if (pipe_type == PIPE)

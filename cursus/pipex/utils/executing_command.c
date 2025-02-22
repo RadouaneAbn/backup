@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executing_command.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 22:33:57 by rabounou          #+#    #+#             */
+/*   Updated: 2025/02/22 22:39:14 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/garbage_collector.h"
 #include "../includes/pipex.h"
 #include "../includes/utils.h"
@@ -45,7 +57,7 @@ void	last_command(char *output_file, int prev)
 	if (output_fd == -1)
 	{
 		print_perror(output_file);
-		exit(1);
+		clean_exit(1);
 	}
 	dup2(output_fd, STDOUT_FILENO);
 	close(output_fd);
@@ -70,6 +82,6 @@ void	run_child_proccess(t_cmd_v *commands, t_fd_holder *file_descriptors,
 	else
 		mid_command(file_descriptors->fd, file_descriptors->prev);
 	commands->current_command = build_command(commands->commands_list[i],
-												commands->path);
+			commands->path);
 	execute_command(commands->current_command, env);
 }

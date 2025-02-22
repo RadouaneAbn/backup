@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rabounou <rabounou@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 22:33:20 by rabounou          #+#    #+#             */
+/*   Updated: 2025/02/22 22:39:48 by rabounou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../get_next_line/get_next_line.h"
 #include "../includes/garbage_collector.h"
 #include "../includes/pipex_bonus.h"
@@ -53,7 +65,7 @@ void	first_execution(char **env, t_execute_info *info, t_list **head)
 	while (current)
 	{
 		write(info->fd[0][1], (char *)current->content,
-				ft_strlen((char *)current->content));
+			ft_strlen((char *)current->content));
 		current = current->next;
 	}
 	info->current_command = build_command(info->commands_list[0], info->path);
