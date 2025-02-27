@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/garbage_collector.h"
-#include "../includes/utils.h"
+// #include "../includes/utils.h"
 
 static t_list	**collector(void)
 {
@@ -61,12 +61,19 @@ void	*ft_smalloc(int size)
 	return (mal);
 }
 
-void	*ft_malloc(int size)
+void	appendlist_to_gbcollector(t_list *node)
 {
-	void	*mal;
+	t_list **gbcollector;
+	t_list *head;
 
-	mal = malloc(size);
-	if (mal == NULL)
-		return (NULL);
-	return (mal);
+	gbcollector = collector();
+	head = *gbcollector;
+	if (head)
+	{
+		while (head->next)
+			head = head->next;
+		head->next = node;
+	}
+	else
+		*gbcollector = node;
 }

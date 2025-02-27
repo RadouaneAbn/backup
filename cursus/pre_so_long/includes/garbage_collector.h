@@ -14,10 +14,11 @@
 # define GARBAGE_COLLECTOR_H
 
 # include "../includes/defs.h"
+# include "../libft/libft.h"
 
-void	*ft_malloc(int size);
+void	appendlist_to_gbcollector(t_list *node);
 void	free_all(void);
-void	free_ptr(void *addr);
+// void	free_ptr(void *addr);
 void	save_ptr(void *data);
 void	*ft_smalloc(int size);
 
