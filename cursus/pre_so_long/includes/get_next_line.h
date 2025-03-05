@@ -21,7 +21,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../libft/libft.h"
 
 typedef struct s_buf
 {
@@ -31,6 +30,8 @@ typedef struct s_buf
 }			t_buf;
 
 char		*get_next_line(int fd);
+size_t		ft_strlen(char *s);
+char		*ft_strdup(char *s);
 void		appendto_buffer(char *tmp, t_buf *buffer, char **line);
 char		*last_clean(char *s, void (*f)(void *));
 int			nl_found(char *s);
