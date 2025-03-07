@@ -1,9 +1,10 @@
+#!/bin/python3
 import pygame
 
 
 # GAME PROPS
-WIDTH = 100
-ROWS = 50
+WIDTH = 1000
+ROWS = 100
 GAP = WIDTH // ROWS
 
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -71,8 +72,12 @@ class Spot:
         self.color = PURPLE
 
     def draw(self, win):
-        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
-
+        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))  # Fill color
+        # pygame.draw.line(win, GREY, (self.x, self.y), (self.x + self.width, self.y))  # Top border
+        # pygame.draw.line(win, GREY, (self.x, self.y), (self.x, self.y + self.width))  # Left border
+        # pygame.draw.line(win, GREY, (self.x, self.y + self.width - 1), (self.x + self.width, self.y + self.width - 1))  # Bottom border
+        # pygame.draw.line(win, GREY, (self.x + self.width - 1, self.y), (self.x + self.width - 1, self.y + self.width))  
+        
     def update_neighbors(self, grid):
         pass
 
@@ -96,8 +101,14 @@ def make_grid(rows, width):
 def draw_grid(win, rows, width):
     for i in range(rows):
         pygame.draw.line(win, GREY, (0, i * GAP), (width, i * GAP))
-        for j in range(rows):
-            pygame.draw.line(win, GREY, (j * GAP, 0), (j * GAP, width))
+    for j in range(rows):
+        pygame.draw.line(win, GREY, (j * GAP, 0), (j * GAP, width))
+
+def update_spots(win, changed_spots):
+    for spot in changed_spots:
+        spot.draw(win)
+    draw_grid(win, ROWS, WIDTH)
+    pygame.display.update()
 
 def draw(win, grid, rows, width):
     win.fill(WHITE)
@@ -123,8 +134,9 @@ def main(win, width):
     
     run = True
     started = False
+    draw(win, grid, ROWS, width)
     while run:
-        draw(win, grid, ROWS, width)
+        changed_spots = []
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -139,10 +151,13 @@ def main(win, width):
                 if not start and spot != end:
                     start = spot
                     start.make_start()
+                    changed_spots.append(spot)
                 elif not end and spot != start:
                     end = spot
                     end.make_end()
+                    changed_spots.append(spot)
                 elif spot != end and spot != start:
+                    changed_spots.append(spot)
                     spot.make_wall()
                 
                     
@@ -151,11 +166,17 @@ def main(win, width):
                 row, col = get_clicked_pos(pos, ROWS, width)
                 spot = grid[row][col]
                 spot.reset()
+                changed_spots.append(spot)
                 if spot == start:
                     start = None
                 elif spot == end:
                     end = None
 
+            elif event.type == pygame.K:
+                if event.key == pygame.K_SPACE and not started:
+
+
+        update_spots(win, changed_spots)
     pygame.quit()
 
 main(WIN, WIDTH)
