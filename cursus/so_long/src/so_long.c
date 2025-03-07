@@ -168,9 +168,32 @@ void build_game_dimentions(t_game *game, t_list **head)
 	game->map_height = rows;
 }
 
+void validate_map_flood_fill2(t_game *game, char **map, int x, int y)
+{
+	int i;
+	int j;
+
+	while (x <= game->map_width || x >= 0 || y <= game->map_height || y >= 0)
+	{
+		if (map[y][x] == '1')
+			return ;
+		if (map[y][x] == '0')
+			map[y][x] = '1';
+		else if (map[y][x] == 'C')
+		{
+			game->player.collectibles++;
+			map[y][x] = '1';
+		}
+		else if (map[y][x] == 'E')
+		{
+			game->player.exit++;
+			map[y][x] = '1';
+		}
+	}
+}
+
 void validate_map_flood_fill(t_game *game, char **map, int x, int y)
 {
-	// printf("current pos [%d,%d]\n", x, y);
 	if (x > game->map_width || x < 0 || y > game->map_height || y < 0)
 		return ;
 	if (map[y][x] == '1')
@@ -218,6 +241,7 @@ void validate_map(t_game *game)
 	map_copy = copy_map2(game);
 	game->player.collectibles = 0;
 	game->player.exit = 0;
+	// printf("init ")
 	validate_map_flood_fill(game, map_copy, game->player.x, game->player.y);
 	// debug_flood_fill(game);
 	i = 0;
