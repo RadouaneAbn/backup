@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+# include "../libft/libft.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -31,6 +32,17 @@
 # define FILE_MISSING_ERR "Map doesn't exist !!!\n"
 # define MAP_IS_DIR_ERR "The given file is a directory !!!\n"
 
+typedef enum e_cell_type
+{
+    WALL,
+    SPACE,
+    COLLECTABLE,
+    PLAYER,
+    ENEMY,
+    EXIT,
+    INVALID
+} t_cell_type;
+
 typedef struct s_player
 {
     int x;
@@ -39,9 +51,41 @@ typedef struct s_player
     int exit;
     int collectibles;
 }   t_player;
+
+typedef struct s_enemy
+{
+    int x;
+    int y;
+    int detecte_player;
+}   t_enemy;
+
+typedef struct s_collectable
+{
+    int x;
+    int y;
+    int is_collected;
+    int is_accessible;
+}   t_collectable;
+
+typedef struct s_cell
+{
+    int x;
+    int y;
+    t_cell_type type;
+    int is_closed;
+} t_cell;
+
+typedef struct s_enteties
+{
+    t_player player;
+    t_enemy *enemies;
+    t_collectable *collectables;
+} t_enteties;
+
 typedef struct s_game
 {
-    char **map;
+    t_cell **map;
+    t_enteties enteties;
     int map_width;
     int map_height;
     int map_grid_size;
@@ -50,11 +94,12 @@ typedef struct s_game
     t_player player;
 } t_game;
 
-// typedef struct s_list
-// {
-//     char *line;
-//     struct s_list *next;
-// } t_list;
+typedef struct s_queue
+{
+    t_list *head;
+    t_list *tail;
+    int is_empty;
+} t_queue;
 
 
 

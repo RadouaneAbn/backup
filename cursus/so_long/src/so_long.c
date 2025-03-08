@@ -4,6 +4,53 @@
 #include "../libft/libft.h"
 #include "../includes/garbage_collector.h"
 
+void print_map(t_game *game)
+{
+	int i = 0, j;
+	int c_idx;
+
+	printf("MAP INFO:\n");
+	printf("  dimentions: [%d/%d]\n", game->map_width, game->map_height);
+	printf("  collectables: [%d]\n", game->collectibles);
+	printf("  player: [%d/%d]\n\n", game->enteties.player.x, game->enteties.player.y);
+	while (i < game->map_height) {
+		j = 0;
+		while (j < game->map_width) {
+			printf("[%2d|%-2d] ", game->map[i][j].x, game->map[i][j].y);
+			j++;
+		}
+		printf("\n");
+		j = 0;
+		c_idx = 0;
+		while (j < game->map_width) {
+			while (c_idx < game->collectibles)
+			{
+				if (i == (game->enteties.collectables[c_idx]).y
+					&& j == (game->enteties.collectables[c_idx]).x)
+					{
+
+						printf("[ COL ] ");
+						break;
+					}
+				c_idx++;
+			}
+			if (c_idx < game->collectibles)
+			{}
+			else if (i == game->enteties.player.y && j == game->enteties.player.x)
+				printf("[ PLY ] ");
+			else if (game->map[i][j].type == WALL)
+				printf("[ WAL ] ");
+			else if (game->map[i][j].type == SPACE)
+				printf("[ SPC ] ");
+			else if (game->map[i][j].type == EXIT)
+				printf("[ EXT ] ");
+			j++;
+		}
+		printf("\n\n");
+		i++;
+	}
+}
+
 t_list *append_to_list(t_list **head, char *row)
 {
 	t_list *node;
@@ -49,10 +96,8 @@ int read_map(t_list **head, int fd)
 	while (TRUE)
 	{
 		row = get_next_line(fd);
-		// printf("=> %s", row);
 		if (row == NULL)
 			break;
-		// save_ptr(row);
 		row = ft_remove_from_end(row, '\n');
 		node = append_to_list(head, row);
 		if (node == NULL)
@@ -61,57 +106,75 @@ int read_map(t_list **head, int fd)
 	return (0);
 }
 
-char **copy_map(t_list **head)
+
+t_cell_type get_map_cell_type(char c)
+{
+	if (c == 'C')
+		return (SPACE);
+	if (c == 'P')
+		return (SPACE);
+	if (c == 'E')
+		return (EXIT);
+	if (c == '1')
+		return (WALL);
+	if (c == '0')
+		return (SPACE);
+	return (INVALID);
+}
+
+t_cell_type get_cell_type(char c)
+{
+	if (c == 'C')
+		return (COLLECTABLE);
+	if (c == 'P')
+		return (PLAYER);
+	if (c == 'E')
+		return (EXIT);
+	if (c == '1')
+		return (WALL);
+	if (c == '0')
+		return (SPACE);
+	return (INVALID);
+}
+
+t_cell **copy_map(t_list **head)
 {
 	t_list *current;
-	char **map;
+	t_cell **map;
 	int list_size;
 	int i;
+	int j;
+	char *tmp_str;
 
 	i = 0;
 	list_size = ft_lstsize(*head);
 	if (list_size == 0)
 		exit_error(1, MAP_EMPTY);
-	map = ft_smalloc(sizeof(char *) * (list_size + 1));
+	map = ft_smalloc(sizeof(t_cell *) * (list_size + 1));
 	if (map == NULL)
 		exit_error(1, MALC_MGS);
-	while (*head)
+	current = *head;
+	while (current)
 	{
-		current = *head;
-		(*head) = (*head)->next;
-		map[i] = ft_strdup((char *)(current->content));
-		if (map[i] == NULL)
-			exit_error(1, MALC_MGS);
-		save_ptr(map[i]);
-		ft_lstdelone(current, free);
-		i++;
-	}
-	map[i] = NULL;
-	return (map);
-}
-
-char **copy_map2(t_game *game)
-{
-	char **new_map;
-	int i;
-
-	new_map = malloc(sizeof(char *) * (game->map_height + 1));
-	if (new_map == NULL)
-		exit_error(1, MALC_MGS);
-	i = 0;
-	while (game->map[i])
-	{
-		new_map[i] = ft_strdup(game->map[i]);
-		if (new_map[i] == NULL)
+		j = 0;
+		// (*head) = (*head)->next;
+		tmp_str = (char *)(current->content);
+		map[i] = ft_smalloc(sizeof(t_cell) * (ft_strlen(tmp_str)));
+		while (tmp_str[j])
 		{
-			while (--i >= 0)
-				free(new_map[i]);
-			exit_error(1, MALC_MGS);
+			map[i][j].x = j;
+			map[i][j].y = i;
+			map[i][j].is_closed = FALSE;
+			map[i][j].type = get_map_cell_type(tmp_str[j]);
+			if (map[i][j].type == INVALID)
+				return (NULL);
+			j++;
 		}
+		// ft_lstdelone(current, free);
+		current = current->next;
 		i++;
 	}
-	new_map[i] = NULL;
-	return (new_map);
+	return (map);
 }
 
 void map_components_invalide(int player, int map_exit, int collectibles)
@@ -126,95 +189,125 @@ void map_components_invalide(int player, int map_exit, int collectibles)
 	exit(1);
 }
 
-void build_game_dimentions(t_game *game, t_list **head)
+void copy_enteties(t_game *game, t_list **head)
 {
-	int rows;
-	int cols;
-	int map_exit;
-
-	game->player.exist = 0;
-	map_exit = 0;
-	game->map = copy_map(head);
-	game->map_width = ft_strlen(game->map[0]);
-	game->collectibles = 0;
-	game->exit_is_open = 0;
-	rows = 0;
-	while (game->map[rows])
-	{
-		cols = 0;
-		while (game->map[rows][cols])
-		{
-			if (game->map[rows][cols] == 'C')
-				game->collectibles++;
-			else if (game->map[rows][cols] == 'P')
-			{
-				game->player.x = cols;
-				game->player.y = rows;
-				(game->player.exist)++;
-			}
-			else if (game->map[rows][cols] == 'E')
-			map_exit++;
-			cols++;
-		}
-		if (cols != game->map_width)
-		{
-			printf("map width: %d || row width: %d", game->map_width, cols);
-			exit_error(1, INVALID_MAP);
-		}
-		rows++;
-	}
-	if ((game->player.exist) != 1 || map_exit != 1 || game->collectibles < 1)
-		map_components_invalide(game->player.exist, map_exit, game->collectibles);
-	game->map_height = rows;
-}
-
-void validate_map_flood_fill2(t_game *game, char **map, int x, int y)
-{
+	t_list *current;
 	int i;
 	int j;
+	char *tmp_str;
+	int exit_cell;
+	int idx;
 
-	while (x <= game->map_width || x >= 0 || y <= game->map_height || y >= 0)
+	i = 0;
+	exit_cell = 0;
+	current = *head;
+	game->enteties.player.exist = 0;
+	game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles));
+	while (current)
 	{
-		if (map[y][x] == '1')
-			return ;
-		if (map[y][x] == '0')
-			map[y][x] = '1';
-		else if (map[y][x] == 'C')
+		j = 0;
+		tmp_str = (char *)(current->content);
+		while (tmp_str[j])
 		{
-			game->player.collectibles++;
-			map[y][x] = '1';
+			if (tmp_str[j] == 'C')
+				game->collectibles++;
+			else if (tmp_str[j] == 'P')
+			{
+				game->enteties.player.x = j;
+				game->enteties.player.y = i;
+				(game->enteties.player.exist)++;
+			}
+			else if (tmp_str[j] == 'E')
+				exit_cell++;
+			j++;
 		}
-		else if (map[y][x] == 'E')
+		current = current->next;
+		i++;
+	}
+	if ((game->enteties.player.exist) != 1 || exit_cell != 1 || game->collectibles < 1)
+		map_components_invalide(game->enteties.player.exist, exit_cell, game->collectibles);
+	game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles));
+	i = 0;
+	idx = 0;
+	while (*head)
+	{
+		j = 0;
+		current = *head;
+		*head = (*head)->next;
+		tmp_str = (char *)(current->content);
+		while (tmp_str[j])
 		{
-			game->player.exit++;
-			map[y][x] = '1';
+			if (tmp_str[j] == 'C')
+			{
+				(game->enteties.collectables[idx]).is_collected = FALSE;
+				(game->enteties.collectables[idx]).x = j;
+				(game->enteties.collectables[idx]).y = i;
+				idx++;
+			}
+			j++;
 		}
+		ft_lstdelone(current, free);
+		i++;
 	}
 }
 
-void validate_map_flood_fill(t_game *game, char **map, int x, int y)
+void get_map_dimentions(t_game *game, t_list **head)
 {
-	if (x > game->map_width || x < 0 || y > game->map_height || y < 0)
-		return ;
-	if (map[y][x] == '1')
-		return ;
-	if (map[y][x] == '0')
-		map[y][x] = '1';
-	if (map[y][x] == 'C')
+	t_list *current;
+
+	game->map_height = ft_lstsize(*head);
+	game->map_width = ft_strlen((*head)->content);
+	current = *head;
+	while (current)
 	{
-		game->player.collectibles++;
-		map[y][x] = '1';
+		if ((int)ft_strlen(current->content) != game->map_width)
+			exit_error(1, INVALID_MAP);
+		current = current->next;
 	}
-	if (map[y][x] == 'E')
-	{
-		game->player.exit++;
-		map[y][x] = '1';
-	}
-	validate_map_flood_fill(game, map, x + 1, y);
-	validate_map_flood_fill(game, map, x, y + 1);
-	validate_map_flood_fill(game, map, x - 1, y);
-	validate_map_flood_fill(game, map, x, y - 1);
 }
+
+void build_game_dimentions(t_game *game, t_list **head)
+{
+	game->enteties.player.exist = 0;
+	get_map_dimentions(game, head);
+	game->map = copy_map(head);
+	game->collectibles = 0;
+	game->exit_is_open = 0;
+	copy_enteties(game, head);
+	// game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles + 1));
+}
+
+// void breadth_first_full_search(t_game *game, char **map, int x, int y)
+// {
+// 	int i;
+// 	int j;
+
+
+// }
+
+// void validate_map_flood_fill(t_game *game, char **map, int x, int y)
+// {
+// 	if (x > game->map_width || x < 0 || y > game->map_height || y < 0)
+// 		return ;
+// 	if (map[y][x] == '1')
+// 		return ;
+// 	if (map[y][x] == '0')
+// 		map[y][x] = '1';
+// 	if (map[y][x] == 'C')
+// 	{
+// 		game->player.collectibles++;
+// 		map[y][x] = '1';
+// 	}
+// 	if (map[y][x] == 'E')
+// 	{
+// 		game->player.exit++;
+// 		map[y][x] = '1';
+// 	}
+// 	validate_map_flood_fill(game, map, x + 1, y);
+// 	validate_map_flood_fill(game, map, x, y + 1);
+// 	validate_map_flood_fill(game, map, x - 1, y);
+// 	validate_map_flood_fill(game, map, x, y - 1);
+// }
 
 void debug_flood_fill(t_game *game)
 {
@@ -225,9 +318,9 @@ void debug_flood_fill(t_game *game)
 
 void map_access_invalide(t_game *game)
 {
-	if (game->player.exit != 1)
+	if (game->enteties.player.exit != 1)
 		write(2, PLAYER_EXIT_ERR, ft_strlen(PLAYER_EXIT_ERR));
-	if (game->player.collectibles != game->collectibles)
+	if (game->enteties.player.collectibles != game->collectibles)
 		write(2, PLAYER_COL_ERR, ft_strlen(PLAYER_COL_ERR));
 	free_all();
 	exit(1);
@@ -235,20 +328,14 @@ void map_access_invalide(t_game *game)
 
 void validate_map(t_game *game)
 {
-	char **map_copy;
-	int i;
+	game->enteties.player.collectibles = 0;
+	game->enteties.player.exit = 0;
 
-	map_copy = copy_map2(game);
-	game->player.collectibles = 0;
-	game->player.exit = 0;
 	// printf("init ")
-	validate_map_flood_fill(game, map_copy, game->player.x, game->player.y);
+	// validate_map_flood_fill(game, map_copy, game->player.x, game->player.y);
+	// breadth_first_full_search(game, map_copy, game->enteties.player.x, game->enteties.player.y);
 	// debug_flood_fill(game);
-	i = 0;
-	while (map_copy[i])
-		free(map_copy[i++]);
-	free(map_copy);
-	if (game->player.exit != 1 || game->player.collectibles != game->collectibles)
+	if (game->enteties.player.exit != 1 || game->enteties.player.collectibles != game->collectibles)
 		map_access_invalide(game);
 }
 
@@ -271,6 +358,8 @@ t_game *build_game(char *map_path)
 	if (game == NULL)
 		exit_error(1, MALC_MGS);
 	build_game_dimentions(game, &head);
+	print_map(game);
+	// return (game);
 	validate_map(game);
 	return (game);
 }

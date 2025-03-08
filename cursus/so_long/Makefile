@@ -25,4 +25,7 @@ fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
+queue: src/queue.c $(LIBFT)
+	$(CC) src/queue.c -L$(LIBFT_DIR) -lft  -o $@
+
 re: fclean all
