@@ -1,10 +1,11 @@
 #!/bin/python3
 import pygame
+from queue import PriorityQueue
 
 
 # GAME PROPS
-WIDTH = 1000
-ROWS = 100
+WIDTH = 900
+ROWS = 50
 GAP = WIDTH // ROWS
 
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -79,7 +80,18 @@ class Spot:
         # pygame.draw.line(win, GREY, (self.x + self.width - 1, self.y), (self.x + self.width - 1, self.y + self.width))  
         
     def update_neighbors(self, grid):
-        pass
+        self.neighbors = []
+        if self.row < self.total_rows - 1 and grid[self.row + 1][self.col].is_wall() == False:
+            self.neighbors.append(grid[self.row + 1][self.col])
+
+        if self.row > 0 and grid[self.row - 1][self.col].is_wall() == False:
+            self.neighbors.append(grid[self.row - 1][self.col])
+
+        if self.col < self.total_rows - 1 and grid[self.row][self.col + 1].is_wall() == False:
+            self.neighbors.append(grid[self.row][self.col + 1])
+
+        if self.col > 0 and grid[self.row][self.col - 1].is_wall() == False:
+            self.neighbors.append(grid[self.row][self.col - 1])
 
     def __lt__(self, other):
         return False
@@ -126,6 +138,58 @@ def get_clicked_pos(pos, row, width):
     
     return row, col
 
+def build_path(came_from, current, draw, win):
+    while current in came_from:
+        current = came_from[current]
+        current.make_path()
+        draw(win, [current])
+
+# def a_star_algorithm(draw, grid, start, end):
+def a_star_algorithm(draw, win, grid, start, end):
+    count = 0
+    open_set = PriorityQueue()
+    open_set.put((0, count, start))
+    came_from = {}
+    g_score = {spot: float("inf") for row in grid for spot in row}
+    g_score[start] = 0
+    f_score = {spot: float("inf") for row in grid for spot in row}
+    f_score[start] = h(start.get_pos(), end.get_pos())
+
+    open_set_hash = {start}
+
+    while not open_set.empty():
+        changed_sopts = []
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        
+        current = open_set.get()[2]
+        open_set_hash.remove(current)
+
+        if current == end: # PATH IS FOUND
+            build_path(came_from, end, draw, win)
+            return True
+
+        for neighbor in current.neighbors:
+            tmp_g_score = g_score[current] + 1
+
+            if tmp_g_score < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tmp_g_score
+                f_score[neighbor] = tmp_g_score + h(neighbor.get_pos(), end.get_pos())
+                if neighbor not in open_set_hash:
+                    count += 1
+                    open_set.put((f_score[neighbor], count, neighbor))
+                    open_set_hash.add(neighbor)
+                    neighbor.make_open()
+                    changed_sopts.append(neighbor)
+        if current != start:
+            current.make_closed()
+            changed_sopts.append(current)
+        draw(win, changed_sopts)
+
+    return False
+
 def main(win, width):
     grid = make_grid(ROWS, width)
 
@@ -147,6 +211,8 @@ def main(win, width):
             if pygame.mouse.get_pressed()[0]: # LEFT CLICK
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
+                if row < 0 or row >= ROWS or col < 0 or col >= ROWS:
+                    continue
                 spot = grid[row][col]
                 if not start and spot != end:
                     start = spot
@@ -164,6 +230,8 @@ def main(win, width):
             elif pygame.mouse.get_pressed()[2]: # RIGHT CLICK
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
+                if row < 0 or row >= ROWS or col < 0 or col >= ROWS:
+                    continue
                 spot = grid[row][col]
                 spot.reset()
                 changed_spots.append(spot)
@@ -172,9 +240,13 @@ def main(win, width):
                 elif spot == end:
                     end = None
 
-            elif event.type == pygame.K:
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and not started:
-
+                    for row in grid:
+                        for spot in row:
+                            spot.update_neighbors(grid)
+                    # a_star_algorithm(lambda: draw(win, grid, ROWS, WIDTH), grid, start, end)
+                    a_star_algorithm(update_spots, win, grid, start, end)
 
         update_spots(win, changed_spots)
     pygame.quit()
