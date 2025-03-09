@@ -21,10 +21,11 @@ void print_map(t_game *game)
 		}
 		printf("\n");
 		j = 0;
-		c_idx = 0;
 		while (j < game->map_width) {
+			c_idx = 0;
 			while (c_idx < game->collectibles)
 			{
+				// printf("[x: %d] [y: %d] [i: %d] [j: %d]\n", (game->enteties.collectables[c_idx]).x, (game->enteties.collectables[c_idx]).y, i, j);
 				if (i == (game->enteties.collectables[c_idx]).y
 					&& j == (game->enteties.collectables[c_idx]).x)
 					{
@@ -266,11 +267,19 @@ void get_map_dimentions(t_game *game, t_list **head)
 	}
 }
 
+
+// copy the map but as strings
+char **copy_simple_map(t_list **head)
+{
+
+}
+
 void build_game_dimentions(t_game *game, t_list **head)
 {
 	game->enteties.player.exist = 0;
 	get_map_dimentions(game, head);
 	game->map = copy_map(head);
+	game->simple_map = copy_simple_map(head);
 	game->collectibles = 0;
 	game->exit_is_open = 0;
 	copy_enteties(game, head);
@@ -359,7 +368,6 @@ t_game *build_game(char *map_path)
 		exit_error(1, MALC_MGS);
 	build_game_dimentions(game, &head);
 	print_map(game);
-	// return (game);
 	validate_map(game);
 	return (game);
 }

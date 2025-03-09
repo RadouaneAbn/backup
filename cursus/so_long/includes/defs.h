@@ -43,6 +43,12 @@ typedef enum e_cell_type
     INVALID
 } t_cell_type;
 
+typedef struct s_pos
+{
+    int x;
+    int y;
+} t_pos;
+
 typedef struct s_player
 {
     int x;
@@ -85,6 +91,7 @@ typedef struct s_enteties
 typedef struct s_game
 {
     t_cell **map;
+    char **simple_map;
     t_enteties enteties;
     int map_width;
     int map_height;
