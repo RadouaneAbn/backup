@@ -11,6 +11,9 @@ SRC_OBJ = $(SRC:.c=.o)
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
+MLX_DIR = minilibx-linux
+MLX = $(MLX_DIR)/libmlx_Linux.a
+
 $(NAME): $(SRC_OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(SRC_OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
 
@@ -27,5 +30,11 @@ fclean: clean
 
 queue: src/queue.c $(LIBFT)
 	$(CC) src/queue.c -L$(LIBFT_DIR) -lft  -o $@
+
+mlx_test: src/mlx_test.c 
+	$(CC) src/mlx_test.c  -L$(MLX_DIR) -lmlx_Linux -o $@
+
+$(MLX):
+	$(MAKE) -C $(MLX_DIR)
 
 re: fclean all

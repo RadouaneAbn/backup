@@ -73,14 +73,6 @@ typedef struct s_collectable
     int is_accessible;
 }   t_collectable;
 
-typedef struct s_cell
-{
-    int x;
-    int y;
-    t_cell_type type;
-    int is_closed;
-} t_cell;
-
 typedef struct s_enteties
 {
     t_player player;
@@ -88,10 +80,25 @@ typedef struct s_enteties
     t_collectable *collectables;
 } t_enteties;
 
+typedef struct s_entity
+{
+    void *entity;
+    char entity_type;
+    struct s_entity *next;
+} t_entity;
+
+typedef struct s_cell
+{
+    int x;
+    int y;
+    t_cell_type type;
+    t_entity enteties;
+    int is_closed;
+} t_cell;
+
 typedef struct s_game
 {
     t_cell **map;
-    char **simple_map;
     t_enteties enteties;
     int map_width;
     int map_height;

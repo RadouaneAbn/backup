@@ -269,9 +269,25 @@ void get_map_dimentions(t_game *game, t_list **head)
 
 
 // copy the map but as strings
-char **copy_simple_map(t_list **head)
+char **copy_simple_map(t_list **head, int size)
 {
+	char **map;
+	int i;
+	t_list *current;
 
+	i = 0;
+	map = ft_smalloc(sizeof(char *) * (size + 1));
+	current = *head;
+	while (current)
+	{
+		map[i] = ft_strdup(current->content);
+		if (map[i] == NULL)
+			exit_error(1, MALC_MGS);
+		save_ptr(map[i++]);
+		current = current->next;
+	}
+	map[i] = NULL;
+	return map;
 }
 
 void build_game_dimentions(t_game *game, t_list **head)
@@ -279,7 +295,7 @@ void build_game_dimentions(t_game *game, t_list **head)
 	game->enteties.player.exist = 0;
 	get_map_dimentions(game, head);
 	game->map = copy_map(head);
-	game->simple_map = copy_simple_map(head);
+	// game->simple_map = copy_simple_map(head, game->map_height);
 	game->collectibles = 0;
 	game->exit_is_open = 0;
 	copy_enteties(game, head);
