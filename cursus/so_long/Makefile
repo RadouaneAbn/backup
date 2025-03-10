@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror -g3
 
 NAME = so_long
 SRC = src/so_long.c garbage_collector/garbage_collector.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c src/file.c src/error.c
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+	src/file.c src/error.c src/queue.c
 
 SRC_OBJ = $(SRC:.c=.o)
 

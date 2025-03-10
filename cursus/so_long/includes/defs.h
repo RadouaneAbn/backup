@@ -49,6 +49,12 @@ typedef struct s_pos
     int y;
 } t_pos;
 
+typedef struct s_map_mask
+{
+    char c;
+    int is_visited;
+} t_map_mask;
+
 typedef struct s_player
 {
     int x;
@@ -100,6 +106,7 @@ typedef struct s_game
 {
     t_cell **map;
     t_enteties enteties;
+    char **simple_map;
     int map_width;
     int map_height;
     int map_grid_size;

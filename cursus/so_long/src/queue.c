@@ -1,4 +1,4 @@
-#include "../includes/utils.h"
+#include "../includes/queue.h"
 
 void add_to_queue(t_queue *q, void *data)
 {
@@ -34,15 +34,17 @@ void *pop_from_queue(t_queue *q)
     return (data);
 }
 
-
 t_queue *create_queue()
 {
     t_queue *queue;
 
     queue = malloc(sizeof(t_queue));
+    if (queue == NULL)
+        return (NULL);
     queue->head = NULL;
     queue->tail = NULL;
     queue->is_empty = TRUE;
+    return (queue);
 }
 
 // int main()

@@ -3,6 +3,7 @@
 #include "../includes/utils.h"
 #include "../libft/libft.h"
 #include "../includes/garbage_collector.h"
+#include "../includes/queue.h"
 
 void print_map(t_game *game)
 {
@@ -107,7 +108,6 @@ int read_map(t_list **head, int fd)
 	return (0);
 }
 
-
 t_cell_type get_map_cell_type(char c)
 {
 	if (c == 'C')
@@ -190,7 +190,7 @@ void map_components_invalide(int player, int map_exit, int collectibles)
 	exit(1);
 }
 
-void copy_enteties(t_game *game, t_list **head)
+t_game *copy_enteties(t_game *game, t_list **head)
 {
 	t_list *current;
 	int i;
@@ -203,7 +203,9 @@ void copy_enteties(t_game *game, t_list **head)
 	exit_cell = 0;
 	current = *head;
 	game->enteties.player.exist = 0;
-	game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles));
+	// game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles));
+	// if (game->enteties.collectables == NULL)
+	// 	return (NULL);
 	while (current)
 	{
 		j = 0;
@@ -230,11 +232,10 @@ void copy_enteties(t_game *game, t_list **head)
 	game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles));
 	i = 0;
 	idx = 0;
-	while (*head)
+	current = *head;
+	while (current)
 	{
 		j = 0;
-		current = *head;
-		*head = (*head)->next;
 		tmp_str = (char *)(current->content);
 		while (tmp_str[j])
 		{
@@ -247,9 +248,11 @@ void copy_enteties(t_game *game, t_list **head)
 			}
 			j++;
 		}
-		ft_lstdelone(current, free);
+		// ft_lstdelone(current, free);
+		current = current->next;
 		i++;
 	}
+	return (game);
 }
 
 void get_map_dimentions(t_game *game, t_list **head)
@@ -267,27 +270,46 @@ void get_map_dimentions(t_game *game, t_list **head)
 	}
 }
 
-
-// copy the map but as strings
-char **copy_simple_map(t_list **head, int size)
+void free_simple_map(t_map_mask **simple_map)
 {
-	char **map;
 	int i;
-	t_list *current;
 
 	i = 0;
-	map = ft_smalloc(sizeof(char *) * (size + 1));
+	while (simple_map[i])
+		free(simple_map[i++]);
+	free(simple_map);
+}
+
+t_map_mask **copy_simple_map(t_list **head, int height, int width)
+{
+	t_map_mask **map;
+	int i;
+	int j;
+	t_list *current;
+	char *tmp;
+
+	i = 0;
+	map = malloc(sizeof(t_map_mask *) * (height + 1));
+	if (map == NULL)
+		exit_error(1, MALC_MGS);
 	current = *head;
 	while (current)
 	{
-		map[i] = ft_strdup(current->content);
+		j = -1;
+		tmp = ((char *)current->content);
+		map[i] = malloc(sizeof(t_map_mask) * width);
 		if (map[i] == NULL)
-			exit_error(1, MALC_MGS);
-		save_ptr(map[i++]);
+			return (free_simple_map(map), NULL);
+		while (tmp[++j])
+		{
+			map[i][j].c = tmp[j];
+			map[i][j].is_visited = FALSE;
+		}
 		current = current->next;
+		i++;
 	}
 	map[i] = NULL;
-	return map;
+	return (map);
 }
 
 void build_game_dimentions(t_game *game, t_list **head)
@@ -295,50 +317,11 @@ void build_game_dimentions(t_game *game, t_list **head)
 	game->enteties.player.exist = 0;
 	get_map_dimentions(game, head);
 	game->map = copy_map(head);
-	// game->simple_map = copy_simple_map(head, game->map_height);
 	game->collectibles = 0;
 	game->exit_is_open = 0;
+	// copy_simple_map(head, game->map_height);
 	copy_enteties(game, head);
 	// game->enteties.collectables = ft_smalloc(sizeof(t_collectable) * (game->collectibles + 1));
-}
-
-// void breadth_first_full_search(t_game *game, char **map, int x, int y)
-// {
-// 	int i;
-// 	int j;
-
-
-// }
-
-// void validate_map_flood_fill(t_game *game, char **map, int x, int y)
-// {
-// 	if (x > game->map_width || x < 0 || y > game->map_height || y < 0)
-// 		return ;
-// 	if (map[y][x] == '1')
-// 		return ;
-// 	if (map[y][x] == '0')
-// 		map[y][x] = '1';
-// 	if (map[y][x] == 'C')
-// 	{
-// 		game->player.collectibles++;
-// 		map[y][x] = '1';
-// 	}
-// 	if (map[y][x] == 'E')
-// 	{
-// 		game->player.exit++;
-// 		map[y][x] = '1';
-// 	}
-// 	validate_map_flood_fill(game, map, x + 1, y);
-// 	validate_map_flood_fill(game, map, x, y + 1);
-// 	validate_map_flood_fill(game, map, x - 1, y);
-// 	validate_map_flood_fill(game, map, x, y - 1);
-// }
-
-void debug_flood_fill(t_game *game)
-{
-	printf("player pos: [%d,%d].\n", game->player.x, game->player.y);
-	printf("player has access to %d c from %d c.\n", game->player.collectibles, game->collectibles);
-	printf("player has access to exit == %d\n", game->player.exit);
 }
 
 void map_access_invalide(t_game *game)
@@ -351,17 +334,159 @@ void map_access_invalide(t_game *game)
 	exit(1);
 }
 
-void validate_map(t_game *game)
+int map_has_wall_boarders(t_map_mask **map, t_game *game)
+{
+	int i;
+	int j;
+
+	i = game->map_height - 1;
+	j = 0;
+	while (j < game->map_width)
+	{
+		if (map[0][j].c != '1' || map[i][j].c != '1')
+			return (FALSE);
+		j++;
+	}
+	i = 0;
+	j = game->map_width - 1;
+	while (i < game->map_height)
+	{
+		if (map[i][0].c != '1' || map[i][j].c != '1')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+t_pos *copy_pos(int x, int y)
+{
+	t_pos *pos;
+
+	pos = malloc(sizeof(t_pos));
+	if (pos == NULL)
+		return (NULL);
+	pos->x = x;
+	pos->y = y;
+	return (pos);
+}
+
+void debug_bfs(t_map_mask **map, t_pos *pos, t_game *game)
+{
+	int i;
+	int j;
+
+		(void) pos;
+	i = 0;
+	while (i < game->map_height)
+	{
+		j = 0;
+		while (j < game->map_width)
+		{
+				printf("%c", map[i][j].c);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("\n");
+}
+
+void check_and_append_neighbors(t_queue *queue, t_pos *pos, t_game *game, t_map_mask **map)
+{
+	// printf("current tail: {%c}[%d,%d]\n", map[pos->y][pos->x].c, pos->x, pos->y);
+	if (pos->x + 1 < game->map_width && map[pos->y][pos->x + 1].c != '1'
+		&& map[pos->y][pos->x + 1].is_visited == FALSE)
+	{
+		// printf("right tail: {%c}[%d,%d]\n", map[pos->y][pos->x + 1].c, pos->x + 1, pos->y);
+		add_to_queue(queue, copy_pos(pos->x + 1, pos->y));
+		map[pos->y][pos->x + 1].is_visited = TRUE;
+	}
+	if (pos->x - 1 >= 0 && map[pos->y][pos->x - 1].c != '1'
+		&& map[pos->y][pos->x - 1].is_visited == FALSE)
+	{
+		// printf("left tail: {%c}[%d,%d]\n", map[pos->y][pos->x - 1].c, pos->x - 1, pos->y);
+		add_to_queue(queue, copy_pos(pos->x - 1, pos->y));
+		map[pos->y][pos->x - 1].is_visited = TRUE;
+	}
+	if (pos->y + 1 < game->map_height && map[pos->y + 1][pos->x].c != '1'
+		&& map[pos->y + 1][pos->x].is_visited == FALSE)
+	{
+		// printf("bottom tail: {%c}[%d,%d]\n", map[pos->y + 1][pos->x].c, pos->x, pos->y + 1);
+		add_to_queue(queue, copy_pos(pos->x, pos->y + 1));
+		map[pos->y + 1][pos->x].is_visited = TRUE;
+	}
+	if (pos->y - 1 >= 0 && map[pos->y - 1][pos->x].c != '1'
+		&& map[pos->y - 1][pos->x].is_visited == FALSE)
+	{
+		// printf("top tail: {%c}[%d,%d]\n", map[pos->y - 1][pos->x].c, pos->x, pos->y - 1);
+		add_to_queue(queue, copy_pos(pos->x, pos->y - 1));
+		map[pos->y - 1][pos->x].is_visited = TRUE;
+	}
+	// printf("\n");
+}
+
+
+// tring to find a way to check if the current position is already visited 
+// meaning it is already in the queue
+void check_using_breadth_first_search(t_map_mask **map, t_game *game)
+{
+	t_queue *queue;
+	t_pos *pos;
+
+	queue = create_queue();
+	pos = copy_pos(game->enteties.player.x, game->enteties.player.y);
+	map[pos->y][pos->x].is_visited = TRUE;
+	add_to_queue(queue, pos);
+	while (queue->is_empty == FALSE)
+	{
+		pos = pop_from_queue(queue);
+		if (map[pos->y][pos->x].c == 'C')
+		(game->enteties.player.collectibles)++;
+		else if (map[pos->y][pos->x].c == 'E')
+		(game->enteties.player.exit)++;
+		check_and_append_neighbors(queue, pos, game, map);
+		map[pos->y][pos->x].c = '.';
+		free(pos);
+	}
+	free(queue);
+}
+
+int player_has_access_to_collectibles_exit(t_map_mask **map, t_game *game)
 {
 	game->enteties.player.collectibles = 0;
 	game->enteties.player.exit = 0;
+	
+	check_using_breadth_first_search(map, game);
 
+	if (game->enteties.player.exit != 1 || game->enteties.player.collectibles != game->collectibles)
+		return (FALSE);
+	return (TRUE);
+}
+
+void validate_map(t_game *game, t_list **head)
+{
+	t_map_mask **tmp_map;
+
+	tmp_map = copy_simple_map(head, game->map_height, game->map_width);
+	ft_lstclear(head, free);
+	// int i = 0;
+	// while (tmp_map[i])
+	// 	printf("%s\n", tmp_map[i++]);
 	// printf("init ")
 	// validate_map_flood_fill(game, map_copy, game->player.x, game->player.y);
 	// breadth_first_full_search(game, map_copy, game->enteties.player.x, game->enteties.player.y);
 	// debug_flood_fill(game);
-	if (game->enteties.player.exit != 1 || game->enteties.player.collectibles != game->collectibles)
+	// if (game->enteties.player.exit != 1 || game->enteties.player.collectibles != game->collectibles)
+	// 	map_access_invalide(game);
+	if (map_has_wall_boarders(tmp_map, game) == FALSE
+		|| player_has_access_to_collectibles_exit(tmp_map, game) == FALSE)
+	{
+		// free_simple_map(tmp_map);
 		map_access_invalide(game);
+		// exit_error(1, INV_MAP_MSG);
+	}
+	// if (player_has_access_to_(game, tmp_map) )
+	free_simple_map(tmp_map);
 }
 
 t_game *build_game(char *map_path)
@@ -383,8 +508,9 @@ t_game *build_game(char *map_path)
 	if (game == NULL)
 		exit_error(1, MALC_MGS);
 	build_game_dimentions(game, &head);
-	print_map(game);
-	validate_map(game);
+	// print_map(game);
+	printf("validating map\n");
+	validate_map(game, &head);
 	return (game);
 }
 
