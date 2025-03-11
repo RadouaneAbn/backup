@@ -102,6 +102,15 @@ typedef struct s_cell
     int is_closed;
 } t_cell;
 
+typedef struct s_tails
+{
+    t_pos pos;
+    t_cell_type type;
+    void *tail;
+} t_tails;
+
+
+
 typedef struct s_game
 {
     t_cell **map;

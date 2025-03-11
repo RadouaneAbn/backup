@@ -180,6 +180,7 @@ t_cell **copy_map(t_list **head)
 
 void map_components_invalide(int player, int map_exit, int collectibles)
 {
+	write(2, "Error\n^^^^^\\ ", 13);
 	if (player != 1)
 		write(2, PLAYER_ERR, ft_strlen(PLAYER_ERR));
 	if (map_exit != 1)
@@ -326,6 +327,7 @@ void build_game_dimentions(t_game *game, t_list **head)
 
 void map_access_invalide(t_game *game)
 {
+	write(2, "Error\n^^^^^\\ ", 13);
 	if (game->enteties.player.exit != 1)
 		write(2, PLAYER_EXIT_ERR, ft_strlen(PLAYER_EXIT_ERR));
 	if (game->enteties.player.collectibles != game->collectibles)
@@ -393,36 +395,30 @@ void debug_bfs(t_map_mask **map, t_pos *pos, t_game *game)
 
 void check_and_append_neighbors(t_queue *queue, t_pos *pos, t_game *game, t_map_mask **map)
 {
-	// printf("current tail: {%c}[%d,%d]\n", map[pos->y][pos->x].c, pos->x, pos->y);
 	if (pos->x + 1 < game->map_width && map[pos->y][pos->x + 1].c != '1'
 		&& map[pos->y][pos->x + 1].is_visited == FALSE)
 	{
-		// printf("right tail: {%c}[%d,%d]\n", map[pos->y][pos->x + 1].c, pos->x + 1, pos->y);
 		add_to_queue(queue, copy_pos(pos->x + 1, pos->y));
 		map[pos->y][pos->x + 1].is_visited = TRUE;
 	}
 	if (pos->x - 1 >= 0 && map[pos->y][pos->x - 1].c != '1'
 		&& map[pos->y][pos->x - 1].is_visited == FALSE)
 	{
-		// printf("left tail: {%c}[%d,%d]\n", map[pos->y][pos->x - 1].c, pos->x - 1, pos->y);
 		add_to_queue(queue, copy_pos(pos->x - 1, pos->y));
 		map[pos->y][pos->x - 1].is_visited = TRUE;
 	}
 	if (pos->y + 1 < game->map_height && map[pos->y + 1][pos->x].c != '1'
 		&& map[pos->y + 1][pos->x].is_visited == FALSE)
 	{
-		// printf("bottom tail: {%c}[%d,%d]\n", map[pos->y + 1][pos->x].c, pos->x, pos->y + 1);
 		add_to_queue(queue, copy_pos(pos->x, pos->y + 1));
 		map[pos->y + 1][pos->x].is_visited = TRUE;
 	}
 	if (pos->y - 1 >= 0 && map[pos->y - 1][pos->x].c != '1'
 		&& map[pos->y - 1][pos->x].is_visited == FALSE)
 	{
-		// printf("top tail: {%c}[%d,%d]\n", map[pos->y - 1][pos->x].c, pos->x, pos->y - 1);
 		add_to_queue(queue, copy_pos(pos->x, pos->y - 1));
 		map[pos->y - 1][pos->x].is_visited = TRUE;
 	}
-	// printf("\n");
 }
 
 
@@ -481,7 +477,7 @@ void validate_map(t_game *game, t_list **head)
 	if (map_has_wall_boarders(tmp_map, game) == FALSE
 		|| player_has_access_to_collectibles_exit(tmp_map, game) == FALSE)
 	{
-		// free_simple_map(tmp_map);
+		free_simple_map(tmp_map);
 		map_access_invalide(game);
 		// exit_error(1, INV_MAP_MSG);
 	}
@@ -509,7 +505,7 @@ t_game *build_game(char *map_path)
 		exit_error(1, MALC_MGS);
 	build_game_dimentions(game, &head);
 	// print_map(game);
-	printf("validating map\n");
+	// printf("validating map\n");
 	validate_map(game, &head);
 	return (game);
 }
