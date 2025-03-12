@@ -504,14 +504,11 @@ t_game *build_game(char *map_path)
 	if (game == NULL)
 		exit_error(1, MALC_MGS);
 	build_game_dimentions(game, &head);
-	// print_map(game);
-	// printf("validating map\n");
 	validate_map(game, &head);
 	return (game);
 }
 
-int main(int ac, char **av)
-{
+int main(int ac, char **av){
 	t_game *game;
 	if (ac != 2)
 	{

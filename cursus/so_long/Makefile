@@ -1,6 +1,6 @@
 CC = cc
 CDEBUG_FLAGS = -fsanitize=address 
-CFLAGS = -Wall -Wextra -Werror -g3 
+# CFLAGS = -Wall -Wextra -Werror -g3 
 
 NAME = so_long
 SRC = src/so_long.c garbage_collector/garbage_collector.c \
