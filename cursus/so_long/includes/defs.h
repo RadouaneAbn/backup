@@ -32,6 +32,28 @@
 # define FILE_MISSING_ERR "Map doesn't exist !!!\n"
 # define MAP_IS_DIR_ERR "The given file is a directory !!!\n"
 
+typedef struct s_xpm
+{
+    void *data;
+    int images_count;
+} t_xpm;
+
+// enum
+// {
+//     PLAYER
+//     XPM_COUNT,
+// };
+
+typedef struct s_all_xpm
+{
+    t_xpm key;
+    t_xpm player;
+    t_xpm left_wall;
+    t_xpm right_wall;
+    t_xpm top_wall;
+    t_xpm bottom_wall;
+}  t_all_xpm;
+
 typedef enum e_cell_type
 {
     WALL,
@@ -102,13 +124,12 @@ typedef struct s_cell
     int is_closed;
 } t_cell;
 
-typedef struct s_tails
-{
-    t_pos pos;
-    t_cell_type type;
-    void *tail;
-} t_tails;
-
+// typedef struct s_tails
+// {
+//     t_pos pos;
+//     t_cell_type type;
+//     void *tail;
+// } t_tails;
 
 
 typedef struct s_game

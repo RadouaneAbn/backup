@@ -26,7 +26,6 @@ void print_map(t_game *game)
 			c_idx = 0;
 			while (c_idx < game->collectibles)
 			{
-				// printf("[x: %d] [y: %d] [i: %d] [j: %d]\n", (game->enteties.collectables[c_idx]).x, (game->enteties.collectables[c_idx]).y, i, j);
 				if (i == (game->enteties.collectables[c_idx]).y
 					&& j == (game->enteties.collectables[c_idx]).x)
 					{
