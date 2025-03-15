@@ -3,9 +3,9 @@ CDEBUG_FLAGS = -fsanitize=address
 # CFLAGS = -Wall -Wextra -Werror -g3 
 
 NAME = so_long
-SRC = src/so_long.c garbage_collector/garbage_collector.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
-	src/file.c src/error.c src/queue.c
+SRC = so_long.c build_game_entities.c error.c flood_fill.c \
+	free_functions.c garbage_collector.c open_file.c read_map.c \
+	validate_map.c
 
 SRC_OBJ = $(SRC:.c=.o)
 
