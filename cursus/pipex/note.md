@@ -30,5 +30,5 @@ Expected:
 
 
 BUG:
-	checkif the delimiter is ""
+	./pipex Makefile cat  "awk -F' ' '{print $1}'" /dev/stdout
 
