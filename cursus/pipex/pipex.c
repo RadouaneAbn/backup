@@ -147,69 +147,69 @@ void child_execute(char **env, int command_index, char **commands, int out, int 
 }
 
 
-void	pipex(int ac, char **av, char **env)
-{
-	char	**path;
-	char 	**commands;
-	int     pids[1024] = {0};
-	int		i;
-	int		fd[2];
-	int     in;
-	int     out;
-	int		prev;
-	int    cmd_count;
+// void	pipex(int ac, char **av, char **env)
+// {
+// 	char	**path;
+// 	char 	**commands;
+// 	int     pids[1024] = {0};
+// 	int		i;
+// 	int		fd[2];
+// 	int     in;
+// 	int     out;
+// 	int		prev;
+// 	int    cmd_count;
 
-	cmd_count = (ac - 3);
-	prev = -1;
-	path = export_path_var(env);
-	i = 0;
-	commands = av + 2;
-	in = open_input_file(av[1]);
-	out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644); 
-	while (i < cmd_count)
-	{
-		pipe(fd);
-		pids[i] = fork();
-		if (pids[i] == 0)
-		{
-			int status;
-			char **command = build_command(commands[i], path);
+// 	cmd_count = (ac - 3);
+// 	prev = -1;
+// 	path = export_path_var(env);
+// 	i = 0;
+// 	commands = av + 2;
+// 	in = open_input_file(av[1]);
+// 	out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644); 
+// 	while (i < cmd_count)
+// 	{
+// 		pipe(fd);
+// 		pids[i] = fork();
+// 		if (pids[i] == 0)
+// 		{
+// 			int status;
+// 			char **command = build_command(commands[i], path);
 
-			if (i == 0) {
-				dup2(n, STDIN_FILENO);
-				close(in);
-			}
-			else
-				dup2(prev, STDIN_FILENO);
-			if (i == cmd_count - 1)
-			{
-				dup2(out, STDOUT_FILENO);
-				close(out);
-			}
-			else
-				dup2(fd[1], STDOUT_FILENO);
-			if (prev != 0)
-				close(prev);
-			close(fd[0]);
-			close(fd[1]);
-			if (command_executable(command, &status))
-				execve(command[0], command, env);
-			else
-				free_command(command), free_all(), exit(status);
-		}
-		if (prev != -1)
-			close(prev);
-		prev = fd[0];
-		close(fd[1]);
-		i++;
-	}
-	close(in);
-	close(prev);
-	close(out);
-	i = 0;
-	while (pids[i])
-		waitpid(pids[i++], NULL, 0);
-}
+// 			if (i == 0) {
+// 				dup2(n, STDIN_FILENO);
+// 				close(in);
+// 			}
+// 			else
+// 				dup2(prev, STDIN_FILENO);
+// 			if (i == cmd_count - 1)
+// 			{
+// 				dup2(out, STDOUT_FILENO);
+// 				close(out);
+// 			}
+// 			else
+// 				dup2(fd[1], STDOUT_FILENO);
+// 			if (prev != 0)
+// 				close(prev);
+// 			close(fd[0]);
+// 			close(fd[1]);
+// 			if (command_executable(command, &status))
+// 				execve(command[0], command, env);
+// 			else
+// 				free_command(command), free_all(), exit(status);
+// 		}
+// 		if (prev != -1)
+// 			close(prev);
+// 		prev = fd[0];
+// 		close(fd[1]);
+// 		i++;
+// 	}
+// 	close(in);
+// 	close(prev);
+// 	close(out);
+// 	i = 0;
+// 	while (pids[i])
+// 		waitpid(pids[i++], NULL, 0);
+// }
 
 int	main(int ac, char **av, char **env)
 {

@@ -53,9 +53,7 @@ static char	**ft_path_join(char **cmd_v, char **path)
 {
 	if (cmd_v == NULL)
 		return (NULL);
-	if (cmd_v[0] && ft_strchr(cmd_v[0], '/') == NULL
-		&& ft_strncmp(cmd_v[0], ".", 2) != 0
-		&& ft_strncmp(cmd_v[0], "..", 3) != 0)
+	if (cmd_v[0] && ft_strchr(cmd_v[0], '/') == NULL)
 		cmd_v[0] = find_command(cmd_v[0], path);
 	return (cmd_v);
 }
