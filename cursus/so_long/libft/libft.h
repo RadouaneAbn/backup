@@ -17,6 +17,24 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
+# include <fcntl.h>
+# include "ft_printf/ft_printf_bonus.h"
+
+# define BUFFER_SIZE 1024
+
+typedef struct s_buf
+{
+	char	*b_tmp;
+	char	str[2048];
+	size_t	idx;
+}			t_buf;
+
+/* Get next line functions */
+char		*get_next_line(int fd);
+void		appendto_buffer(char *tmp, t_buf *buffer, char **line);
+char		*last_clean(char *s, void (*f)(void *));
+int			nl_found(char *s);
+void		appendto_line(char **line, char *buffer);
 
 /* The linked list struct */
 typedef struct s_list
