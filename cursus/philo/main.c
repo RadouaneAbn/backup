@@ -79,10 +79,12 @@ int main(int ac, char **av)
     }
     memset(&table, 0, sizeof(t_table));
     status = convert_arguments(&table, ac, av);
-    printf("status: %d\n", status);
+    printf("convert_arguments: %d\n", status);
     if (status == 0)
         status = init_simulation(&table);
+    printf("init_simulation: %d\n", status);
     if (status == 0)
         status = start_simulation(&table);
+    printf("start_simulation: %d\n", status);
     return (status);
 }
