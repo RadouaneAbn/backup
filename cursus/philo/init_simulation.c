@@ -1,7 +1,7 @@
 #include "philo.h"
 
 
-int init_simulation_data(t_table *table)
+static int init_simulation_data(t_table *table)
 {
     int status;
 
@@ -24,13 +24,25 @@ int init_simulation_data(t_table *table)
     return (status);
 }
 
+static int serve_forks(t_table *table)
+{
+    int i;
+
+    i = 0;
+    while (i < table->number_of_philosophers)
+    {
+        table->philos[i].l_fork = &(table->forks)
+    }
+}
+
 int init_simulation(t_table *table)
 {
     int status;
 
     status = init_simulation_data(table);
-    table->simulation_running = FALSE;
     if (status != 0)
         return (status);
+    table->simulation_running = FALSE;
+    status = serve_forks(table);
     return (status);
 }

@@ -36,11 +36,19 @@ typedef enum e_state
 # define TRUE 1
 # define FALSE 0
 
+typedef struct s_fork
+{
+    int available;
+    pthread_mutex_t *forks;
+} t_fork;
+
 typedef struct s_philo
 {
     pthread_t   philo;
     int         id;
     int         last_meal;
+    pthread_mutex_t *l_fork;
+    pthread_mutex_t *r_fork;
     t_state     state;
     t_table     *table;
 }               t_philo;
@@ -52,7 +60,7 @@ typedef struct s_philo
 typedef struct s_table
 {
     t_philo *philos;
-    pthread_mutex_t *forks;
+    t_fork *forks;
     t_bool philo_died;
     int number_of_philosophers;
     int number_of_forks;
@@ -72,5 +80,8 @@ typedef struct s_table
 /* Helper functions */
 int     ft_atoi(const char *str);
 void ft_usleep(int time, t_philo *philo);
+
+int convert_arguments(t_table *table, int ac , char **av);
+int init_simulation(t_table *table);
 
 #endif
