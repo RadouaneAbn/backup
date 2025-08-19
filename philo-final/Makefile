@@ -1,7 +1,8 @@
-CC = cc -pthread -g3 -fsanitize=thread
+CC = cc -pthread
 CFLAGS = -Wall -Wextra -Werror
 
-SRC_FILES = $(wildcard *.c)
+SRC_FILES = convert_args.c ft_atoi.c ft_memset.c ft_usleep.c init_simulation.c \
+	main.c monitor.c philo_utils.c print_functions.c routine.c utils.c
 OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
 INCLUDE = .
@@ -22,14 +23,6 @@ clean:
 fclean: clean
 	@rm -rf $(TARGET)
 
-run: $(TARGET)
-	clear
-	make clean
-	./$(TARGET) 3 180 60 60
-
-val: $(TARGET)
-	clear
-	make clean
-	valgrind -s --leak-check=full --show-leak-kinds=all ./$(TARGET) 3 180 60 60
-
 re: fclean all
+
+.PHONY : all clean fclean re

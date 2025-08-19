@@ -69,7 +69,6 @@ int main(int ac, char **av)
 		return (1);
 	if (table.options.total_philos == 0 || table.options.max_meals == 0)
 		return (0);
-	// printf("convert_arguments: %d\n", status);
 	if (status == true)
 		status = init_simulation(&table);
 	if (status == true)

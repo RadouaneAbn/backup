@@ -9,7 +9,7 @@ void increment_meal_cout(t_philo *philo)
 
 void shufle_forks(t_philo *philo, pthread_mutex_t **lf, pthread_mutex_t **rf)
 {
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 1)
 	{
 		*lf = philo->left_fork;
 		*rf = philo->right_fork;
@@ -39,8 +39,8 @@ void start_routine(t_philo *philo)
 	set_lastmeal(philo, get_current_time());
 	while (sim_is_running(philo) == true)
 	{
-		if (philo->id % 2)
-			usleep(200);
+		// if (philo->id % 2)
+		// 	usleep(500);
 		print_message(philo, "is thinking");
 		pthread_mutex_lock(lf);
 		if (sim_is_running(philo) == true)

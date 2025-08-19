@@ -1,4 +1,4 @@
-CC = cc -pthread -g3 -fsanitize=thread
+CC = cc -pthread #-g3 -fsanitize=thread
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_FILES = $(wildcard *.c)
@@ -6,7 +6,7 @@ OBJ_FILES = $(SRC_FILES:%.c=%.o)
 
 INCLUDE = .
 
-TARGET = philo
+TARGET = philo_bonus
 
 all: $(TARGET)
 
