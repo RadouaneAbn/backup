@@ -2,7 +2,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-SRC = $(wildcard *.cpp)
+SRC = Main.cpp
 OBJ = ${SRC:.cpp=.o}
 
 TARGET = phonebook
