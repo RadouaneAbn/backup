@@ -8,8 +8,8 @@
 #include "libft/libft.h"
 
 #define SIZE 64
-#define STEP_P  1
-#define PI 3.14159265359
+#define STEP_P 8.0
+#define PI 3.14159265358979323846
 #define CAM_A 10
 #define ROTATE_SPEED 0.01
 

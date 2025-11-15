@@ -16,13 +16,13 @@ int	handle_keys_release(int keycode, t_game *game)
 	}
 	else if (keycode == RIGHT_BUTTON)    // RIGHT
 	{
-		if (game->player.side_direction.now == 1)
+		if (game->player.side_direction.now == -1)
 			game->player.side_direction.now = game->player.side_direction.before;
 		game->player.side_direction.before = 0;
 	}
 	else if (keycode == LEFT_BUTTON)     // LEFT
 	{
-		if (game->player.side_direction.now == -1)
+		if (game->player.side_direction.now == 1)
 			game->player.side_direction.now = game->player.side_direction.before;
 		game->player.side_direction.before = 0;
 	}
@@ -58,12 +58,12 @@ int	handle_key_press(int keycode, t_game *game)
 	else if (keycode == RIGHT_BUTTON)    // RIGHT
 	{
 		player->side_direction.before = player->side_direction.now;
-		player->side_direction.now = 1;
+		player->side_direction.now = -1;
 	}
 	else if (keycode == LEFT_BUTTON)     // LEFT
 	{
 		player->side_direction.before = player->side_direction.now;
-		player->side_direction.now = -1;
+		player->side_direction.now = 1;
 	}
 	else if (keycode == RIGHT_ARROW)	// rotate right
 	{

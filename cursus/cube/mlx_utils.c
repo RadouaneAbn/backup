@@ -40,7 +40,7 @@ void	copy_xpm_pixels_to_window(t_data *data, t_pos pos, int frame)
 		while (x < SIZE)
 		{
 			color = 0xadabaa;
-			my_mlx_pixel_put(data, pos.x + x, pos.y + y, color);
+			my_mlx_pixel_put(data, (int)(pos.x + x), (int)(pos.y + y), color);
 			x++;
 		}
 		y++;

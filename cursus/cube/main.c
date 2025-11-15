@@ -129,7 +129,7 @@ void draw_direction(t_game *game, int color)
 {
 	int i = 0;
 	int x, y;
-	int tk = 50; // line thickness
+	int tk = 2; // line thickness
 	int dx, dy;
 
 	while (i < 400)
@@ -140,8 +140,8 @@ void draw_direction(t_game *game, int color)
 			dy = -tk;
 			while (dy <= tk)
 			{
-				x = game->player.pos.x - ((i * (cos(game->player.player_angle) * STEP_P) - dx) / 64);
-				y = game->player.pos.y - ((i * (sin(game->player.player_angle) * STEP_P) - dy) / 64);
+				x = game->player.pos.x - ((i * (cos(game->player.player_angle) * 8) - dx) / 64);
+				y = game->player.pos.y - ((i * (sin(game->player.player_angle) * 8) - dy) / 64);
 				my_mlx_pixel_put(game->data, x, y, color);
 				dy++;
 			}
@@ -173,9 +173,11 @@ void draw_direction(t_game *game, int color)
 // 	draw_direction(game, pdx, pdy, color);
 // }
 
+
 void load_player(t_game *game)
 {
-	// draw_direction(game, 0xf55142);
+	draw_direction(game, 0xfb2b2b);
+	// draw_player_direction_line(game, 0x6082B6);
 	// draw_directions(game, 0xf55142);
 	draw_player(game->data, game->player.pos, 0x6082B6);
 }
@@ -191,20 +193,31 @@ void update_player(t_game *game, t_player *player)
 		player->player_angle -= 2 * PI;
 	else if (player->player_angle < 0)
 		player->player_angle += 2 * PI;
+	
+	pdx = 0;
+	pdy = 0;
 
-	pdx = cos(player->player_angle) * (player->walk_direction.now);
-	pdy = sin(player->player_angle) * (player->walk_direction.now);
-
-	// if (player->walk_direction == )
-	player->pos.x += (int)pdx;
-	player->pos.y += (int)pdy;
-	// printf("# walk:   %d\n", player->walk_direction.now);
-	// printf("# side:   %d\n", player->side_direction.now);
-	// printf("# rotate: %d\n\n", player->rotation_direction.now);
-	// player->pos.y += player->walk_direction.now * STEP_P;
+	// printf("angle: %f\n", player->player_angle);
 	// printf("cos: %f, sin: %f\n", cos(player->player_angle), sin(player->player_angle));
-	// printf("cos: %d, sin: %d\n", (int)cos(player->player_angle), (int)sin(player->player_angle));
-}
+	// if (player->walk_direction.now != 0 && player->side_direction.now == 0)
+	// {
+	// 	pdx = cos(player->player_angle) * (player->walk_direction.now * STEP_P);
+	// 	pdy = sin(player->player_angle) * (player->walk_direction.now * STEP_P);
+	// }
+	// else if (player->walk_direction.now == 0 && player->side_direction.now != 0)
+	// {
+	// 	pdx = cos(player->player_angle + PI / 2) * (player->side_direction.now);
+	// 	pdy = sin(player->player_angle + PI / 2) * (player->side_direction.now);
+	// }
+
+    pdx += cos(player->player_angle) * STEP_P * player->walk_direction.now;
+    pdy += sin(player->player_angle) * STEP_P * player->walk_direction.now ;
+    // pdx += cos(player->player_angle + PI / 2) * STEP_P * player->side_direction.now;
+    // pdy += sin(player->player_angle + PI / 2) * STEP_P * player->side_direction.now;
+
+	player->pos.x += (int)(pdx / 3);
+	player->pos.y += (int)(pdy / 3);
+	}
 
 int	load_map(t_game *game)
 {
