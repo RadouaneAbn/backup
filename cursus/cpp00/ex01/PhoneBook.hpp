@@ -1,13 +1,11 @@
 #pragma once
 
-#include <iostream>
 #include "Contact.hpp"
 
 class PhoneBook
 {
     private:
         Contact _phoneBook[8];
-        int _bookCapacity;
         int _bookSize;
         int _front;
     public:

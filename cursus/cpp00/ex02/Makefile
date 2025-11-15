@@ -2,10 +2,10 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-SRC = Zombie.cpp newZombie.cpp randomChump.cpp main.cpp
+SRC =  tests.cpp Account.cpp 
 OBJ = ${SRC:.cpp=.o}
 
-TARGET = zombie
+TARGET = Bank
 
 all: $(TARGET)
 
@@ -17,7 +17,5 @@ clean:
 
 fclean: clean
 		rm -rf $(TARGET)
-
-re: fclean all
 
 .PHONY: all clean fclean
