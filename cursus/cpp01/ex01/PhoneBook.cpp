@@ -22,7 +22,10 @@ bool PhoneBook::saveContact( Contact contact ) {
 }
 
 void PhoneBook::searchForContact( void ) {
+    int index;
     displayContactList();
+
+    
 }
 
 void PhoneBook::displayContactList( void ) {
