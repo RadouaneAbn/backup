@@ -1,30 +1,69 @@
-#include "PhoneBook.hpp"
+#include "Header.hpp"
 
-Contact* PhoneBook::add(Contact contact) {
-    book[front] = &contact;
-    front++;
-    return (&contact);
+std::string strSimplify(std::string str){
+    return ((str.length() < 10) ? str : str.substr(0, 9).append("."));
 }
 
-void print_contact_list(Contact* book[8], int front) {
-    std::cout << "   index  | first name | last name | nickname " << std::endl;
-    for (int i = 0; i <= front; i++) {
-        std::cout <<  i << " | " << book[i]->get_firstname() << " | "
-            << book[i]->get_lastname() << " | " << book[i]->get_nickname() << std::endl;
-    }
+PhoneBook::PhoneBook ( void ) {
+    _bookSize = 0;
+    _front = 0;
 }
 
+bool PhoneBook::saveContact( Contact contact ) {
+    if (contact.hasEmptyField())
+        return (false);
+    _phoneBook[_front] = contact;
+    _front = (_front + 1) % BOOK_CAPACITY;
+    if (_bookSize < BOOK_CAPACITY)
+        _bookSize++;
+    return (true);
+}
 
-Contact* PhoneBook::search(void) {
+void PhoneBook::searchForContact( void ) {
     int index;
 
-    print_contact_list(book, front);
-    std::cin >> index;
-    if (std::cin.fail() || index < 0 || index > front)
-    {
-        std::cin.ignore(1000, '\n');
-        std::cin.clear();
-        return (NULL);
+    if (_bookSize == 0) {
+        std::cout << "Phonebook is empty\n";
+        return ;
     }
-    return (book[index]);
+
+    displayContactList();
+
+    std::cout << "Enter contact index: ";
+    std::cin >> index;
+    std::cin.ignore(1000, '\n');
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(1000, '\n');
+        std::cout << "Invalid input\n";
+        return ;
+    }
+
+    if (index < 0 || index >= _bookSize) {
+        std::cout << "Index out of range\n";
+        return ;
+    }
+
+    _phoneBook[index].displayContactInfo();
 }
+
+void PhoneBook::displayContactList( void ) {
+    std::cout << "  index   | firstname|  lastname|  nickname\n";
+    for (int i = 0; i < _bookSize; i++) {
+        std::cout << std::setw(10) << i << "|";
+        std::cout << std::setw(10) << strSimplify(_phoneBook[i].getFirstName()) << "|";
+        std::cout << std::setw(10) << strSimplify(_phoneBook[i].getLastName()) << "|";
+        std::cout << std::setw(10) << strSimplify(_phoneBook[i].getNickName());
+        std::cout << std::endl;
+    }
+}
+
+// 111111111111
+// 222222222222
+// 333333333333
+// 444444444444
+// 555555555555
+// 666666666666
+// 777777777777
+// 888888888888
+// 999999999999

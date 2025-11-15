@@ -1,18 +1,17 @@
+#pragma once
+
 #include <iostream>
 #include "Contact.hpp"
 
-
-class PhoneBook {
+class PhoneBook
+{
     private:
-        Contact* book[8];
-        int front;
-        int phoneBookSize;
-
+        Contact _phoneBook[8];
+        int _bookSize;
+        int _front;
     public:
-        PhoneBook () {
-            front = 0;
-            phoneBookSize = 8;
-        };
-        Contact* add(Contact Contact);
-        Contact* search(void);
+        PhoneBook ( void );
+        void displayContactList( void );
+        bool saveContact( Contact contact );
+        void searchForContact( void );
 };
