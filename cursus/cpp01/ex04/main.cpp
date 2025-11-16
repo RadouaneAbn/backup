@@ -18,7 +18,7 @@ std::string replaceStr(std::string str, std::string s1, std::string s2) {
 
 
 int main(int ac, char *av[]) {
-    std::string rStr, wStr, s1, s2;
+    std::string rStr, wStr, s1, s2, tmp;
     std::string fileOutput, fileInput;
 
     if (ac != 4) {
@@ -45,10 +45,11 @@ int main(int ac, char *av[]) {
         return (1);
     }
 
-    while (std::getline(iFile, rStr)) {
-        wStr = replaceStr(rStr, s1, s2);
-        oFile << wStr << std::endl;
-    }
+    std::getline(iFile, rStr, '\0');
+
+    wStr = replaceStr(rStr, s1, s2);
+
+    oFile << wStr << std::endl;
 
     oFile.close();
     iFile.close();
