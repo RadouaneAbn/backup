@@ -2,10 +2,10 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-SRC = zombieHorde.cpp Zombie.cpp main.cpp
+SRC = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 OBJ = ${SRC:.cpp=.o}
 
-TARGET = zombieHord
+TARGET = string
 
 all: $(TARGET)
 
@@ -21,3 +21,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean
+
+# Makefile, main.cpp, Weapon.{h, hpp}, Weapon.cpp, HumanA.{h,
+# hpp}, HumanA.cpp, HumanB.{h, hpp}, HumanB.cpp

@@ -2,10 +2,10 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-SRC = zombieHorde.cpp Zombie.cpp main.cpp
+SRC = main.cpp
 OBJ = ${SRC:.cpp=.o}
 
-TARGET = zombieHord
+TARGET = string
 
 all: $(TARGET)
 
