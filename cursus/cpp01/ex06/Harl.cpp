@@ -26,6 +26,10 @@ void Harl::error( void ) {
     std::cout << Harl::ERROR << std::endl;
 }
 
+int Harl::getFilter( void ) {
+    return (_filter);
+}
+
 void Harl::setFilter( std::string level ) {
     std::string levels[4] = {
         "DEBUG",
@@ -33,11 +37,14 @@ void Harl::setFilter( std::string level ) {
         "WARNING",
         "ERROR"
     };
-    _filter = -1;
+
     for (int i = 0; i < 4; i++) {
-        if (levels[i] == level)
+        if (levels[i] == level) {
             _filter = i;
+            return;
+        }
     }
+    _filter = -1;
 }
 
 void Harl::complain( std::string level ) {
@@ -48,12 +55,13 @@ void Harl::complain( std::string level ) {
         {"ERROR", &Harl::error}
     };
 
+    if (_filter < 0)
+        return ;
+
     for (int i = _filter; i < 4; i++) {
         if (pairs[i].level == level) {
             (this->*pairs[i].function)();
             return ;
         }
     }
-    std::cout << "[ Probably complaining about insignificant problems ]\n";
-
 }

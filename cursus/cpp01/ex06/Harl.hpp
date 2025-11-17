@@ -20,4 +20,5 @@ class Harl {
         // Harl ( std::string level );
         void complain( std::string level );
         void setFilter( std::string level );
+        int getFilter( void );
 };

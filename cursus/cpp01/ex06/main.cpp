@@ -15,10 +15,13 @@ int main(int ac, char *av[]) {
         return (1);
 
     level = av[1];
-
     harl.setFilter(level);
-
+    if (harl.getFilter() < 0 || harl.getFilter() > 3) {
+        std::cout << "[ Probably complaining about insignificant problems ]\n";
+        return (1);
+    }
     for (std::string str: testStrings) {
         harl.complain(str);
     }
+    return (0);
 }
