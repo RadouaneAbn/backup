@@ -2,20 +2,20 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-SRC = ___
+SRC = main.cpp Fixed.cpp
 OBJ = ${SRC:.cpp=.o}
 
-TARGET = ___
+TARGET = Fixed
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-        $(CC) $(CFLAGS) $(CFLAGSX) $^ -o $@
+	$(CC) $(CFLAGS) $(CFLAGSX) $^ -o $@
 
 clean:
-        rm -rf $(OBJ)
+	rm -rf $(OBJ)
 
 fclean: clean
-        rm -rf $(TARGET)
+	rm -rf $(TARGET)
 
 .PHONY: all clean fclean
