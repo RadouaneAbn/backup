@@ -2,23 +2,27 @@
 #include <iostream>
 
 ClapTrap::ClapTrap ( std::string name ) {
-    std::cout << "Constructor called\n";
+    std::cout << "ClapTrap constructor called\n";
     _name = name;
 }
 
 ClapTrap::ClapTrap ( const ClapTrap& oldObj ) : _name(oldObj.getName()) {
-    std::cout << "Copy Constructor called\n";
+    std::cout << "ClapTrap copy Constructor called\n";
 }
 
 ClapTrap& ClapTrap::operator=( const ClapTrap& other ) {
-    std::cout << "Copy assignment operator Constructor called\n";
-    if (this != &other)
+    std::cout << "ClapTrap copy assignment operator Constructor called\n";
+    if (this != &other) {
         setName(other.getName());
+        setAttackDamage(other.getAttackDamage());
+        setHitPoints(other.getHitPoints());
+        setEnergyPoints(other.getEnergyPoints());
+    }
     return (*this);
 }
 
 ClapTrap::~ClapTrap( void ) {
-    std::cout << "Destructor called\n";
+    std::cout << "ClapTrap destructor called!\n";
 }
 
 // ClapTrap <name> attacks <target>, causing <damage> points of damage!
@@ -84,7 +88,7 @@ unsigned int ClapTrap::getEnergyPoints( void ) const {
 }
 
 std::ostream& operator<<(std::ostream &out, const ClapTrap &obj) {
-    out << "Name: " << obj.getName() << std::endl 
+    out << "ClapTrap: " << obj.getName() << std::endl 
         << "    Attack Damage: " << obj.getAttackDamage() << std::endl 
         << "    Hit Points   : " << obj.getHitPoints() << std::endl 
         << "    energy points: " << obj.getEnergyPoints() << std::endl;
