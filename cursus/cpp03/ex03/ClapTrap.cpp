@@ -28,6 +28,7 @@ ClapTrap::~ClapTrap( void ) {
 // ClapTrap <name> attacks <target>, causing <damage> points of damage!
 
 void ClapTrap::attack( const std::string& target ) {
+    std::cout << "ClapTrap::attack()" << std::endl;
     if (_enegryPoints <= 0)
         return ;
     std::cout << "ClapTrap " << getName() << " attacks " << target << ", causing " << _attackDamage << " points of damage!\n";
@@ -35,6 +36,7 @@ void ClapTrap::attack( const std::string& target ) {
 }
 
 void ClapTrap::takeDamage( unsigned int amount ) {
+    std::cout << "ClapTrap::takeDamage()" << std::endl;
     if (amount > _hitPoints)
         return ;
     std::cout << "ClapTrap " << getName() << " has taken " << amount << " points of damage!\n";
@@ -42,6 +44,7 @@ void ClapTrap::takeDamage( unsigned int amount ) {
 }
 
 void ClapTrap::beRepaired( unsigned int amount ) {
+    std::cout << "ClapTrap::beRepaired()" << std::endl;
     if (_enegryPoints <= 0 && _hitPoints > 0)
         return ;
     std::cout << "ClapTrap " << getName() << " has restored " << amount << " hit point\n";
@@ -56,34 +59,42 @@ void ClapTrap::beRepaired( unsigned int amount ) {
  */
 
 const std::string& ClapTrap::getName( void ) const {
+    std::cout << "ClapTrap::getName()" << std::endl;
     return (_name);
 }
 
 void ClapTrap::setName( std::string name ) {
+    std::cout << "ClapTrap::setName()" << std::endl;
     _name = name;
 }
 
 void ClapTrap::setAttackDamage( unsigned int amount ) {
+    std::cout << "ClapTrap::setAttackDamage()" << std::endl;
     _attackDamage = amount;
 }
 
 unsigned int ClapTrap::getAttackDamage( void ) const {
+    std::cout << "ClapTrap::getAttackDamage()" << std::endl;
     return (_attackDamage);
 }
 
 void ClapTrap::setHitPoints( unsigned int amount ) {
+    std::cout << "ClapTrap::setHitPoints()" << std::endl;
     _hitPoints = amount;
 }
 
 unsigned int ClapTrap::getHitPoints( void ) const {
+    std::cout << "ClapTrap::getHitPoints()" << std::endl;
     return (_hitPoints);
 }
 
 void ClapTrap::setEnergyPoints( unsigned int amount ) {
+    std::cout << "ClapTrap::setEnergyPoints()" << std::endl;
     _enegryPoints = amount;
 }
 
 unsigned int ClapTrap::getEnergyPoints( void ) const {
+    std::cout << "ClapTrap::getEnergyPoints()" << std::endl;
     return (_enegryPoints);
 }
 

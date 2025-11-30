@@ -3,10 +3,11 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
-class ScavTrap: public ClapTrap {
+class ScavTrap: virtual public ClapTrap {
 
     public:
-        ScavTrap( std::string name);
+        ScavTrap( void );
+        ScavTrap( std::string name );
         ScavTrap( const ScavTrap& oldObj );
         ScavTrap& operator= (const ScavTrap& other);
         ~ScavTrap ( void );

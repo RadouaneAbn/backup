@@ -2,8 +2,8 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror
 CFLAGSX = -std=c++98
 
-TARGET = FragTrap
-SRC = main.cpp ClapTrap.cpp FragTrap.cpp
+TARGET = DiamondTrap
+SRC = main.cpp ClapTrap.cpp FragTrap.cpp ScavTrap.cpp DiamondTrap.cpp
 
 OBJ = ${SRC:.cpp=.o}
 

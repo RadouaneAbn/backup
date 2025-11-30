@@ -1,25 +1,31 @@
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 #include <iostream>
 
 int main(void) {
-    FragTrap p1("player_1");
-    FragTrap p2("player_2");
-    FragTrap p3 = p1;
-    FragTrap p4("");
-    p4 = p1;
+    std::cout << "--- DiamondTrap tests start ---" << std::endl;
 
-    p1.attack(p2.getName());
-    p2.takeDamage(p1.getAttackDamage());
+    // DiamondTrap d_default;
+    // d_default.whoAmI();
+    DiamondTrap d1("DiamondOne");
+    d1.whoAmI();
+    // d1.attack("TargetA");
+    // d1.takeDamage(30);
+    // d1.beRepaired(15);
+    // d1.highFivesGuys();
+    // d1.guardGate();
 
-    p2.beRepaired(1);
+    // DiamondTrap d2(d1);
+    // d2.whoAmI();
+    // DiamondTrap d3("Temp");
+    // d3.whoAmI();
+    // d3 = d1;
+    // d3.whoAmI();
 
-    p2.attack(p1.getName());
-    p1.takeDamage(p2.getAttackDamage());
+    // std::cout << "\n7) WhoAmI on originals after changes" << std::endl;
+    // d1.whoAmI();
+    // d2.whoAmI();
+    // d3.whoAmI();
 
-    std::cout << p1;
-    std::cout << p2;
-
-    p1.highFivesGuys();
-    p2.highFivesGuys();
-    return (0);
+    // std::cout << "\n--- DiamondTrap tests end ---" << std::endl;
+    return 0;
 }
