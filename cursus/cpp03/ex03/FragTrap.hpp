@@ -4,6 +4,10 @@
 #include <iostream>
 
 class FragTrap: virtual public ClapTrap {
+    protected:
+        static const int initHitPoints = 100;
+        static const int initEnergyPoints = 100;
+        static const int initAttackDamage = 30;
 
     public:
         FragTrap( void );

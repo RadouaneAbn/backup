@@ -20,4 +20,8 @@ fclean: clean
 
 re: fclean all
 
+run: re
+	clear
+	./$(TARGET)
+
 .PHONY: all clean fclean

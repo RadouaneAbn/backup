@@ -1,31 +1,60 @@
 #include "DiamondTrap.hpp"
 #include <iostream>
 
-int main(void) {
-    std::cout << "--- DiamondTrap tests start ---" << std::endl;
 
-    // DiamondTrap d_default;
-    // d_default.whoAmI();
-    DiamondTrap d1("DiamondOne");
-    d1.whoAmI();
-    // d1.attack("TargetA");
-    // d1.takeDamage(30);
-    // d1.beRepaired(15);
-    // d1.highFivesGuys();
-    // d1.guardGate();
+int	main(void)
+{
+	ClapTrap	trapA("Hugo");
+	ScavTrap	trapB("Tom");
+	FragTrap	trapC("Paul");
+    DiamondTrap	trapD("Diamond1");
+    
+    // trapD.takeDamage(50);
+    // std::cout << trapD << std::endl;
+    // trapD.beRepaired(10);
 
-    // DiamondTrap d2(d1);
-    // d2.whoAmI();
-    // DiamondTrap d3("Temp");
-    // d3.whoAmI();
-    // d3 = d1;
-    // d3.whoAmI();
+    // std::cout << trapD << std::endl;
 
-    // std::cout << "\n7) WhoAmI on originals after changes" << std::endl;
-    // d1.whoAmI();
-    // d2.whoAmI();
-    // d3.whoAmI();
+	trapD.attack("everyone!");
+	trapD.whoAmI();
+	trapD.highFivesGuys();
+	trapD.guardGate();
+	
+	trapC.highFivesGuys();
+	trapC.attack(trapD.getName());
+	
+	trapD.guardGate();
+	trapD.attack(trapC.getName());
+	trapB.takeDamage(20);
+	trapA.attack(trapB.getName());
+	trapB.takeDamage(2);
+	trapB.attack(trapC.getName());
+	trapC.takeDamage(7);
+	trapC.attack(trapA.getName());
+	trapA.takeDamage(5);
+	trapA.beRepaired(3);
+	trapB.attack(trapA.getName());
+	trapA.takeDamage(2);
+	trapC.attack(trapB.getName());
+	trapA.attack(trapB.getName());
+	trapB.takeDamage(2);
+	trapB.attack(trapC.getName());
+	trapC.takeDamage(7);
+	trapC.attack(trapA.getName());
+	trapA.takeDamage(5);
+	trapA.beRepaired(3);
+	trapB.attack(trapA.getName());
+	trapA.takeDamage(2);
+	trapC.attack(trapB.getName());
+	trapC.beRepaired(5);
+	trapA.beRepaired(3);
+	trapB.beRepaired(3);
+	trapD.beRepaired(6);
 
-    // std::cout << "\n--- DiamondTrap tests end ---" << std::endl;
-    return 0;
+    std::cout << trapA << std::endl;
+    std::cout << trapB << std::endl;
+    std::cout << trapC << std::endl;
+    std::cout << trapD << std::endl;
+
+	return (0);
 }

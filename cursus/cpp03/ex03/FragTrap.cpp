@@ -2,17 +2,17 @@
 
 FragTrap::FragTrap( void ) : ClapTrap("Default") {
 	std::cout << "FragTrap default constructor called\n";
-	setHitPoints(100);
-	setEnergyPoints(100);
-	setAttackDamage(30);
+	setHitPoints(FragTrap::initHitPoints);
+	setEnergyPoints(FragTrap::initEnergyPoints);
+	setAttackDamage(FragTrap::initAttackDamage);
 
 }
 
 FragTrap::FragTrap ( std::string name ) : ClapTrap(name) {
 	std::cout << "FragTrap constructor called\n";
-	setHitPoints(100);
-	setEnergyPoints(100);
-	setAttackDamage(30);
+	setHitPoints(FragTrap::initHitPoints);
+	setEnergyPoints(FragTrap::initEnergyPoints);
+	setAttackDamage(FragTrap::initAttackDamage);
 }
 
 FragTrap::~FragTrap ( void ) {
@@ -39,12 +39,12 @@ FragTrap& FragTrap::operator= ( const FragTrap& oldObj) {
 }
 
 void FragTrap::highFivesGuys( void ) {
-	std::cout << "FragTrap::highFivesGuys()" << std::endl;
+	if (DEBUG) std::cout << "FragTrap::highFivesGuys()" << std::endl;
 	std::cout << "FragTrap: " << getName() << " says 'wanna high five guys'\n";
 }
 
 void FragTrap::attack( const std::string& target ) {
-	std::cout << "FragTrap::attack()" << std::endl;
+	if (DEBUG) std::cout << "FragTrap::attack()" << std::endl;
 	if (getEnergyPoints() <= 0)
 		return ;
 	std::cout << "FragTrap " << getName() << " attacks " << target

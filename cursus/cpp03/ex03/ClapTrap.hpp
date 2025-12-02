@@ -2,12 +2,19 @@
 
 #include <string>
 
+#define DEBUG false
+
 class ClapTrap {
     private:
         std::string _name;
         unsigned int _hitPoints = 10;
         unsigned int _enegryPoints = 10;
         unsigned int _attackDamage = 0;
+
+    protected:
+        static const int initHitPoints = 10;
+        static const int initEnergyPoints = 10;
+        static const int initAttackDamage = 0;
 
     public:
 
