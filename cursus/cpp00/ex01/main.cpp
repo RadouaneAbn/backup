@@ -6,7 +6,7 @@ int main( void ) {
     std::string contactInput[5];
 
     do {
-        std::cout << ">> ";
+        std::cout << "[ADD], [SEARCH], [EXIT] >> ";
         std::getline(std::cin, userInput);
         if (std::cin.eof()) {
             std::cout << std::endl;
@@ -26,6 +26,10 @@ int main( void ) {
         }
         else if (userInput == "ADD") {
             if (!getContactInput(contactInput)) {
+                if (std::cin.eof()) {
+                    std::cout << "EOF" << std::endl;
+                    break;
+                }
                 std::cout << "Unvalid input\n";
                 continue;
             }

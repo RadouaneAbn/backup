@@ -1,21 +1,22 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror
-CFLAGSX = -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC =  tests.cpp Account.cpp 
-OBJ = ${SRC:.cpp=.o}
+OBJ = tests.o Account.o 
 
-TARGET = Bank
+NAME = Bank
 
-all: $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(CFLAGSX) $^ -o $@
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 clean:
 		rm -rf $(OBJ)
 
 fclean: clean
-		rm -rf $(TARGET)
+		rm -rf $(NAME)
+
+re: fclean all
 
 .PHONY: all clean fclean
