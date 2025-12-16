@@ -1,21 +1,22 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror
-CFLAGSX = -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = megaphone.cpp
-OBJ = ${SRC:.cpp=.o}
+OBJ = megaphone.o
 
-TARGET = megaphone
+NAME = megaphone
 
-all: $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(CFLAGSX) $^ -o $@
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(TARGET)
+	rm -rf $(NAME)
+
+re: fclean all
 
 .PHONY: all clean fclean
