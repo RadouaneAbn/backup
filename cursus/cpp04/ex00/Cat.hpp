@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "Animal.hpp"
+#include "WrongAnimal.hpp"
 
-class Cat: public Animal {
+class Cat: public WrongAnimal {
     public:
         Cat( void );
         virtual ~Cat( void );

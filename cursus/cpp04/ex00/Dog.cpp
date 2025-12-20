@@ -6,7 +6,7 @@ Dog::Dog( void ) {
 
 Dog::~Dog( void ) {}
 
-Dog::Dog( const Dog &old_obj) {
+Dog::Dog( const Dog &old_obj): Animal() {
     _type = old_obj._type;
 }
 

@@ -1,8 +1,8 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror
 
-SRC = Animal.cpp Dog.cpp Cat.cpp main.cpp
-OBJ = Animal.o Dog.o Cat.o main.o
+SRC = Animal.cpp WrongAnimal.cpp Dog.cpp Cat.cpp main.cpp
+OBJ = Animal.o WrongAnimal.o Dog.o Cat.o main.o
 
 NAME = animal
 

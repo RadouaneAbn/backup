@@ -6,7 +6,7 @@ Cat::Cat( void ) {
 
 Cat::~Cat( void ) {}
 
-Cat::Cat( const Cat &old_obj) {
+Cat::Cat( const Cat &old_obj): WrongAnimal() {
     _type = old_obj._type;
 }
 
