@@ -1,10 +1,10 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = megaphone.cpp
-OBJ = megaphone.o
+SRC = Animal.cpp Dog.cpp Cat.cpp Brain.cpp main.cpp
+OBJ = Animal.o Dog.o Cat.o Brain.o main.o
 
-NAME = megaphone
+NAME = animal
 
 all: $(NAME)
 
