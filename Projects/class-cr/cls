@@ -1,0 +1,58 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 ClassName"
+    exit 1
+fi
+
+classname=$1
+
+if [ -f "${classname}.cpp" ] || [ -f "${classname}.hpp" ]; then
+    echo "Error: ${classname}.cpp or ${classname}.hpp already exists."
+    exit 1
+fi
+
+touch ${classname}.cpp
+touch ${classname}.hpp
+
+cat > ${classname}.hpp << EOF
+#ifndef ${classname^^}_HPP
+# define ${classname^^}_HPP
+
+# include <iostream>
+
+class ${classname} {
+	public:
+		${classname}( void );
+		${classname}( const ${classname} & oldObj );
+		${classname} & operator=( const ${classname} & oldObj );
+		~${classname}( void );
+};
+
+#endif
+EOF
+
+cat > ${classname}.cpp << EOF
+#include "${classname}.hpp"
+${classname}::${classname}( void ) {
+    std::cout << "${classname} default constructor called" << std::endl;
+}
+
+${classname}::${classname}( const ${classname} & oldObj ) {
+    std::cout << "${classname} copy constructor called" << std::endl;
+    /* ... */
+}
+
+${classname} & ${classname}::operator=( const ${classname} & oldObj ) {
+    std::cout << "${classname} assignment operator called" << std::endl;
+    if (this != &oldObj) {
+        /* ... */
+    }
+    return *this;
+}
+
+${classname}::~${classname}( void ) {
+    std::cout << "${classname} destructor called" << std::endl;
+}
+
+EOF
