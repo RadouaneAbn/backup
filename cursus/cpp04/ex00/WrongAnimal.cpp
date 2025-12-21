@@ -4,7 +4,9 @@ WrongAnimal::WrongAnimal( void ): _type("Wrong animal") {}
 
 WrongAnimal::WrongAnimal( std::string type ): _type(type) {}
 
-WrongAnimal::~WrongAnimal( void ) {}
+WrongAnimal::~WrongAnimal( void ) {
+    std::cout << "but but\n";
+}
 
 WrongAnimal::WrongAnimal( const WrongAnimal &old_obj): _type(old_obj._type) {}
 

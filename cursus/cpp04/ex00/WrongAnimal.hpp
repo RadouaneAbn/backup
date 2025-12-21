@@ -8,10 +8,13 @@ class WrongAnimal {
     public:
         WrongAnimal( void );
         WrongAnimal( std::string type );
-         ~WrongAnimal( void );
+        virtual ~WrongAnimal( void );
         WrongAnimal( const WrongAnimal &old_obj);
-        WrongAnimal &operator=( const WrongAnimal &old_obj );
+        WrongAnimal &operator=( const WrongAnimal &old_obj );\
+                void setSound( std::string str ) {
+            _type = str;
+        }
 
         std::string getType( void ) const;
-        void makeSound( void ) const;
+        virtual void makeSound( void ) const;
 };
