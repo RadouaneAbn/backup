@@ -1,14 +1,23 @@
 #include "Animal.hpp"
 
-Animal::Animal( void ) {}
+Animal::Animal( void ) {
+    std::cout << "> Animal default constructor\n";
+}
 
-Animal::Animal( std::string type ): _type(type) {}
+Animal::Animal( std::string type ): _type(type) {
+    std::cout << "> Animal parametrized constructor\n";
+}
 
-Animal::~Animal( void ) {}
+Animal::~Animal( void ) {
+    std::cout << "> Animal destructor constructor\n";
+}
 
-Animal::Animal( const Animal &old_obj): _type(old_obj._type) {}
+Animal::Animal( const Animal &old_obj): _type(old_obj._type) {
+    std::cout << "> Animal copy constructor\n";
+}
 
 Animal& Animal::operator=( const Animal& old_obj ) {
+    std::cout << "> Animal copy operator overload\n";
     if (this != &old_obj)
         _type = old_obj._type;
     return (*this);
