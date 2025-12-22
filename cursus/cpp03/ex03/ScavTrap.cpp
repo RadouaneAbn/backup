@@ -1,10 +1,17 @@
 #include "ScavTrap.hpp"
 
+ScavTrap::ScavTrap ( void ) : ClapTrap("Default") {
+    std::cout << "ScavTrap Default constructor called\n";
+    setHitPoints(ScavTrap::initHitPoints);
+    setEnergyPoints(ScavTrap::initEnergyPoints);
+    setAttackDamage(ScavTrap::initAttackDamage);
+}
+
 ScavTrap::ScavTrap ( std::string name ) : ClapTrap(name) {
     std::cout << "ScavTrap constructor called\n";
-    setHitPoints(100);
-    setEnergyPoints(50);
-    setAttackDamage(20);
+    setHitPoints(ScavTrap::initHitPoints);
+    setEnergyPoints(ScavTrap::initEnergyPoints);
+    setAttackDamage(ScavTrap::initAttackDamage);
 }
 
 ScavTrap::~ScavTrap ( void ) {
@@ -20,7 +27,7 @@ ScavTrap::ScavTrap ( const ScavTrap& oldObj ) : ClapTrap(oldObj.getName()) {
 }
 
 ScavTrap& ScavTrap::operator= ( const ScavTrap& oldObj) {
-    std::cout << "ScavTrap copy Constructor called\n";
+    std::cout << "ScavTrap copy assignment operator Constructor called\n";
     if (this != &oldObj) {
         setName(oldObj.getName());
         setHitPoints(oldObj.getHitPoints());
@@ -31,10 +38,12 @@ ScavTrap& ScavTrap::operator= ( const ScavTrap& oldObj) {
 }
 
 void ScavTrap::guardGate( void ) {
+    if (DEBUG) std::cout << "ScavTrap::guardGate()" << std::endl;
     std::cout << "ScavTrap " << getName() << " is in gate keeper mode\n";
 }
 
 void ScavTrap::attack( const std::string& target ) {
+    if (DEBUG) std::cout << "ScavTrap::attack()" << std::endl;
     if (getEnergyPoints() <= 0)
         return ;
     std::cout << "ScavTrap " << getName() << " attacks " << target

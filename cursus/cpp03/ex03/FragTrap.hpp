@@ -3,10 +3,15 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
-class FragTrap: public ClapTrap {
+class FragTrap: virtual public ClapTrap {
+    protected:
+        static const int initHitPoints = 100;
+        static const int initEnergyPoints = 100;
+        static const int initAttackDamage = 30;
 
     public:
-        FragTrap( std::string name);
+        FragTrap( void );
+        FragTrap( std::string name );
         FragTrap( const FragTrap& oldObj );
         FragTrap& operator= (const FragTrap& other);
         ~FragTrap ( void );

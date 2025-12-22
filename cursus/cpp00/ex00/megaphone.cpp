@@ -3,8 +3,8 @@
 std::string toUpperCase(const std::string& str) {
     std::string result = str;
 
-    for (char& c : result) {
-        c = std::toupper(c);
+    for (int i = 0; str[i]; i++) {
+        result[i] = std::toupper(str[i]);
     }
     return (result);
 }
@@ -17,6 +17,8 @@ int main (int ac, char* av[]) {
     } else {
         for (int i = 1; i < ac; i++) {
             str.append(toUpperCase(av[i]));
+            if (i < ac - 1)
+                str.append(" ");
         }
     }
     std::cout << str << std::endl;

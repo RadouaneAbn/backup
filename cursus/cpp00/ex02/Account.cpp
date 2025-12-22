@@ -9,12 +9,12 @@ int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
 void Account::_displayTimestamp( void ) {
-    time_t timestamp;
-    struct tm datetime;
+    time_t now = time(0);
+    struct tm* local_time = localtime(&now);
+    char buffer[80];
 
-    time(&timestamp);
-    datetime = *localtime(&timestamp);
-    std::cout << "[" << std::put_time(&datetime, "%Y%m%d_%H%M%S") << "]";
+    strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", local_time);
+    std::cout << "[" << buffer << "] ";
 }
 
 Account::Account( int initial_deposit ) {

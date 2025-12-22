@@ -29,7 +29,7 @@ void Fixed::setRawBits( int const raw ) {
 }
 
 Fixed::Fixed( const int n ) {
-	_fixedPoint = (n * (1 << _fractionalBits));
+	_fixedPoint = (n << _fractionalBits);
 }
 
 Fixed::Fixed( const float n ) {
