@@ -12,10 +12,7 @@
 #define DWARNING_MSG "[ WARNING ]\nWARNING MSG"
 #define DERROR_MSG "[ ERROR ]\nERROR MSG"
 
-typedef void (Harl::*t_func)(void);
-
-typedef struct s_pair {
-    std::string level;
-    t_func function;
-} t_pair;
-
+# define DEBUG 0
+# define INFO 1
+# define WARNING 2
+# define ERROR 3

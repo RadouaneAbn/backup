@@ -2,14 +2,14 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp
-OBJ = ${SRC:.cpp=.o}
+OBJ = main.o
 
 NAME = replace
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS)  $^ -o $@
+	$(CXX) $(CXXFLAGS)  $(OBJ) -o $(NAME)
 
 clean:
 				rm -rf $(OBJ)
