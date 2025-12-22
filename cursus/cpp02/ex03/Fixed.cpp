@@ -11,9 +11,9 @@ Fixed::Fixed ( const Fixed &n ) {
 }
 
 Fixed& Fixed::operator= ( const Fixed& n ) {
-	if (this == &n)
-		return (*this);
-	this->_fixedPoint = n._fixedPoint;
+	if (this != &n) {
+		this->_fixedPoint = n._fixedPoint;
+	}
 	return (*this);
 }
 
