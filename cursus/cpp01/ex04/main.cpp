@@ -32,13 +32,13 @@ int main(int ac, char *av[]) {
     s1 = av[2];
     s2 = av[3];
 
-    std::ifstream iFile(fileInput);
+    std::ifstream iFile(fileInput.c_str()); //TODO: understand stream
     if (!iFile.is_open()) {
         std::cerr << "Error reading '" << fileInput << "'\n";
         return (1);
     }
 
-    std::ofstream oFile(fileOutput);
+    std::ofstream oFile(fileOutput.c_str());
     if (!oFile.is_open()) {
         std::cerr << "Error writing '" << fileOutput << "'\n";
         iFile.close();

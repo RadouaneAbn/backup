@@ -5,8 +5,8 @@
 int main( void ) {
     Zombie *zombieHordeList = zombieHorde(ZOMBIE_COUNT, "jeff");
 
-    if (zombieHordeList == nullptr) {
-        std::cerr << "nullptr" << std::endl;
+    if (zombieHordeList == NULL) {
+        std::cerr << "NULL" << std::endl;
         return (1);
     }
     for (int i = 0; i < ZOMBIE_COUNT; i++) {

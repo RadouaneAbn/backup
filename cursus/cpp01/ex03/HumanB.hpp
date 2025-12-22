@@ -8,8 +8,8 @@ class HumanB {
         std::string _name;
 
     public:
-        HumanB( std::string name ) : _name(name), _weapon(nullptr) {};
-        HumanB( std::string name, Weapon weapon ) : _name(name), _weapon(&weapon) {};
+        HumanB( std::string name );
+        HumanB( std::string name, Weapon weapon );
         ~HumanB ( void ) {};
         void attack( void );
         void setWeapon( Weapon& weapon);

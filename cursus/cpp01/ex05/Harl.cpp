@@ -30,9 +30,9 @@ void Harl::complain( std::string level ) {
         {"ERROR", &Harl::error}
     };
 
-    for (t_pair pair : pairs) {
-        if (pair.level == level) {
-            (this->*pair.function)();
+    for (int i = 0; i < 4; i++) {
+        if (pairs[i].level == level) {
+            (this->*pairs[i].function)();
         }
     }
 }

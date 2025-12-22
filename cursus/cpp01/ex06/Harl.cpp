@@ -6,10 +6,6 @@ const char* const Harl::INFO = DINFO_MSG;
 const char* const Harl::WARNING = DWARNING_MSG;
 const char* const Harl::ERROR = DERROR_MSG;
 
-// Harl::Harl( std::string level ) {
-//     setFilter(level);
-// }
-
 void Harl::debug( void ) {
     std::cout << Harl::DEBUG << std::endl;
 }
@@ -58,10 +54,20 @@ void Harl::complain( std::string level ) {
     if (_filter < 0)
         return ;
 
-    for (int i = _filter; i < 4; i++) {
-        if (pairs[i].level == level) {
-            (this->*pairs[i].function)();
-            return ;
-        }
-    }
+    // for (int i = _filter; i < 4; i++) {
+    //     if (pairs[i].level == level) {
+    //         (this->*pairs[i].function)();
+    //         return ;
+    //     }
+    // }
+
+    // switch (_filter)
+    // {
+    // case constant expression:
+    //     /* code */
+    //     break;
+    
+    // default:
+    //     break;
+    // }
 }
