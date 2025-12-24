@@ -1,73 +1,61 @@
 #include "Harl.hpp"
 #include "Harl.h"
 
-const char* const Harl::DEBUG = DDEBUG_MSG;
-const char* const Harl::INFO = DINFO_MSG;
-const char* const Harl::WARNING = DWARNING_MSG;
-const char* const Harl::ERROR = DERROR_MSG;
+Harl::Harl(void) {}
 
 void Harl::debug( void ) {
-    std::cout << Harl::DEBUG << std::endl;
+	std::cout << DDEBUG_MSG << std::endl;
 }
 
 void Harl::info( void ) {
-    std::cout << Harl::INFO << std::endl;
+	std::cout << DINFO_MSG << std::endl;
 }
 
 void Harl::warning( void ) {
-    std::cout << Harl::WARNING << std::endl;
+	std::cout << DWARNING_MSG << std::endl;
 }
 
 void Harl::error( void ) {
-    std::cout << Harl::ERROR << std::endl;
+	std::cout << DERROR_MSG << std::endl;
 }
 
-int Harl::getFilter( void ) {
-    return (_filter);
-}
-
-void Harl::setFilter( std::string level ) {
-    std::string levels[4] = {
-        "DEBUG",
-        "INFO",
-        "WARNING",
-        "ERROR"
-    };
-
-    for (int i = 0; i < 4; i++) {
-        if (levels[i] == level) {
-            _filter = i;
-            return;
-        }
-    }
-    _filter = -1;
+int getLevel(std::string &level) {
+	if (level == "DEBUG")
+		return (DEBUG);
+	if (level == "INFO")
+		return (INFO);
+	if (level == "WARNING")
+		return (WARNING);
+	if (level == "ERROR")
+		return (ERROR);
+	return (-1);
 }
 
 void Harl::complain( std::string level ) {
-    t_pair pairs[4] = {
-        {"DEBUG", &Harl::debug},
-        {"INFO", &Harl::info},
-        {"WARNING", &Harl::warning},
-        {"ERROR", &Harl::error}
-    };
-
-    if (_filter < 0)
-        return ;
-
-    // for (int i = _filter; i < 4; i++) {
-    //     if (pairs[i].level == level) {
-    //         (this->*pairs[i].function)();
-    //         return ;
-    //     }
-    // }
-
-    // switch (_filter)
-    // {
-    // case constant expression:
-    //     /* code */
-    //     break;
-    
-    // default:
-    //     break;
-    // }
+	int wanted_level = getLevel(level);
+	switch (wanted_level)
+	{
+	case DEBUG:
+		Harl::debug();
+	case INFO:
+		Harl::info();
+	case WARNING:
+		Harl::warning();
+	case ERROR:
+		Harl::error();
+		break;
+	default:
+		std::cout << "[ Probably complaining about insignificant problems ]\n";
+		break;
+	}
 }
+
+/*          L
+
+	debug   0:   0   1   2   3
+	info    1:   1   2   3
+	warning 2:   2   3
+	error   3:   3
+
+	0: 0 1 2 3
+*/

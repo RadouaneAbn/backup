@@ -2,7 +2,9 @@
 
 HumanB::HumanB( std::string name ): _weapon(NULL), _name(name) {}
 
-HumanB::HumanB( std::string name, Weapon weapon ): _weapon(&weapon), _name(name) {}
+HumanB::HumanB( std::string name, Weapon weapon ): _name(name) {
+    _weapon = &weapon;
+}
 
 void HumanB::attack( void ) {
     if (_weapon != NULL)

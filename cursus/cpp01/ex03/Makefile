@@ -9,7 +9,7 @@ NAME = string
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS)  $^ -o $@
+	$(CXX) $(CXXFLAGS)  $(OBJ) -o $(NAME)
 
 clean:
 		rm -rf $(OBJ)
