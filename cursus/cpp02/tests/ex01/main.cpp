@@ -19,8 +19,9 @@ int main( void ) {
     // std::cout << "b is " << b.toInt() << " as integer" << std::endl;
     // std::cout << "c is " << c.toInt() << " as integer" << std::endl;
     // std::cout << "d is " << d.toInt() << " as integer" << std::endl;
-
-    Fixed const a( 15.045f );
-    std::cout << "a is " << a.toFloat() << " as integer" << std::endl;
+    float n = 15.045f;
+    std::cout << "n is " << n<< " before FX" << std::endl;
+    Fixed const a( n );
+    std::cout << "n is " << a.toFloat() << " after FX" << std::endl;
     return 0;
 }

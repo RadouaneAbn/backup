@@ -1,21 +1,22 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror
-CFLAGSX = -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJ = ${SRC:.cpp=.o}
 
-TARGET = checkPoint
+NAME = checkPoint
 
-all: $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(CFLAGSX) $^ -o $@
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(CXXFLAGSX) $^ -o $@
 
 clean:
 	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(TARGET)
+	rm -rf $(NAME)
+
+re: fclean all
 
 .PHONY: all clean fclean

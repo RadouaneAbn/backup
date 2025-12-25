@@ -1,4 +1,5 @@
-#pragma once
+#ifndef POINT_HPP
+# define POINT_HPP
 
 #include "Fixed.hpp"
 
@@ -8,7 +9,7 @@ class Point {
         Fixed const _y;
 
     public:
-        Point( void );
+        Point( void );${SRC:.cpp=.o}
         Point( const float x, const float y );
         Point( const Point& p );
         ~Point( void );
@@ -18,3 +19,5 @@ class Point {
 
         Point& operator= ( const Point& p);
 };
+
+#endif
