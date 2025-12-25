@@ -9,7 +9,7 @@ NAME = Fixed
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(CXXFLAGSX) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:
 	rm -rf $(OBJ)

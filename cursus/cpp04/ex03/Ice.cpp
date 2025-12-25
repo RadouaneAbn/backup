@@ -1,14 +1,17 @@
 #include "Ice.hpp"
+#include "ICharacter.hpp"
+#include "debug.h"
+
 Ice::Ice( void ): AMateria("ice") {
-    std::cout << "Ice default constructor called" << std::endl;
+    if (DEBUGING) std::cout << "Ice default constructor called" << std::endl;
 }
 
 Ice::Ice( const Ice & oldObj ): AMateria(oldObj._type) {
-    std::cout << "Ice copy constructor called" << std::endl;
+    if (DEBUGING) std::cout << "Ice copy constructor called" << std::endl;
 }
 
 Ice & Ice::operator=( const Ice & oldObj ) {
-    std::cout << "Ice assignment operator called" << std::endl;
+    if (DEBUGING) std::cout << "Ice assignment operator called" << std::endl;
     if (this != &oldObj) {
         _type = oldObj._type;
     }
@@ -16,7 +19,7 @@ Ice & Ice::operator=( const Ice & oldObj ) {
 }
 
 Ice::~Ice( void ) {
-    std::cout << "Ice destructor called" << std::endl;
+    if (DEBUGING) std::cout << "Ice destructor called" << std::endl;
 }
 
 Ice* Ice::clone() const {
@@ -26,5 +29,5 @@ Ice* Ice::clone() const {
 }
 
 void Ice::use(ICharacter& target) {
-    std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
+    std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }

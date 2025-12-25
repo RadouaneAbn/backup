@@ -1,10 +1,10 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-SRC = megaphone.cpp
-OBJ = megaphone.o
+SRC = AMateria.cpp Cure.cpp main.cpp Character.cpp Ice.cpp MateriaSource.cpp
+OBJ = AMateria.o Cure.o main.o Character.o Ice.o MateriaSource.o
 
-NAME = megaphone
+NAME = a.out
 
 all: $(NAME)
 

@@ -2,7 +2,8 @@
 # define AMATERIA_H
 
 # include <iostream>
-# include "ICharacter.hpp"
+# include <string>
+class ICharacter; // forward declaration to avoid circular include
 
 class AMateria
 {
@@ -10,7 +11,7 @@ class AMateria
         std::string _type;
     public:
         AMateria(std::string const & type);
-        ~AMateria( void );
+        virtual ~AMateria( void );
         AMateria( const AMateria & oldObj );
         AMateria& operator=( const AMateria & oldObj );
 

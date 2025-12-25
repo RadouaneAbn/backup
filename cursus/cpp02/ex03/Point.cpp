@@ -8,9 +8,9 @@ Point::Point( const Point& p ) : _x(p._x), _y(p._y) {}
 
 Point::~Point ( void ) {}
 
-Point& Point::operator=( const Point& p ) { 
-	(void) p;
-	return *this;
+Point& Point::operator=( const Point& p ) {
+    (void) p;
+    return (*this);
 }
 
 const Fixed& Point::getX( void ) const { return _x; };
