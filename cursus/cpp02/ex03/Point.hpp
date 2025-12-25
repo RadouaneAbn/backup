@@ -9,7 +9,7 @@ class Point {
         Fixed const _y;
 
     public:
-        Point( void );${SRC:.cpp=.o}
+        Point( void );
         Point( const float x, const float y );
         Point( const Point& p );
         ~Point( void );
