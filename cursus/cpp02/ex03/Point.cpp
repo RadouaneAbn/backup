@@ -9,6 +9,7 @@ Point::Point( const Point& p ) : _x(p._x), _y(p._y) {}
 Point::~Point ( void ) {}
 
 Point& Point::operator=( const Point& p ) {
+	std::cout << "Assignation operator wont work because _x and _y are const" << std::endl;
     (void) p;
     return (*this);
 }
