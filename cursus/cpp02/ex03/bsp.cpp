@@ -3,6 +3,7 @@
 
 bool bsp( Point const a, Point const b, Point const c, Point const point) {
     /**
+     * cross products to determine the position of the point relative to the triangle
      * AB * AP = (Bx - Ax)(Py - Ay) - (By - Ay)(Px - Ax)
      * BC * BP = (Cx - Bx)(Py - by) - (Cy - By)(Px - Bx)
      * CA * CP = (Ax - Cx)(Py - Cy) - (Ay - Cy)(Px - Cx)
@@ -14,7 +15,6 @@ bool bsp( Point const a, Point const b, Point const c, Point const point) {
 
     bool allNegative = (d1 < 0) && (d2 < 0) && (d3 < 0);
     bool allPositive = (d1 > 0) && (d2 > 0) && (d3 > 0);
-    // bool allZero = (d1 == 0) && (d2 == 0) && (d3 == 0);
 
     return (allNegative || allPositive);
 }   

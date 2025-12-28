@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FIXED_HPP
+# define FIXED_HPP
 
 #include <iostream>
 
@@ -44,3 +45,5 @@ class Fixed {
 		static const Fixed& min (const Fixed& a,const Fixed& b);
 		static const Fixed& max (const Fixed& a,const Fixed& b);
 };
+
+#endif

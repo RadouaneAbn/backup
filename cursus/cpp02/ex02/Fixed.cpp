@@ -38,7 +38,7 @@ Fixed::Fixed( const float n ) {
 
 
 int Fixed::toInt( void ) const {
-	return (_fixedPoint / int(1 << _fractionalBits));
+	return (_fixedPoint >> _fractionalBits);
 } 
 
 float Fixed::toFloat( void ) const {
@@ -133,7 +133,7 @@ Fixed Fixed::operator* ( const Fixed& n ) const {
  * A_real = A_raw / 256
  * B_real = B_raw / 256
  *
- * result_real = A_real * B_real
+ * result_real = A_real / B_real
  * <==>
  *             = (A_raw/256) / (B_raw/256)
  *             = A_raw / B_raw
