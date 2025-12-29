@@ -1,11 +1,12 @@
 #include "WrongCat.hpp"
 
 WrongCat::WrongCat( void ) {
+    std::cout << "Wrong cat constrcuctor called\n";
     _type = "WrongCat";
 }
 
 WrongCat::~WrongCat( void ) {
-    std::cout << "but but but but cat\n";
+    std::cout << "Wrong cat destructor called\n";
 }
 
 WrongCat::WrongCat( const WrongCat &old_obj): WrongAnimal(old_obj) {
