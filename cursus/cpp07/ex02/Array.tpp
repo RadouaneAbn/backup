@@ -16,7 +16,7 @@ Array<T>::Array(const Array &old_array)
     _array_capasity = old_array._array_capasity;
     _array = new T[_array_capasity];
     for (unsigned int i = 0; i < _array_capasity; i++)
-        _array[i] = old_array[i];
+        _array[i] = old_array._array[i];
 }
 
 template <typename T>
@@ -29,7 +29,7 @@ Array<T> &Array<T>::operator=(const Array<T> &old_array)
         _array_capasity= old_array._array_capasity;
         _array = new T[_array_capasity];
         for (unsigned int i = 0; i < _array_capasity; i++)
-            _array[i] = old_array[i];
+            _array[i] = old_array._array[i];
     }
     return (*this);
 }
