@@ -19,7 +19,10 @@ public:
     ~Span(void);
 
     void addNumber(int number);
-    void addNumbers(unsigned int start, unsigned int end);
+    void addNumbers(
+        std::vector<int>::iterator begin,
+        std::vector<int>::iterator end
+    );
     int shortestSpan(void) const;
     int longestSpan(void) const;
     int getNumberOfElements(void) const;
@@ -33,6 +36,13 @@ public:
         public:
         const char* what() const throw() {
             return "Span is full, cannot add more numbers.";
+        }
+    };
+
+    class NotEnoughSpaceLeftInSpan : public std::exception {
+        public:
+        const char* what() const throw() {
+            return "Not enough space left in Span to add the range of numbers.";
         }
     };
 

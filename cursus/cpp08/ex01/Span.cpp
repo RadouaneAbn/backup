@@ -1,10 +1,5 @@
 #include "Span.hpp"
 
-int rnd(void)
-{
-    return std::rand();
-}
-
 Span::Span(void) : _n(0) {}
 
 Span::Span(unsigned int n) : _n(n) {}
@@ -28,25 +23,16 @@ void Span::addNumber(int number) {
     _numbers.push_back(number);
 }
 
-void Span::addNumbers(unsigned int start, unsigned int end)
+void Span::addNumbers(
+    std::vector<int>::iterator begin,
+    std::vector<int>::iterator end
+)
 {
-    try
-    {
-        if (start <= end)
-        {
-            for (unsigned int i = start; i <= end; i++)
-            addNumber(i);
-        }
-        else
-        {
-            for (unsigned int i = start; i >= end; i--)
-            addNumber(i);
-        }
+    if (std::distance(begin, end) + _numbers.size() > _n) {
+        throw NotEnoughSpaceLeftInSpan();
     }
-    catch (const SpanFullException& e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
+
+    _numbers.insert(_numbers.end(), begin, end);
 }
 
 int Span::getNumberOfElements(void) const
