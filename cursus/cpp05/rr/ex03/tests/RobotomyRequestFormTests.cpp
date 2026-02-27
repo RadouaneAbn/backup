@@ -63,11 +63,11 @@ void rr_test_grade_ok_to_sign_and_execute(Bureaucrat bureaucrat, RobotomyRequest
 void rr_test_grade_ok_to_sign_and_execute_multi(Bureaucrat bureaucrat, RobotomyRequestForm form)
 {
 	std::cout << "\n---- Test 4: Grade is high to sign and execute multiple times ----" << std::endl;
-	std::cout << "The RobotomyRequestForm execution has a 50% chance to succeed." << std::endl;
+	std::cout << "The RobotomyRequestForm execution has a 50% chance to succeed.\n";
 	bureaucrat.signAForm(form);
 	for (int i = 0; i < 5; i++)
 	{
-		std::cout << std::endl << "-- Iteration " << i + 1 << " --" << std::endl;
+		std::cout << "\n-- Iteration " << i + 1 << " --" << std::endl;
 		try
 		{
 			bureaucrat.executeForm(form);
