@@ -7,10 +7,6 @@ SRCS = main.cpp \
 	ShrubberyCreationForm.cpp \
 	PresidentialPardonForm.cpp \
 	RobotomyRequestForm.cpp \
-	tests/PresidentialPardonFormTests.cpp \
-	tests/ShrubberyCreationFormTests.cpp \
-	tests/RobotomyRequestFormTests.cpp \
-	tests/InternTests.cpp \
 	Intern.cpp
 
 OBJS = $(SRCS:.cpp=.o)
@@ -35,4 +31,4 @@ test: re
 	valgrind ./$(NAME)
 	make fclean
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

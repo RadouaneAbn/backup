@@ -42,12 +42,6 @@ void AForm::checkExecutable(const Bureaucrat &executor) const
 		throw GradeTooLowException("Bureaucrat grade too low to execute the form");
 }
 
-void AForm::executingForm(Bureaucrat const &executor) const
-{
-	(void)executor;
-	// Pure virtual function to be implemented in derived classes
-}
-
 void AForm::execute(Bureaucrat const &executor) const
 {
 	checkExecutable(executor);
