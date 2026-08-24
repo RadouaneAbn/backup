@@ -1,0 +1,39 @@
+function FordJohnsonSort(input):
+    n = length(input)
+    if n <= 1: return input
+
+    pairs = []
+    straggler = None
+
+    i = 0
+    while i + 1 < n:
+        if input[i] > input[i+1]:
+            pairs.append( (a: input[i], b: input[i+1]) )
+        else:
+            pairs.append( (a: input[i+1], b: input[i]) )
+        i += 2
+    if n is odd:
+        straggler = input[n-1]
+
+    // recursively sort just the a's (as a list of {a, b} pairs, sorted by a)
+    sortedPairs = FordJohnsonSort_pairsByA(pairs)   // base case: 0 or 1 pair -> return as-is
+
+    // chain starts as b0 (free insertion) + all sorted a's
+    mainChain = [ sortedPairs[0].b ] + [p.a for p in sortedPairs]
+
+    // everything else waiting to be inserted:
+    // b1, b2, ... (NOT b0, it's already placed) + straggler
+    pendingB = [ sortedPairs[1].b, sortedPairs[2].b, ..., sortedPairs[last].b ]
+
+    insertionOrder = BuildJacobsthalInsertionOrder(length(pendingB))
+    // insertionOrder is a list of INDICES into pendingB, in the order they should be inserted
+
+    for idx in insertionOrder:
+        b = pendingB[idx]
+        boundIndex = position_in_mainChain_of( sortedPairs[idx+1].a )  // the 'a' partner of this b
+        InsertWithBoundedBinarySearch(mainChain, b, searchUpperBound = boundIndex)
+
+    if straggler exists:
+        InsertWithBoundedBinarySearch(mainChain, straggler, searchUpperBound = length(mainChain))
+
+    return mainChain
